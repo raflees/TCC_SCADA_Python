@@ -6,6 +6,8 @@ import numpy as np
 import pprint
 
 listSeries = []
+plottedSeries = []
+unplottedSeries = []
 nSeries = 0
 
 class GraphicPlotConfig(QtWidgets.QWidget):
@@ -24,17 +26,17 @@ class GraphicPlotConfig(QtWidgets.QWidget):
 		self.description = description
 		self.plot_object = plot_object
 		self.plot_list_layout = plot_list_layout
+		self.plotted = False
 
 		# Objetos filhos principais
 		self.chart_object = SimpleChartObject(series=self.series)
-		self.button_plot = ToggleColorButton(text='Plot', color_on=QtGui.QColor(0,255,0,127),
-											color_off=QtGui.QColor(255,0,0,127))
+		self.button_plot = QtWidgets.QPushButton(text='Plot')
 		self.button_edit = QtWidgets.QPushButton(text='Edit')
 		self.button_delete = QtWidgets.QPushButton(text='Delete')
 		self.label = QtWidgets.QLabel(self.description)
 
 		# Definicoes dos eventos
-		self.button_plot.clicked.connect(self.plot)
+		self.button_plot.clicked.connect(self.togglePlot)
 		self.button_delete.clicked.connect(self.delete)
 		self.button_edit.clicked.connect(self.edit)
 
@@ -54,8 +56,9 @@ class GraphicPlotConfig(QtWidgets.QWidget):
 		layout.addLayout(layout_left)
 		layout.addWidget(self.chart_object)
 
-		global nSeries
 		listSeries.append(self.series)
+		unplottedSeries.append(self.series)
+		global nSeries
 		nSeries += 1
 
 		self.setLayout(layout)
@@ -63,7 +66,28 @@ class GraphicPlotConfig(QtWidgets.QWidget):
 		return
 
 	def plot(self):
+		ax = self.plot_object.figure.gca()
+		for serie in self.series:
+			ax.plot(serie)
+		self.plot_object.canvas.draw()
+		self.plotted = not self.plotted
+		self.repaint()
 		return
+
+	def togglePlot(self):
+		global unplottedSeries
+		global plottedSeries
+		if self.plotted:
+			print('Unploting...')
+			plottedSeries.remove(self.series)
+			unplottedSeries.append(self.series)
+		else:
+			print('Plotting...')
+			unplottedSeries.remove(self.series)
+			plottedSeries.append(self.series)
+		self.plotted = not self.plotted
+		self.plot_object.update_plot()
+		self.repaint()
 
 	def edit(self):
 		return
@@ -71,24 +95,14 @@ class GraphicPlotConfig(QtWidgets.QWidget):
 	def delete(self):
 		self.plot_list_layout.removeWidget(self)
 		listSeries.remove(self.series)
+		if self.series in plottedSeries:
+			plottedSeries.remove(self.series)
+			self.plot_object.update_plot()
+		if self.series in unplottedSeries:
+			unplottedSeries.remove(self.series)
 		self.hide()
 		del self
 		return
-
-
-class ToggleColorButton(QtWidgets.QPushButton):
-	def __init__(self, parent=None, text='Button', color_on=None, color_off=None):
-		super().__init__(parent)
-		self.color_on = color_on if color_on else QtGui.QColor(127, 127, 127)
-		self.color_off = color_off if color_off else QtGui.QColor(127, 127, 127)
-		self.state = False
-		self.setText(text)
-		self.clicked.connect(self.toggle)
-
-	def toggle(self):
-		print('Clicked!')
-		self.state = not self.state
-		self.repaint()
 
 	def paintEvent(self, event):
 		painter = QtGui.QPainter()
@@ -98,21 +112,19 @@ class ToggleColorButton(QtWidgets.QPushButton):
 		return
 
 	def paint(self, painter, area):
-		painter.setPen(QtGui.QColor(0,0,0,255))
-		if self.state:
-			painter.setBrush(self.color_on)
+		painter.setPen(QtGui.QColor(0,0,0,0))
+		if self.plotted:
+			painter.setBrush(QtGui.QColor(0,255,0,127))
 		else:
-			painter.setBrush(self.color_off)
+			painter.setBrush(QtGui.QColor(255,0,0,127))
 		painter.drawRect(area)
-		painter.drawText(area, QtCore.Qt.AlignCenter, self.text())
 
 
 class SimpleChartObject(QtWidgets.QWidget):
-	def __init__(self, parent=None, series=None, time_axis=None, plot_object=None):
+	def __init__(self, parent=None, series=None, time_axis=None):
 		super().__init__(parent)
 		self._figure = plt.Figure(figsize=(1,1), frameon=False)
 		self._canvas = FigureCanvas(self._figure)
-		self.plot_object = plot_object
 		self.series = series
 		self.time_axis = time_axis
 
@@ -162,6 +174,18 @@ class GraphicPlotList(QtWidgets.QScrollArea):
 		
 		return
 
+	def paintEvent(self, event):
+		painter = QtGui.QPainter()
+		painter.begin(self)
+		self.paint(painter, event.rect())
+		painter.end()
+		return
+
+	def paint(self, painter, area):
+		painter.setBrush(QtGui.QColor(0, 127, 127, 127))
+		painter.drawRect(area)
+		return
+
 
 class PlotManager(QtWidgets.QWidget):
 	def __init__(self, plot_object, parent=None):
@@ -202,9 +226,12 @@ class PlotManager(QtWidgets.QWidget):
 class MainPlotArea(QtWidgets.QWidget):
 	def __init__(self, parent=None):
 		super().__init__(parent)
-		self._figure = plt.Figure()
-		self.canvas = FigureCanvas(self._figure)
+		self.figure = plt.Figure()
+		self.canvas = FigureCanvas(self.figure)
 
+		ax = self.figure.gca()
+		ax.set_xlim([0, 1])
+		ax.set_ylim([0, 1])
 
 		layout = QtWidgets.QVBoxLayout()
 		layout.addWidget(QtWidgets.QLabel('Awesome Graph'))
@@ -212,6 +239,17 @@ class MainPlotArea(QtWidgets.QWidget):
 		self.setLayout(layout)
 		self.setMinimumWidth(400)
 		self.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+
+	def update_plot(self):
+		self.figure.clear()
+		ax = self.figure.gca()
+		global plottedSeries
+		print('Updating plot ({} series to plot)'.format(len(plottedSeries)))
+		for series in plottedSeries:
+			for serie in series:
+				ax.plot(serie)
+		self.canvas.draw()
+		return
 
 class MainWidget(QtWidgets.QWidget):
 	def __init__(self, parent=None):
@@ -223,7 +261,7 @@ class MainWidget(QtWidgets.QWidget):
 
 		layout = QtWidgets.QHBoxLayout()
 		layout.addWidget(main_plot_area)
-		layout.addWidget(PlotManager(main_plot_area.canvas))
+		layout.addWidget(PlotManager(main_plot_area))
 
 		self.setSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
 		self.setMinimumSize(QtCore.QSize(850,400))
