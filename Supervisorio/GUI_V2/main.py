@@ -6,7 +6,7 @@ app = QtWidgets.QApplication(sys.argv)
 main_window = QtWidgets.QMainWindow()
 main_window.setWindowTitle('Supervisorio Didatico')
 
-central_widget = objs.PlotManager()
+central_widget = objs.MainWidget()
 
 main_window.setCentralWidget(central_widget)
 

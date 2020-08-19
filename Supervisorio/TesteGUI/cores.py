@@ -28,7 +28,7 @@ class GroupMainWidget(QtWidgets.QGroupBox):
 	def paintEvent(self, event):
 		painter = QtGui.QPainter()
 		painter.begin(self)
-		self.drawBackground(painter, event.rect())
+		#self.drawBackground(painter, event.rect())
 		painter.end()
 
 	def drawBackground(self, painter, rect):
@@ -48,7 +48,7 @@ class MyButton(QtWidgets.QPushButton):
 	def paintEvent(self, event):
 		painter = QtGui.QPainter()
 		painter.begin(self)
-		self.drawBackground(painter, event.rect())
+		#self.drawBackground(painter, event.rect())
 		painter.end()
 
 	def drawBackground(self, painter, rect):
