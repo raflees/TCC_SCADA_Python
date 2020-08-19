@@ -244,7 +244,7 @@ class MainPlotArea(QtWidgets.QWidget):
 		self.figure.clear()
 		ax = self.figure.gca()
 		global plottedSeries
-		print('Updating plot ({} series to plot)'.format(len(plottedSeries)))
+		# print('Updating plot ({} series to plot)'.format(len(plottedSeries)))
 		for series in plottedSeries:
 			for serie in series:
 				ax.plot(serie)
