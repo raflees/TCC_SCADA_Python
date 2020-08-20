@@ -251,7 +251,49 @@ class MainPlotArea(QtWidgets.QWidget):
 		self.canvas.draw()
 		return
 
-class SeriesConfig(QtWidgets.QTabWidget):
+class DatasetConfig(QtWidgets.QWidget):
+	def __init__(self, parent=None):
+		super().__init__(parent)
+
+		layout = QtWidgets.QHBoxLayout()
+		layout.addWidget(SeriesSourceConfig())
+		#layout.addSpacing(40)
+		layout.addWidget(DatasetLayoutConfig())
+		layout.addSpacerItem(QtWidgets.QSpacerItem(1, 1, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum))
+		layout.setAlignment(QtCore.Qt.AlignLeft)
+
+		self.setLayout(layout)
+
+class DatasetLayoutConfig(QtWidgets.QWidget):
+	def __init__(self, parent=None):
+		super().__init__(parent)
+
+		self.edit_ncol = QtWidgets.QLineEdit()
+		self.edit_time_col = QtWidgets.QLineEdit()
+		self.chkbox_headers = QtWidgets.QCheckBox('Considerar cabeçalho')
+		self.btn_go = QtWidgets.QPushButton('Puxar Dados')
+		lbl_time_col = QtWidgets.QLabel(' Posição coluna tempo (>0)')
+		lbl_ncol = QtWidgets.QLabel(' Nº de Colunas')
+
+		self.edit_ncol.setMaximumWidth(30)
+		self.edit_time_col.setMaximumWidth(30)
+		
+		layout_upper = QtWidgets.QGridLayout()
+		layout_upper.addWidget(lbl_ncol, 0, 0)
+		layout_upper.addWidget(self.edit_ncol, 0, 1)
+		layout_upper.addWidget(lbl_time_col, 1, 0)
+		layout_upper.addWidget(self.edit_time_col, 1 , 1)
+
+		layout = QtWidgets.QVBoxLayout()
+		layout.addLayout(layout_upper)
+		layout.addWidget(self.chkbox_headers)
+		layout.addSpacerItem(QtWidgets.QSpacerItem(1, 1, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
+		layout.addWidget(self.btn_go)
+
+		self.setFixedWidth(190)
+		self.setLayout(layout)
+
+class SeriesSourceConfig(QtWidgets.QTabWidget):
 	def __init__(self, parent=None):
 		super().__init__(parent)
 
@@ -482,7 +524,7 @@ class MainWidget(QtWidgets.QWidget):
 		main_plot_area = MainPlotArea()
 
 		layout_left = QtWidgets.QVBoxLayout()
-		layout_left.addWidget(SeriesConfig())
+		layout_left.addWidget(DatasetConfig())
 		layout_left.addWidget(main_plot_area)
 
 		layout = QtWidgets.QHBoxLayout()
@@ -490,6 +532,6 @@ class MainWidget(QtWidgets.QWidget):
 		layout.addWidget(PlotManager(main_plot_area))
 
 		#self.setSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
-		self.setMinimumSize(QtCore.QSize(1000,600))
+		self.setMinimumSize(QtCore.QSize(1100,600))
 
 		self.setLayout(layout)
