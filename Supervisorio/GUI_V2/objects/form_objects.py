@@ -3,7 +3,8 @@ from matplotlib.backends.backend_qt5agg import FigureCanvas
 import matplotlib.pyplot as plt
 import mpl_toolkits.axisartist as axisartist
 import numpy as np
-import pprint
+import serial
+import time
 
 listSeries = []
 plottedSeries = []
@@ -234,7 +235,6 @@ class MainPlotArea(QtWidgets.QWidget):
 		ax.set_ylim([0, 1])
 
 		layout = QtWidgets.QVBoxLayout()
-		layout.addWidget(QtWidgets.QLabel('Awesome Graph'))
 		layout.addWidget(self.canvas)
 		self.setLayout(layout)
 		self.setMinimumWidth(400)
@@ -251,6 +251,228 @@ class MainPlotArea(QtWidgets.QWidget):
 		self.canvas.draw()
 		return
 
+class SeriesConfig(QtWidgets.QTabWidget):
+	def __init__(self, parent=None):
+		super().__init__(parent)
+
+		self.addTab(TransferFunctionConfig(), 'Função Transferência')
+		self.addTab(FileConfig(), 'Arquivo')
+		self.addTab(SerialConfig(), 'Serial')
+
+		self.setFixedHeight(180)
+		self.setFixedWidth(350)
+		return
+
+class TransferFunctionConfig(QtWidgets.QWidget):
+	def __init__(self, parent=None):
+		super().__init__(parent)
+		lbl_num = QtWidgets.QLabel(' num')
+		lbl_den = QtWidgets.QLabel(' den')
+		self.edit_num = QtWidgets.QLineEdit()
+		self.edit_den = QtWidgets.QLineEdit()
+		self.list_tf = QtWidgets.QListWidget()
+		self.btn_add = QtWidgets.QPushButton('Adicionar função')
+		self.btn_remove = QtWidgets.QPushButton('-')
+		self.btn_move_up = QtWidgets.QPushButton()
+		self.btn_move_down = QtWidgets.QPushButton()
+		lbl_obs = QtWidgets.QLabel('OBS: A dimensão do numerador não pode ultrapassar a do denominador. Funções de transferência serão multiplicadas na ordem mostrada na lista. Configure a entrada no botão ''Editar'' na lista de séries à direita após sua inclusão.')
+		icon_up = QtGui.QIcon('./icons/arrow_up.png')
+		icon_down = QtGui.QIcon('./icons/arrow_down.png')
+		self.btn_move_up.setIcon(icon_up)
+		self.btn_move_down.setIcon(icon_down)
+
+		self.btn_move_up.setMaximumWidth(20)
+		self.btn_move_down.setMaximumWidth(20)
+		self.btn_remove.setMaximumWidth(20)
+		self.btn_move_up.setMaximumHeight(20)
+		self.btn_move_down.setMaximumHeight(20)
+		self.btn_remove.setMaximumHeight(20)
+		lbl_obs.setWordWrap(True)
+		self.edit_num.setFixedWidth(100)
+		self.edit_den.setFixedWidth(100)
+
+		layout_func = QtWidgets.QGridLayout()
+		layout_func.addWidget(lbl_num, 0, 0)
+		layout_func.addWidget(lbl_den, 1, 0)
+		layout_func.addWidget(self.edit_num, 0, 2)
+		layout_func.addWidget(self.edit_den, 1, 2)
+
+		layout_add_func = QtWidgets.QVBoxLayout()
+		layout_add_func.addLayout(layout_func)
+		layout_add_func.addWidget(self.btn_add)
+		layout_add_func.setAlignment(QtCore.Qt.AlignCenter)
+
+		layout_ctrl = QtWidgets.QVBoxLayout()
+		layout_ctrl.addWidget(self.btn_move_up)
+		layout_ctrl.addWidget(self.btn_move_down)
+		layout_ctrl.addWidget(self.btn_remove)
+		layout_ctrl.setAlignment(QtCore.Qt.AlignBottom)
+		layout_ctrl.setSpacing(1)
+
+		layout_config = QtWidgets.QHBoxLayout()
+		layout_config.addLayout(layout_add_func)
+		layout_config.addWidget(self.list_tf)
+		layout_config.addLayout(layout_ctrl)
+
+		layout = QtWidgets.QVBoxLayout()
+		layout.addLayout(layout_config)
+		layout.addWidget(lbl_obs)
+		#layout.setContentsMargins(QtCore.QMargins(0, 0, 0, 0))
+
+		self.setLayout(layout)
+
+class SerialConfig(QtWidgets.QWidget):
+	def __init__(self, parent=None):
+		super().__init__(parent)
+
+		self.lbl_porta = QtWidgets.QLabel('Porta')
+		self.edit_porta = QtWidgets.QLineEdit()
+		self.list_porta = QtWidgets.QListWidget()
+		self.lbl_br = QtWidgets.QLabel('Baud Rate')
+		self.edit_br = QtWidgets.QLineEdit()
+		self.list_br = QtWidgets.QListWidget()
+		self.lbl_timeout = QtWidgets.QLabel('Timeout (ms)')
+		self.edit_timeout = QtWidgets.QLineEdit()
+		self.btn_check_connection = QtWidgets.QPushButton('Testar')
+
+		self.edit_porta.setText('COM 3')
+		self.edit_br.setText('9600')
+		self.edit_timeout.setText('5000')
+		self.list_porta.addItems(['COM '+str(i+1) for i in range(6)])
+		self.list_br.addItems([str(9600+i*1600) for i in range(7)])
+
+		self.edit_porta.setMaximumWidth(100)
+		self.list_porta.setMaximumWidth(100)
+		self.edit_br.setMaximumWidth(100)
+		self.list_br.setMaximumWidth(100)
+		self.edit_timeout.setMaximumWidth(80)
+
+		self.list_porta.itemClicked.connect(self.overwrite_porta)
+		self.list_br.itemClicked.connect(self.overwrite_br)
+		self.btn_check_connection.clicked.connect(self.test_connection)
+
+		layout = QtWidgets.QGridLayout(self)
+		layout.addWidget(self.lbl_porta, 0, 0)
+		layout.addWidget(self.edit_porta, 1, 0)
+		layout.addWidget(self.list_porta, 2, 0)
+		layout.addWidget(self.lbl_br, 0, 2)
+		layout.addWidget(self.edit_br, 1, 2)
+		layout.addWidget(self.list_br, 2, 2)
+		layout.addWidget(self.lbl_timeout, 0, 4)
+		layout.addWidget(self.edit_timeout, 1, 4)
+		layout.addWidget(self.btn_check_connection, 2, 4, alignment=QtCore.Qt.AlignBottom)
+
+		layout.setColumnMinimumWidth(1, 10)
+		layout.setColumnMinimumWidth(3, 10)
+
+		self.setLayout(layout)
+		return
+
+	def overwrite_porta(self, item):
+		self.edit_porta.setText(item.text())
+		return
+
+	def overwrite_br(self, item):
+		self.edit_br.setText(item.text())
+		return
+
+	def test_connection(self):
+		desc = ''
+		try:
+			if not self.edit_br.text().isnumeric():
+				desc = 'Baud Rate inválido, certifique-se que se trata de um número.'
+				raise Exception
+			if self.edit_br.text() == '' or self.edit_porta.text() == '' or self.edit_timeout.text() == '':
+				desc = 'Um ou mais parametros estão vazio. Certifique-se de preencher todos os campos'
+				raise Exception
+
+			with serial.Serial(self.edit_porta.text(), self.edit_br.text(),\
+				timeout=int(self.edit_timeout.text())) as porta_teste:
+				if porta_teste.is_open:
+					desc = 'Porta serial está correta, mas já iniciou uma comunicação. Certifique-se que nenhuma ' \
+					'outra aplicação está utilizando esta porta. (Ex: Serial Monitor / Plotter da IDE Arduino)'
+					raise Exception
+
+			desc = 'Conexão realizada com sucesso!'
+			message_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, 'All Good!', desc, QtWidgets.QMessageBox.StandardButton.Ok)
+		except Exception as exc:
+			if desc == '':
+				desc = str(exc)
+			message_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, 'Warning!', desc, QtWidgets.QMessageBox.StandardButton.Ok)
+		message_box.setFixedWidth(400)
+		message_box.setFixedHeight(100)
+		message_box.exec_()
+		return
+
+class FileConfig(QtWidgets.QWidget):
+	file_path = ''
+
+	def __init__(self, parent=None):
+		super().__init__(parent)
+
+		lbl_file = QtWidgets.QLabel('Arquivo')
+		lbl_directory = QtWidgets.QLabel('Diretório')
+		self.edit_file = QtWidgets.QLineEdit()
+		self.edit_directory = QtWidgets.QLineEdit()
+		self.btn_file_dialog = QtWidgets.QPushButton('...')
+		self.btn_csv = QtWidgets.QRadioButton('.csv')
+		self.btn_tsv = QtWidgets.QRadioButton('.tsv')
+		self.btn_xls = QtWidgets.QRadioButton('.xls')
+		self.btn_xlsx = QtWidgets.QRadioButton('.xlsx')
+
+		self.btn_file_dialog.setFixedWidth(25)
+		self.btn_file_dialog.setFixedHeight(22)
+		self.btn_csv.click()
+
+		self.btn_file_dialog.clicked.connect(self.open_file_dialog)
+		
+		layout_btns = QtWidgets.QHBoxLayout()
+		layout_btns.addWidget(self.btn_csv)
+		layout_btns.addWidget(self.btn_tsv)
+		layout_btns.addWidget(self.btn_xls)
+		layout_btns.addWidget(self.btn_xlsx)
+
+		layout_directory = QtWidgets.QHBoxLayout()
+		layout_directory.addWidget(lbl_directory)
+		layout_directory.addWidget(self.edit_directory)
+
+		layout_file = QtWidgets.QHBoxLayout()
+		layout_file.addWidget(lbl_file)
+		layout_file.addWidget(self.edit_file)
+		layout_file.addWidget(self.btn_file_dialog)
+		
+		layout = QtWidgets.QVBoxLayout()
+		layout.addLayout(layout_btns)
+		layout.addLayout(layout_directory)
+		layout.addLayout(layout_file)
+
+		self.setLayout(layout)
+		return
+
+	def open_file_dialog(self):
+		caption = 'Selecione um arquivo'
+		directory = 'C://'
+		if self.btn_csv.isChecked(): file_filter = 'Comma Separated Values (*.csv)'
+		if self.btn_tsv.isChecked(): file_filter = 'Tab Separated Values (*.tsv)'
+		if self.btn_xls.isChecked(): file_filter = 'Old Excel Files (*.xls)'
+		if self.btn_xlsx.isChecked(): file_filter = 'Modern Excel Files (*.xlsx)'
+
+		fd = QtWidgets.QFileDialog(self, caption, directory, file_filter)
+		fd.setFileMode(QtWidgets.QFileDialog.ExistingFile)
+
+		file_path = ''
+		if fd.exec():
+			file_path = fd.selectedFiles()[0]
+		self.update_file(file_path)
+		return
+
+	def update_file(self, path):
+		file = path.split('/')[-1]
+		self.edit_directory.setText(path.replace(file, ''))
+		self.edit_file.setText(file)
+		self.file_path = path
+		return
+
 class MainWidget(QtWidgets.QWidget):
 	def __init__(self, parent=None):
 		super().__init__(parent)
@@ -259,11 +481,15 @@ class MainWidget(QtWidgets.QWidget):
 
 		main_plot_area = MainPlotArea()
 
+		layout_left = QtWidgets.QVBoxLayout()
+		layout_left.addWidget(SeriesConfig())
+		layout_left.addWidget(main_plot_area)
+
 		layout = QtWidgets.QHBoxLayout()
-		layout.addWidget(main_plot_area)
+		layout.addLayout(layout_left)
 		layout.addWidget(PlotManager(main_plot_area))
 
-		self.setSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
-		self.setMinimumSize(QtCore.QSize(850,400))
+		#self.setSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
+		self.setMinimumSize(QtCore.QSize(1000,600))
 
 		self.setLayout(layout)
