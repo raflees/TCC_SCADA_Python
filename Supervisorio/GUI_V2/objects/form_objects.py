@@ -1,40 +1,156 @@
 from PyQt5 import QtWidgets, QtCore, QtGui, QtChart
-from matplotlib.backends.backend_qt5agg import FigureCanvas
+from matplotlib.backends.backend_qt5agg import FigureCanvas, NavigationToolbar2QT
 import matplotlib.pyplot as plt
 import mpl_toolkits.axisartist as axisartist
 import numpy as np
 import serial
 import time
+import control
+import os
+from pprint import pprint
 
 listSeries = []
 plottedSeries = []
 unplottedSeries = []
 nSeries = 0
 
+class ModalSeriesDialog(QtWidgets.QDialog):
+	last_header = -1
+	def __init__(self, parent=None, series_obj=None, source='Dummy', series_name='Nova Serie'):
+		super().__init__(parent)
+
+		self.series_obj = series_obj
+
+		self.datatable = QtWidgets.QTableWidget(len(series_obj.series[0]), len(series_obj.series))
+		lbl_series_name = QtWidgets.QLabel('Nome da Série: ')
+		self.edit_series_name = QtWidgets.QLineEdit(series_name)
+		lbl_source = QtWidgets.QLabel('Source: ' + source)
+		self.edit_header = QtWidgets.QLineEdit()
+		self.figure = plt.figure()
+		self.canvas = FigureCanvas(self.figure)
+		self.btn_cancel = QtWidgets.QPushButton('Cancelar')
+		self.btn_apply = QtWidgets.QPushButton('Aplicar')
+		self.btn_ok = QtWidgets.QPushButton('Criar Série')
+
+		self.edit_series_name.setMaximumWidth(300)
+		self.datatable.setMinimumWidth(300)
+		#self.canvas.setFixedWidth(300)
+
+		self.datatable.cellChanged.connect(self.edit_value)
+		self.datatable.itemSelectionChanged.connect(self.copy_header)
+		self.edit_header.returnPressed.connect(lambda: self.edit_header_func(self.edit_header.text()))
+		self.btn_apply.clicked.connect(self.update_plot)
+		self.btn_ok.clicked.connect(self.create_serie)
+		self.btn_cancel.clicked.connect(self.close)
+
+		layout_series_name = QtWidgets.QHBoxLayout()
+		layout_series_name.addWidget(lbl_series_name)
+		layout_series_name.addWidget(self.edit_series_name)
+
+		layout_left = QtWidgets.QVBoxLayout()
+		layout_left.addLayout(layout_series_name)
+		layout_left.addWidget(lbl_source)
+		layout_left.addSpacing(20)
+		layout_left.addWidget(self.edit_header)
+		layout_left.addSpacing(2)
+		layout_left.addWidget(self.datatable)
+
+		layout_buttons = QtWidgets.QHBoxLayout()
+		layout_buttons.addWidget(self.btn_apply)
+		layout_buttons.addWidget(self.btn_cancel)
+		layout_buttons.addWidget(self.btn_ok)
+		layout_buttons.setAlignment(QtCore.Qt.AlignRight)
+
+		layout_upper = QtWidgets.QHBoxLayout()
+		layout_upper.addLayout(layout_left)
+		layout_upper.addWidget(self.canvas)
+
+		layout = QtWidgets.QVBoxLayout()
+		layout.addLayout(layout_upper)
+		layout.addLayout(layout_buttons)
+
+		self.setFixedWidth(650)
+		self.setFixedHeight(400)
+		self.setLayout(layout)
+		self.populate_datatable()
+		self.update_plot()
+		return
+
+	def copy_header(self):
+		c = self.datatable.currentColumn()
+		if c < 0:
+			self.edit_header.setText('')
+		else:
+			self.edit_header.setText(self.datatable.horizontalHeaderItem(c).text())
+		self.last_header = c
+		return
+
+	def edit_header_func(self, value):
+		if self.last_header < 0: return
+
+		self.datatable.setHorizontalHeaderItem(self.last_header, QtWidgets.QTableWidgetItem(value))
+		self.series_obj.series_names[self.last_header] = value
+		return
+
+	def edit_value(self, row, col):
+		value = float(self.datatable.item(row, col).text())
+		self.series_obj.series[col][row] = value
+		return
+
+	def create_serie(self):
+		self.accept()
+		return
+
+	def populate_datatable(self):
+		pprint(self.series_obj.series_names)
+		for i, name in enumerate(self.series_obj.series_names):
+			try:
+				self.datatable.setHorizontalHeaderItem(i, QtWidgets.QTableWidgetItem(name))
+			except:
+				self.datatable.setHorizontalHeaderItem(i, QtWidgets.QTableWidgetItem('Serie '+str(i+1)))
+		label = []
+		for time in self.series_obj.time_axis:
+			label.append('{0:.1f}'.format(time))
+		self.datatable.setVerticalHeaderLabels(label)
+
+		for i, serie in enumerate(self.series_obj.series):
+			for j, data in enumerate(serie):
+				self.datatable.setItem(j, i, QtWidgets.QTableWidgetItem('{:0.4f}'.format(data)))
+		#self.datatable.horizontalHeader().setStretchLastSection(True)
+		self.datatable.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+		return
+
+	def update_plot(self):
+		self.figure.clear()
+		ax = self.figure.gca()
+		for serie in self.series_obj.series:
+			ax.plot(self.series_obj.time_axis, serie)
+		ax.legend(self.series_obj.series_names)
+		self.canvas.draw()
+
 class GraphicPlotConfig(QtWidgets.QWidget):
 	series = []
 	time_axis = []
 
-	def __init__(self, plot_object,
+	def __init__(self, plot_object, series_obj,
 				plot_list_layout=None,
 				parent=None,
-				series=None,
-				time_axis=None,
-				description=''):
+				description='',
+				source='Dummy'):
 		super().__init__(parent)
-		self.series = series
-		self.time_axis = time_axis
+		self.series_obj = series_obj
 		self.description = description
 		self.plot_object = plot_object
 		self.plot_list_layout = plot_list_layout
 		self.plotted = False
 
 		# Objetos filhos principais
-		self.chart_object = SimpleChartObject(series=self.series)
+		self.chart_object = SimpleChartObject(parent=self, series=self.series_obj.series,
+											time_axis=series_obj.time_axis)
 		self.button_plot = QtWidgets.QPushButton(text='Plot')
 		self.button_edit = QtWidgets.QPushButton(text='Edit')
 		self.button_delete = QtWidgets.QPushButton(text='Delete')
-		self.label = QtWidgets.QLabel(self.description)
+		lbl_title = QtWidgets.QLabel('<big><b>'+self.description+'</b></big>')
 
 		# Definicoes dos eventos
 		self.button_plot.clicked.connect(self.togglePlot)
@@ -49,7 +165,9 @@ class GraphicPlotConfig(QtWidgets.QWidget):
 
 		# Ajuste do layout na parte esquerda do objeto grafico
 		layout_left = QtWidgets.QVBoxLayout()
-		layout_left.addWidget(self.label)
+		layout_left.addWidget(lbl_title)
+		layout_left.addWidget(QtWidgets.QLabel(source))
+		layout_left.addSpacerItem(QtWidgets.QSpacerItem(1, 1, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
 		layout_left.addLayout(layout_buttons)
 
 		# Finalizacao do layout completo do objeto grafico
@@ -57,8 +175,8 @@ class GraphicPlotConfig(QtWidgets.QWidget):
 		layout.addLayout(layout_left)
 		layout.addWidget(self.chart_object)
 
-		listSeries.append(self.series)
-		unplottedSeries.append(self.series)
+		listSeries.append(self.series_obj)
+		unplottedSeries.append(self.series_obj)
 		global nSeries
 		nSeries += 1
 
@@ -66,26 +184,17 @@ class GraphicPlotConfig(QtWidgets.QWidget):
 		self.setFixedHeight(120)
 		return
 
-	def plot(self):
-		ax = self.plot_object.figure.gca()
-		for serie in self.series:
-			ax.plot(serie)
-		self.plot_object.canvas.draw()
-		self.plotted = not self.plotted
-		self.repaint()
-		return
-
 	def togglePlot(self):
 		global unplottedSeries
 		global plottedSeries
 		if self.plotted:
 			print('Unploting...')
-			plottedSeries.remove(self.series)
-			unplottedSeries.append(self.series)
+			plottedSeries.remove(self.series_obj)
+			unplottedSeries.append(self.series_obj)
 		else:
 			print('Plotting...')
-			unplottedSeries.remove(self.series)
-			plottedSeries.append(self.series)
+			unplottedSeries.remove(self.series_obj)
+			plottedSeries.append(self.series_obj)
 		self.plotted = not self.plotted
 		self.plot_object.update_plot()
 		self.repaint()
@@ -94,13 +203,13 @@ class GraphicPlotConfig(QtWidgets.QWidget):
 		return
 
 	def delete(self):
-		self.plot_list_layout.removeWidget(self)
-		listSeries.remove(self.series)
-		if self.series in plottedSeries:
-			plottedSeries.remove(self.series)
+		self.plot_list_layout.layout.removeWidget(self)
+		listSeries.remove(self.series_obj)
+		if self.series_obj in plottedSeries:
+			plottedSeries.remove(self.series_obj)
 			self.plot_object.update_plot()
-		if self.series in unplottedSeries:
-			unplottedSeries.remove(self.series)
+		if self.series_obj in unplottedSeries:
+			unplottedSeries.remove(self.series_obj)
 		self.hide()
 		del self
 		return
@@ -141,13 +250,13 @@ class SimpleChartObject(QtWidgets.QWidget):
 		ax.set_xticks([])
 
 		# Tratando series iniciadas como None
-		if not self.series:
+		if self.series is None:
 			self._figure.clear()
 			return
 		# Plotando cada serie
 		for serie in self.series:
-			if self.time_axis:
-				ax.plot(serie, self.time_axis)
+			if not self.time_axis is None:
+				ax.plot(self.time_axis, serie)
 			else:
 				ax.plot(serie)
 		self._canvas.draw()
@@ -171,10 +280,6 @@ class GraphicPlotList(QtWidgets.QScrollArea):
 		self.widget.setLayout(self.layout)
 		return
 
-	def add(self, series=None, time_axis=None, description='', plot_object=None):
-		
-		return
-
 	def paintEvent(self, event):
 		painter = QtGui.QPainter()
 		painter.begin(self)
@@ -188,16 +293,36 @@ class GraphicPlotList(QtWidgets.QScrollArea):
 		return
 
 
+class SeriesObject():
+	sys = control.tf([1,], [1,])
+	tfs=[]
+
+	def __init__(self, tfs=[], series=[], series_names=[], time_axis=[]):
+		self.tfs = tfs
+		self.series = series
+		self.series_names = series_names
+		self.time_axis = time_axis
+
+		if len(series) == 0 and len(tfs) > 0:
+			for tf in tfs:
+				self.sys = control.append(self.sys, control.tf(tf[0], tf[1]))
+			t, response = control.step_response(self.sys)
+			self.time_axis = t
+			self.series.append(response)
+		return
+
+
 class PlotManager(QtWidgets.QWidget):
 	def __init__(self, plot_object, parent=None):
 		super().__init__(parent)
-		self.plot_list = GraphicPlotList()
+		self.plot_list = GraphicPlotList(self)
 		self.plot_object = plot_object
 
-		add_series_button = QtWidgets.QPushButton('Add Series')
-		add_series_button.setFixedWidth(100)
+		add_series_button = QtWidgets.QPushButton('Add Dummy Series')
+		add_series_button.setFixedWidth(150)
 		add_series_button.setSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-		add_series_button.clicked.connect(self.create_series_object)
+
+		add_series_button.clicked.connect(self.dummy_series_dialog)
 
 		layout_bottom = QtWidgets.QHBoxLayout()
 		layout_bottom.setAlignment(QtCore.Qt.AlignLeft)
@@ -210,25 +335,39 @@ class PlotManager(QtWidgets.QWidget):
 		self.setLayout(layout)
 		return
 
-	def create_series_object(self):
-		series = []
+	def dummy_series_dialog(self):
+		series_obj = self.create_dummy_series_object()
+		dialog = ModalSeriesDialog(series_obj=series_obj)
+		if dialog.exec_():
+			series_obj = dialog.series_obj
+			new_serie = GraphicPlotConfig(plot_object=self.plot_object, series_obj=series_obj,
+					plot_list_layout=self.plot_list, description=dialog.edit_series_name.text())
+			self.add(new_serie)
+		return
+
+	def add(self, new_serie):
+		self.plot_list.layout.addWidget(new_serie)
+
+	def create_dummy_series_object(self):
 		global nSeries
+		series = []
 		quantidade_series = int(np.random.rand()*4) + 1
 		for j in range(quantidade_series):
 			tg = np.random.rand()*3
 			serie = [k*tg for k in range(100)]
 			series.append(serie)
 		n = nSeries + 1
-		new_widget = GraphicPlotConfig(series=series, description='Serie ' + str(n),
-								plot_object=self.plot_object, plot_list_layout=self.plot_list.layout)
-		self.plot_list.layout.addWidget(new_widget)
-		return
+		names = ['Serie '+str(i+1) for i in range(quantidade_series)]
+		series_obj = SeriesObject(series=series, time_axis=range(100), series_names=names)
+
+		return series_obj
 
 class MainPlotArea(QtWidgets.QWidget):
 	def __init__(self, parent=None):
 		super().__init__(parent)
 		self.figure = plt.Figure()
 		self.canvas = FigureCanvas(self.figure)
+		self.toolbar = NavigationToolbar2QT(self.canvas, self)
 
 		ax = self.figure.gca()
 		ax.set_xlim([0, 1])
@@ -236,6 +375,9 @@ class MainPlotArea(QtWidgets.QWidget):
 
 		layout = QtWidgets.QVBoxLayout()
 		layout.addWidget(self.canvas)
+		layout.addWidget(self.toolbar)
+		layout.setAlignment(QtCore.Qt.AlignRight)
+		
 		self.setLayout(layout)
 		self.setMinimumWidth(400)
 		self.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
@@ -244,47 +386,212 @@ class MainPlotArea(QtWidgets.QWidget):
 		self.figure.clear()
 		ax = self.figure.gca()
 		global plottedSeries
-		# print('Updating plot ({} series to plot)'.format(len(plottedSeries)))
-		for series in plottedSeries:
-			for serie in series:
+		legends = []
+		for series_obj in plottedSeries:
+			legends += series_obj.series_names
+			for leg, serie in enumerate(series_obj.series):
 				ax.plot(serie)
+		ax.legend(legends)
+		print(legends)
 		self.canvas.draw()
 		return
 
 class DatasetConfig(QtWidgets.QWidget):
 	def __init__(self, parent=None):
 		super().__init__(parent)
+		self.ds_layout_config = DatasetLayoutConfig(parent=self) 
+		self.series_source_config = SeriesSourceConfig(parent=self)
+
+		self.ds_layout_config.btn_go.clicked.connect(self.import_series)
 
 		layout = QtWidgets.QHBoxLayout()
-		layout.addWidget(SeriesSourceConfig())
-		#layout.addSpacing(40)
-		layout.addWidget(DatasetLayoutConfig())
+		layout.addWidget(self.series_source_config)
+		layout.addWidget(self.ds_layout_config)
 		layout.addSpacerItem(QtWidgets.QSpacerItem(1, 1, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum))
 		layout.setAlignment(QtCore.Qt.AlignLeft)
 
 		self.setLayout(layout)
 
+	def import_series(self):
+		series_obj = None
+		obj = self.series_source_config
+		use_header = self.ds_layout_config.chkbox_headers.isChecked()
+		
+		if obj.currentIndex() == 1:
+			file_extension = obj.file_config_tab
+			path = os.path.join(file_extension.edit_directory.text(), file_extension.edit_file.text())
+			
+			try:
+				with open(path, 'r'):
+					pass
+			except:
+				print('Não foi possivel abrir o arquivo em {}. Ou ele não existe ou já se encontra aberto'.format(path)) 
+				return
+
+			if file_extension.btn_csv.isChecked():
+				source = '.csv file'
+				series_obj = self.import_series_csv(path, use_header)
+			if file_extension.btn_xls.isChecked():
+				source = '.xls file'
+				series_obj = self.import_series_xls(path, use_header)
+		if obj.currentIndex() == 3:
+			source = 'python script'
+			series_obj = self.import_series_script()
+
+		if series_obj is None:
+			return
+
+		name = self.ds_layout_config.edit_name_serie.text()
+		dialog = ModalSeriesDialog(series_obj=series_obj, source=source, series_name=name)
+		
+		if dialog.exec_():
+			new_serie = GraphicPlotConfig(plot_object=self.parent().main_plot_area,
+				series_obj=dialog.series_obj, plot_list_layout=self.parent().plot_manager.plot_list,
+				source=source, description=dialog.edit_series_name.text())
+			self.parent().plot_manager.add(new_serie)
+		return
+
+	def import_series_csv(self, path, use_header):
+		import csv
+		with open(path) as f:
+			series_t = []
+			headers = []
+			reader = csv.reader(f)
+			n_lines = 0
+			for line in reader:
+				serie_t = []
+				if n_lines == 0 and use_header:
+					headers = line
+				else:
+					for elem in line:
+						try:
+							serie_t.append(float(elem))
+						except:
+							serie_t.append(np.nan)
+				series_t.append(serie_t)
+				n_lines += 1
+
+		series = np.array(series_t).transpose()
+		time_serie = series[0]
+		series = series[1:]
+		if not headers == []: 
+			headers = headers[1:]
+		else:
+			headers = ['Serie '+str(i) for i in range(len(series))]
+		pprint(headers)
+		series_obj = SeriesObject(series=series, series_names=headers, time_axis=time_serie)
+		return series_obj
+
+	def import_series_xls(self, path, source, use_header):
+		import xlrd
+
+		workbook = xlrd.open_workbook(filename=path)
+		worksheet = workbook.sheet_by_index(0)
+		series = []
+		headers = []
+		
+		for c in range(worksheet.ncols):
+			serie = []
+			for r in range(worksheet.nrows):
+				if r == 0 and use_header:
+					headers.append(worksheet.cell(r, c).value)
+				else:
+					try:
+						serie.append(float(worksheet.cell(r, c).value))
+					except:
+						serie.append(None)
+			series.append(serie)
+		pprint(series)
+		if len(series) > 1:
+			time_serie = series[0]
+			series = series[1:]
+		else:
+			print('Arquivo importado vazio ou com uma coluna somente')
+
+		if not headers is None: 
+			series_obj = SeriesObject(series=series, series_names=headers[1:], time_axis=time_serie)
+		else:
+			headers = ['Serie '+str(i) for i in range(len(series))]
+			series_obj = SeriesObject(series=series, series_names=headers, time_axis=time_serie)
+		return series_obj
+
+	def import_series_script(self):
+		import pickle
+
+		script = self.series_source_config.python_script_tab.edit_script.toPlainText()
+		file = 'script.py'
+
+		try:
+			open(file, 'x')
+		except:
+			pass
+		with open(file, 'w') as f:
+			f.write('def func(): \n')
+			lines = script.split('\n')
+			for line in lines:
+				f.write('\t' + line + '\n')
+			f.write('\n\nobj = func() \n')
+			f.write('import pickle \ntry: \n\topen("returned_obj", "x") \nexcept: \n\tpass')
+			f.write("\nwith open('returned_obj', 'wb') as f: \n\tpickle.dump(obj, f) \n\tf.close() \nexit(0)")
+		
+		try:
+			os.system('python ' + file)
+		except:
+			print('Erro no script')
+			return None
+
+		try:
+			with open('returned_obj', 'rb') as f:
+				obj = pickle.load(f)
+		except:
+			return None
+
+		try:
+			series = obj[0]
+		except:
+			print('Verifique seu script python!')
+			return None
+		try:
+			time_serie = obj[1]
+			if time_serie is None: raise Exception
+		except:
+			time_serie = range(len(series[0]))
+		try:
+			headers = obj[2]
+			if headers is None: raise Exception
+		except:
+			headers = ['Serie '+str(i) for i in range(len(series))]
+
+		series_obj = SeriesObject(series=series, series_names=headers, time_axis=time_serie)
+		return series_obj
+
 class DatasetLayoutConfig(QtWidgets.QWidget):
 	def __init__(self, parent=None):
 		super().__init__(parent)
 
+		self.edit_name_serie = QtWidgets.QLineEdit()
 		self.edit_ncol = QtWidgets.QLineEdit()
 		self.edit_time_col = QtWidgets.QLineEdit()
 		self.chkbox_headers = QtWidgets.QCheckBox('Considerar cabeçalho')
 		self.btn_go = QtWidgets.QPushButton('Puxar Dados')
-		lbl_time_col = QtWidgets.QLabel(' Posição coluna tempo (>0)')
-		lbl_ncol = QtWidgets.QLabel(' Nº de Colunas')
+		self.lbl_time_col = QtWidgets.QLabel(' Posição coluna tempo (>0)')
+		self.lbl_ncol = QtWidgets.QLabel(' Nº de Colunas')
+		lbl_name_serie = QtWidgets.QLabel('Nome da nova série')
 
 		self.edit_ncol.setMaximumWidth(30)
 		self.edit_time_col.setMaximumWidth(30)
+
+		#self.btn_go.clicked.connect(self.import_series)
 		
 		layout_upper = QtWidgets.QGridLayout()
-		layout_upper.addWidget(lbl_ncol, 0, 0)
+		layout_upper.addWidget(self.lbl_ncol, 0, 0)
 		layout_upper.addWidget(self.edit_ncol, 0, 1)
-		layout_upper.addWidget(lbl_time_col, 1, 0)
+		layout_upper.addWidget(self.lbl_time_col, 1, 0)
 		layout_upper.addWidget(self.edit_time_col, 1 , 1)
 
 		layout = QtWidgets.QVBoxLayout()
+		layout.addWidget(lbl_name_serie)
+		layout.addWidget(self.edit_name_serie)
 		layout.addLayout(layout_upper)
 		layout.addWidget(self.chkbox_headers)
 		layout.addSpacerItem(QtWidgets.QSpacerItem(1, 1, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
@@ -293,17 +600,64 @@ class DatasetLayoutConfig(QtWidgets.QWidget):
 		self.setFixedWidth(190)
 		self.setLayout(layout)
 
+	def paintEvent(self, event):
+		painter = QtGui.QPainter()
+		painter.begin(self)
+		self.paint(painter, event.rect())
+		painter.end()
+		return
+
+	def paint(self, painter, area):
+		painter.setBrush(QtGui.QColor(255, 255, 255, 255))
+		painter.setPen(QtGui.QColor(127, 127, 127, 255))
+		painter.fillRect(area, QtGui.QColor(255, 255, 255, 255))
+		return
+
+
 class SeriesSourceConfig(QtWidgets.QTabWidget):
 	def __init__(self, parent=None):
 		super().__init__(parent)
+		self.parent = parent
+		self.tf_tab = TransferFunctionConfig(self)
+		self.file_config_tab = FileConfig(self)
+		self.serial_config_tab = SerialConfig(self)
+		self.python_script_tab = PythonScriptRunner(self)
 
-		self.addTab(TransferFunctionConfig(), 'Função Transferência')
-		self.addTab(FileConfig(), 'Arquivo')
-		self.addTab(SerialConfig(), 'Serial')
+		self.addTab(self.tf_tab, 'Função Transferência')
+		self.addTab(self.file_config_tab, 'Arquivo')
+		self.addTab(self.serial_config_tab, 'Serial')
+		self.addTab(self.python_script_tab, 'Script Python')
+
+		self.currentChanged.connect(self.chk_tab)
+
+		self.chk_tab(self.currentIndex())
 
 		self.setFixedHeight(180)
 		self.setFixedWidth(350)
 		return
+
+	def chk_tab(self, index):
+		obj = self.parent.ds_layout_config
+		if index == 0:
+			obj.lbl_ncol.hide()
+			obj.edit_time_col.hide()
+			obj.lbl_time_col.hide()
+			obj.edit_ncol.hide()
+			obj.chkbox_headers.hide()
+		if index == 3:
+			obj.lbl_ncol.hide()
+			obj.edit_time_col.hide()
+			obj.lbl_time_col.hide()
+			obj.edit_ncol.hide()
+			obj.chkbox_headers.hide()
+		else:
+			obj.lbl_ncol.show()
+			obj.edit_time_col.show()
+			obj.lbl_ncol.show()
+			obj.edit_ncol.show()
+			obj.chkbox_headers.show()
+		return
+		
 
 class TransferFunctionConfig(QtWidgets.QWidget):
 	def __init__(self, parent=None):
@@ -332,6 +686,9 @@ class TransferFunctionConfig(QtWidgets.QWidget):
 		lbl_obs.setWordWrap(True)
 		self.edit_num.setFixedWidth(100)
 		self.edit_den.setFixedWidth(100)
+
+		self.btn_add.clicked.connect(self.add_function)
+		self.btn_remove.clicked.connect(self.remove_function)
 
 		layout_func = QtWidgets.QGridLayout()
 		layout_func.addWidget(lbl_num, 0, 0)
@@ -362,6 +719,45 @@ class TransferFunctionConfig(QtWidgets.QWidget):
 		#layout.setContentsMargins(QtCore.QMargins(0, 0, 0, 0))
 
 		self.setLayout(layout)
+
+	def remove_function(self):
+		if self.list_tf.currentItem() is None:
+			return
+		print(self.list_tf.currentRow())
+		self.list_tf.takeItem(self.list_tf.currentRow())
+		return
+
+	def add_function(self):
+		num = self.edit_num.text()
+		den = self.edit_den.text()
+
+		num = num.replace('[', '')
+		num = num.replace(']', '')
+		num = num.replace(',', ' ')
+		num = num.strip()
+
+		den = den.replace('[', '')
+		den = den.replace(']', '')
+		den = den.replace(',', ' ')
+		den = den.strip()
+
+		nums = num.split(' ')
+		formatted_nums = '['
+		for n in nums:
+			if n != '': formatted_nums += str(n) + ' '
+		if (len(formatted_nums) > 2): formatted_nums = formatted_nums[:-1]
+		formatted_nums += ']'
+
+		dens = den.split(' ')
+		formatted_dens = '['
+		for d in dens:
+			if d != '': formatted_dens += str(d) + ' '
+		if (len(formatted_dens) > 2): formatted_dens = formatted_dens[:-1]
+		formatted_dens += ']'
+
+		self.list_tf.addItem(formatted_nums + '\t' + formatted_dens)
+		return
+
 
 class SerialConfig(QtWidgets.QWidget):
 	def __init__(self, parent=None):
@@ -467,6 +863,10 @@ class FileConfig(QtWidgets.QWidget):
 		self.btn_csv.click()
 
 		self.btn_file_dialog.clicked.connect(self.open_file_dialog)
+		self.btn_xls.clicked.connect(self.clear_contents)
+		self.btn_xlsx.clicked.connect(self.clear_contents)
+		self.btn_csv.clicked.connect(self.clear_contents)
+		self.btn_tsv.clicked.connect(self.clear_contents)
 		
 		layout_btns = QtWidgets.QHBoxLayout()
 		layout_btns.addWidget(self.btn_csv)
@@ -489,6 +889,11 @@ class FileConfig(QtWidgets.QWidget):
 		layout.addLayout(layout_file)
 
 		self.setLayout(layout)
+		return
+
+	def clear_contents(self):
+		self.edit_directory.setText('')
+		self.edit_file.setText('')
 		return
 
 	def open_file_dialog(self):
@@ -515,23 +920,50 @@ class FileConfig(QtWidgets.QWidget):
 		self.file_path = path
 		return
 
+class PythonScriptRunner(QtWidgets.QWidget):
+	def __init__(self, parent=None):
+		super().__init__()
+
+		lbl_script = QtWidgets.QLabel('Digite script abaixo')
+		lbl_obs = QtWidgets.QLabel('Escreva um script simple, <b>sem cabeçalho de função</b>. \
+			Se certique de finalizar com um comando <i>return</i> [lista_de_series], [serie_temporal] \
+			[lista_de_nomes].\nCaso tudo corra bem, aparecerá uma caixa diálogo com a série criada.')
+		self.edit_script = QtWidgets.QTextEdit()
+
+		self.edit_script.setPlaceholderText('t = range(50) \
+			\nseries = [[i*0.2 for i in t], [i*0.25 for i in t]] \
+			\nheaders = ["Reta Inclinada", "Reta + Inclinada"] \
+			\nreturn series, t, headers')
+
+		lbl_obs.setWordWrap(True)
+
+		layout = QtWidgets.QVBoxLayout()
+		layout.addWidget(lbl_script)
+		layout.addWidget(self.edit_script)
+		layout.addWidget(lbl_obs)
+
+		self.setLayout(layout)
+
 class MainWidget(QtWidgets.QWidget):
 	def __init__(self, parent=None):
 		super().__init__(parent)
 
 		nSeries = 0
 
-		main_plot_area = MainPlotArea()
+		self.main_plot_area = MainPlotArea(parent=self)
+		self.plot_manager = PlotManager(parent=self, plot_object=self.main_plot_area)
+		self.ds_config = DatasetConfig(parent=self)
 
 		layout_left = QtWidgets.QVBoxLayout()
-		layout_left.addWidget(DatasetConfig())
-		layout_left.addWidget(main_plot_area)
+		layout_left.addWidget(self.ds_config)
+		layout_left.addWidget(self.main_plot_area)
 
 		layout = QtWidgets.QHBoxLayout()
 		layout.addLayout(layout_left)
-		layout.addWidget(PlotManager(main_plot_area))
+		layout.addWidget(self.plot_manager)
 
 		#self.setSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
-		self.setMinimumSize(QtCore.QSize(1100,600))
+		self.setMinimumSize(QtCore.QSize(1000,600))
 
 		self.setLayout(layout)
+		return
