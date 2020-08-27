@@ -223,11 +223,11 @@ class GraphicPlotConfig(QtWidgets.QWidget):
 		global unplottedSeries
 		global plottedSeries
 		if self.plotted:
-			print('Unploting...')
+			#print('Unploting...')
 			plottedSeries.remove(self.series_obj)
 			unplottedSeries.append(self.series_obj)
 		else:
-			print('Plotting...')
+			#print('Plotting...')
 			unplottedSeries.remove(self.series_obj)
 			plottedSeries.append(self.series_obj)
 		self.plotted = not self.plotted
@@ -485,8 +485,7 @@ class DatasetConfig(QtWidgets.QWidget):
 		
 		if obj.currentIndex() == 0:
 			source = 'transfer function'
-			series_obj = self.import_series_tf(obj.tf_tab.list_tf, int(obj.tf_tab.edit_k.text()))
-
+			series_obj = self.import_series_tf(obj.tf_tab.list_tf, float(obj.tf_tab.edit_k.text()))
 
 		elif obj.currentIndex() == 1:
 			file_extension = obj.file_config_tab
@@ -501,26 +500,27 @@ class DatasetConfig(QtWidgets.QWidget):
 
 			if file_extension.btn_tsv.isChecked():
 				source = '.tsv file'
-				series_obj = self.import_series_tsv(path, use_header)
-			if file_extension.btn_csv.isChecked():
+				series_obj = self.import_series_tsv(path, use_header, use_1st_col)
+			elif file_extension.btn_csv.isChecked():
 				source = '.csv file'
-				series_obj = self.import_series_csv(path, use_header)
-			if file_extension.btn_xls.isChecked():
+				series_obj = self.import_series_csv(path, use_header, use_1st_col)
+			elif file_extension.btn_xls.isChecked():
 				source = '.xls file'
-				series_obj = self.import_series_xls(path, use_header)
-			if file_extension.btn_xlsx.isChecked():
+				series_obj = self.import_series_xls(path, use_header, use_1st_col)
+			elif file_extension.btn_xlsx.isChecked():
 				source = '.xlsx file'
 				series_obj = self.import_series_xlsx(path, use_header, use_1st_col)
 			else:
 				series_obj = None
 
 		elif obj.currentIndex() == 2:
-			return
+			series_obj = None
 		elif obj.currentIndex() == 3:
 			source = 'python script'
 			series_obj = self.import_series_script()
 
 		if series_obj is None:
+			print('Erro na importação')
 			return
 
 		name = self.ds_layout_config.edit_name_serie.text()
@@ -538,7 +538,7 @@ class DatasetConfig(QtWidgets.QWidget):
 			self.parent().plot_manager.add(new_serie)
 		return
 
-	def import_series_csv(self, path, use_header):
+	def import_series_csv(self, path, use_header, use_1st_col):
 		import csv
 		with open(path) as f:
 			series_t = []
@@ -547,64 +547,73 @@ class DatasetConfig(QtWidgets.QWidget):
 			n_lines = 0
 			for line in reader:
 				serie_t = []
-				if n_lines == 0 and use_header:
-					headers = line
+				if (n_lines == 0) and use_header:
+					for elem in line:
+						headers.append(elem)
 				else:
+					#print(line)
 					for elem in line:
 						try:
 							serie_t.append(float(elem))
 						except:
 							serie_t.append(np.nan)
-				series_t.append(serie_t)
+					series_t.append(serie_t)
 				n_lines += 1
 
 		series = np.array(series_t).transpose()
-		time_serie = series[0]
-		series = series[1:]
-		if not headers == []: 
+		if use_1st_col:
+			time_serie = series[0]
+			series = series[1:]
 			headers = headers[1:]
 		else:
-			headers = ['Serie '+str(i+1) for i in range(len(series))]
+			time_serie = [i for i in range(len(series[0]))]
+
+		for i in range(len(headers), len(series)):
+			headers.append('Serie ' + str(i+1))
 
 		series_obj = SeriesObject(series=series, series_names=headers, time_axis=time_serie)
 		return series_obj
 
-	def import_series_tsv(self, path, use_header):
+	def import_series_tsv(self, path, use_header, use_1st_col):
 		with open(path, 'r') as f:
 			series = []
 			headers = []
-			l = 0
+			n = 0
 			for line in f.readlines():
 				serie = []
-				if l==0 and use_header:
-					headers.append(line)
+				if (n == 0) and use_header:
+					for elem in line.split('\t'):
+						headers.append(elem)
 				else:
 					for elem in line.split('\t'):
 						try:
 							serie.append(float(elem))
 						except:
 							serie.append(np.nan)
-				series.append(serie)
-		pprint(series)
+					series.append(serie)
+				n += 1
+
 		series = np.array(series).transpose()
 
-		if len(series) < 2:
-			print('Serie contem menos de 2 colunas!')
-			return None
-
-		time_serie = series[0]
-		series = series[1:]
-
-		if not headers == []: 
+		if use_1st_col:
+			time_serie = series[0]
+			series = series[1:]
 			headers = headers[1:]
 		else:
-			headers = ['Serie '+str(i+1) for i in range(len(series))]
+			time_serie = [i for i in range(len(series[0]))]
+
+		for i in range(len(headers), len(series)):
+			headers.append('Serie ' + str(i+1))
+
+		pprint(headers)
+		pprint(series)
+		pprint(time_serie)
 
 		series_obj = SeriesObject(series=series, series_names=headers, time_axis=time_serie)
 		return series_obj
 
 
-	def import_series_xls(self, path, use_header):
+	def import_series_xls(self, path, use_header, use_1st_col):
 		import xlrd
 
 		workbook = xlrd.open_workbook(filename=path)
@@ -621,19 +630,18 @@ class DatasetConfig(QtWidgets.QWidget):
 					try:
 						serie.append(float(worksheet.cell(r, c).value))
 					except:
-						serie.append(None)
+						serie.append(np.nan)
 			series.append(serie)
 		
-		if len(series) > 1:
+		if use_1st_col:
 			time_serie = series[0]
 			series = series[1:]
-		else:
-			print('Arquivo importado vazio ou com uma coluna somente')
-
-		if not headers == []: 
 			headers = headers[1:]
 		else:
-			headers = ['Serie '+str(i+1) for i in range(len(series))]
+			time_serie = [i for i in range(len(series[0]))]
+
+		for i in range(len(headers), len(series)):
+			headers.append('Serie ' + str(i+1))
 
 		series_obj = SeriesObject(series=series, series_names=headers, time_axis=time_serie)
 		return series_obj
@@ -657,7 +665,7 @@ class DatasetConfig(QtWidgets.QWidget):
 				except:
 					serie.append(np.nan)
 			series.append(serie)
-		pprint(headers)
+		#pprint(headers)
 		if use_1st_col:
 			time_serie = series[0]
 			series = series[1:]
@@ -743,15 +751,15 @@ class DatasetConfig(QtWidgets.QWidget):
 			for n in split[1].split(' '):
 				dens.append(float(n))
 
-			pprint(nums)
-			pprint(dens)
+			#pprint(nums)
+			#pprint(dens)
 
-			tfs.append(control.TransferFunction(nums, dens))
+			tfs.append(control.tf(nums, dens))
 
-		sys = tfs[0]
+		sys = control.series(control.tf([1,], [1,]), tfs[0])
 		if len(tfs) > 1:
 			for tf in tfs[1:]:
-				sys = control.append(sys, tf)
+				sys = control.series(sys, tf)
 		time_serie, y = control.step_response(sys, None, X0=x0)
 		headers = ['u(t)', 'y(t)']
 		u = [gain if i>0 else 0 for i in range(len(y))]
@@ -781,18 +789,9 @@ class DatasetLayoutConfig(QtWidgets.QWidget):
 		self.edit_ncol.setMaximumWidth(30)
 		self.edit_time_col.setMaximumWidth(30)
 
-		#self.btn_go.clicked.connect(self.import_series)
-		
-		#layout_upper = QtWidgets.QGridLayout()
-		#layout_upper.addWidget(self.lbl_ncol, 0, 0)
-		#layout_upper.addWidget(self.edit_ncol, 0, 1)
-		#layout_upper.addWidget(self.lbl_time_col, 1, 0)
-		#layout_upper.addWidget(self.edit_time_col, 1 , 1)
-
 		layout = QtWidgets.QVBoxLayout()
 		layout.addWidget(lbl_name_serie)
 		layout.addWidget(self.edit_name_serie)
-		#layout.addLayout(layout_upper)
 		layout.addWidget(self.chkbox_first_col)
 		layout.addWidget(self.chkbox_time_serie)
 		layout.addWidget(self.chkbox_headers)
@@ -841,7 +840,7 @@ class SeriesSourceConfig(QtWidgets.QTabWidget):
 		return
 
 	def chk_tab(self, index):
-		print(index)
+		#pprint(index)
 		obj = self.parent.ds_layout_config
 		if index == 3 or index == 0: # Python Script
 			obj.chkbox_headers.hide()
@@ -1131,7 +1130,7 @@ class ScriptEditor(QtWidgets.QTextEdit):
 		super().__init__()
 
 	def mouseDoubleClickEvent(self, event):
-		print('click')
+		#print('click')
 		dialog = ScriptEditorDialog(text=self.toPlainText())
 		if dialog.exec_():
 			self.setPlainText(dialog.text_editor.toPlainText())

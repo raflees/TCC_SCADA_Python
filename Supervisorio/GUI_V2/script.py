@@ -1,6 +1,20 @@
-import pandas as pd
-from pprint import pprint
-file = 'C:/Users/Rafael Lucena/Workspace/TCC/Supervisorio/GUI_V2/testes/exemplo_xlsx.xlsx'
+def func(): 
+	import math 
+	
+	t = range(100) 		
+	series = [[math.sin(i/10) for i in t], [math.cos(i/10) for i in t]] 		
+	header = ["seno", "cosseno"] 
+	return series, t, header
+	
 
-df = pd.read_excel(file, header=0)
-print([col for col in df.columns])
+
+obj = func() 
+import pickle 
+try: 
+	open("returned_obj", "x") 
+except: 
+	pass
+with open('returned_obj', 'wb') as f: 
+	pickle.dump(obj, f) 
+	f.close() 
+exit(0)
