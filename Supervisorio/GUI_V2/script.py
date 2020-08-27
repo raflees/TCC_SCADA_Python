@@ -1,14 +1,6 @@
-def func(): 
-	
+import pandas as pd
+from pprint import pprint
+file = 'C:/Users/Rafael Lucena/Workspace/TCC/Supervisorio/GUI_V2/testes/exemplo_xlsx.xlsx'
 
-
-obj = func() 
-import pickle 
-try: 
-	open("returned_obj", "x") 
-except: 
-	pass
-with open('returned_obj', 'wb') as f: 
-	pickle.dump(obj, f) 
-	f.close() 
-exit(0)
+df = pd.read_excel(file, header=0)
+print([col for col in df.columns])
