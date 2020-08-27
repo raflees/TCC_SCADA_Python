@@ -483,7 +483,12 @@ class DatasetConfig(QtWidgets.QWidget):
 		use_header = self.ds_layout_config.chkbox_headers.isChecked()
 		use_1st_col = self.ds_layout_config.chkbox_first_col.isChecked()
 		
-		if obj.currentIndex() == 1:
+		if obj.currentIndex() == 0:
+			source = 'transfer function'
+			series_obj = self.import_series_tf(obj.tf_tab.list_tf, int(obj.tf_tab.edit_k.text()))
+
+
+		elif obj.currentIndex() == 1:
 			file_extension = obj.file_config_tab
 			path = os.path.join(file_extension.edit_directory.text(), file_extension.edit_file.text())
 			
@@ -506,7 +511,12 @@ class DatasetConfig(QtWidgets.QWidget):
 			if file_extension.btn_xlsx.isChecked():
 				source = '.xlsx file'
 				series_obj = self.import_series_xlsx(path, use_header, use_1st_col)
-		if obj.currentIndex() == 3:
+			else:
+				series_obj = None
+
+		elif obj.currentIndex() == 2:
+			return
+		elif obj.currentIndex() == 3:
 			source = 'python script'
 			series_obj = self.import_series_script()
 
@@ -715,6 +725,44 @@ class DatasetConfig(QtWidgets.QWidget):
 		series_obj = SeriesObject(series=series, series_names=headers, time_axis=time_serie)
 		return series_obj
 
+	def import_series_tf(self, list_tf, gain=1, x0=0):
+		if list_tf.count == 0: return None
+
+		tfs = []
+		for i in range(list_tf.count()):
+			item = list_tf.item(i)
+			nums = []
+			dens = []
+			text = item.text()
+			text = text.replace('[', '')
+			text = text.replace(']', '')
+			split = text.split('\t')
+
+			for n in split[0].split(' '):
+				nums.append(float(n))
+			for n in split[1].split(' '):
+				dens.append(float(n))
+
+			pprint(nums)
+			pprint(dens)
+
+			tfs.append(control.TransferFunction(nums, dens))
+
+		sys = tfs[0]
+		if len(tfs) > 1:
+			for tf in tfs[1:]:
+				sys = control.append(sys, tf)
+		time_serie, y = control.step_response(sys, None, X0=x0)
+		headers = ['u(t)', 'y(t)']
+		u = [gain if i>0 else 0 for i in range(len(y))]
+		y = [gain*i for i in y]
+		series = [u, y]
+
+		series_obj = SeriesObject(series=series, series_names=headers, time_axis=time_serie)
+		return series_obj
+
+
+
 class DatasetLayoutConfig(QtWidgets.QWidget):
 	def __init__(self, parent=None):
 		super().__init__(parent)
@@ -793,28 +841,13 @@ class SeriesSourceConfig(QtWidgets.QTabWidget):
 		return
 
 	def chk_tab(self, index):
+		print(index)
 		obj = self.parent.ds_layout_config
-		if index == 0: # Transfer Function
-			#obj.lbl_ncol.hide()
-			#obj.edit_time_col.hide()
-			#obj.lbl_time_col.hide()
-			#obj.edit_ncol.hide()
-			obj.chkbox_headers.hide()
-			obj.chkbox_first_col.hide()
-			obj.chkbox_time_serie.hide()
-		if index == 3: # Python Script
-			#obj.lbl_ncol.hide()
-			#obj.edit_time_col.hide()
-			#obj.lbl_time_col.hide()
-			#obj.edit_ncol.hide()
+		if index == 3 or index == 0: # Python Script
 			obj.chkbox_headers.hide()
 			obj.chkbox_first_col.hide()
 			obj.chkbox_time_serie.hide()
 		else:
-			#obj.lbl_ncol.show()
-			#obj.edit_time_col.show()
-			#obj.lbl_ncol.show()
-			#obj.edit_ncol.show()
 			obj.chkbox_headers.show()
 			obj.chkbox_first_col.show()
 			obj.chkbox_time_serie.show()
@@ -824,18 +857,21 @@ class SeriesSourceConfig(QtWidgets.QTabWidget):
 class TransferFunctionConfig(QtWidgets.QWidget):
 	def __init__(self, parent=None):
 		super().__init__(parent)
-		lbl_num = QtWidgets.QLabel(' num')
-		lbl_den = QtWidgets.QLabel(' den')
+		lbl_num = QtWidgets.QLabel('num')
+		lbl_den = QtWidgets.QLabel('den')
+		lbl_k = QtWidgets.QLabel('Ganho <i>K</i> da entrada')
 		self.edit_num = QtWidgets.QLineEdit()
 		self.edit_den = QtWidgets.QLineEdit()
+		self.edit_k = QtWidgets.QLineEdit()
 		self.list_tf = QtWidgets.QListWidget()
 		self.btn_add = QtWidgets.QPushButton('Adicionar função')
 		self.btn_remove = QtWidgets.QPushButton('-')
 		self.btn_move_up = QtWidgets.QPushButton()
 		self.btn_move_down = QtWidgets.QPushButton()
-		lbl_obs = QtWidgets.QLabel('OBS: A dimensão do numerador não pode ultrapassar a do denominador. Funções de transferência serão multiplicadas na ordem mostrada na lista. Configure a entrada no botão ''Editar'' na lista de séries à direita após sua inclusão.')
+		lbl_obs = QtWidgets.QLabel('OBS: Funções de transferência serão multiplicadas na ordem mostrada na lista.')
 		icon_up = QtGui.QIcon('./icons/arrow_up.png')
 		icon_down = QtGui.QIcon('./icons/arrow_down.png')
+
 		self.btn_move_up.setIcon(icon_up)
 		self.btn_move_down.setIcon(icon_down)
 
@@ -845,6 +881,11 @@ class TransferFunctionConfig(QtWidgets.QWidget):
 		self.btn_move_up.setMaximumHeight(20)
 		self.btn_move_down.setMaximumHeight(20)
 		self.btn_remove.setMaximumHeight(20)
+		self.edit_k.setFixedWidth(50)
+		lbl_num.setMargin(2)
+		lbl_den.setMargin(2)
+		lbl_obs.setMargin(2)
+		lbl_k.setMargin(2)
 		lbl_obs.setWordWrap(True)
 		self.edit_num.setFixedWidth(100)
 		self.edit_den.setFixedWidth(100)
@@ -858,9 +899,14 @@ class TransferFunctionConfig(QtWidgets.QWidget):
 		layout_func.addWidget(self.edit_num, 0, 2)
 		layout_func.addWidget(self.edit_den, 1, 2)
 
+		layout_k = QtWidgets.QHBoxLayout()
+		layout_k.addWidget(lbl_k)
+		layout_k.addWidget(self.edit_k)
+
 		layout_add_func = QtWidgets.QVBoxLayout()
 		layout_add_func.addLayout(layout_func)
 		layout_add_func.addWidget(self.btn_add)
+		layout_add_func.addLayout(layout_k)
 		layout_add_func.setAlignment(QtCore.Qt.AlignCenter)
 
 		layout_ctrl = QtWidgets.QVBoxLayout()
@@ -878,7 +924,6 @@ class TransferFunctionConfig(QtWidgets.QWidget):
 		layout = QtWidgets.QVBoxLayout()
 		layout.addLayout(layout_config)
 		layout.addWidget(lbl_obs)
-		#layout.setContentsMargins(QtCore.QMargins(0, 0, 0, 0))
 
 		self.setLayout(layout)
 
