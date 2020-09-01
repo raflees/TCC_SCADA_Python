@@ -64,3 +64,8 @@ def script():
 		#f.seek(0)
 		obj = pickle.load(f)
 	print(obj[0])
+
+import control
+
+sys = control.tf([1, 1], [1, 1])
+T, y = control.step_response(sys)

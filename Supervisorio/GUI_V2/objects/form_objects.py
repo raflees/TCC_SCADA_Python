@@ -1,11 +1,15 @@
+from .realtime_objects import *
+
 from PyQt5 import QtWidgets, QtCore, QtGui, QtChart
 from matplotlib.backends.backend_qt5agg import FigureCanvas, NavigationToolbar2QT
 import matplotlib.pyplot as plt
 import mpl_toolkits.axisartist as axisartist
 import numpy as np
 import serial
-import time
 import control
+
+#libs padroes
+import time
 import os
 from pprint import pprint
 
@@ -129,14 +133,22 @@ class ScriptEditorDialog(QtWidgets.QDialog):
 		super().__init__()
 		self.text_editor = QtWidgets.QTextEdit(text)
 		self.btn_model_1 = QtWidgets.QPushButton('Modelo')
+		self.btn_control = QtWidgets.QPushButton('T. Func')
 		self.btn_ok = QtWidgets.QPushButton('OK')
 		self.btn_cancel = QtWidgets.QPushButton('Cancelar')
 
 		self.btn_ok.clicked.connect(self.accept)
 		self.btn_cancel.clicked.connect(self.close)
 		self.btn_model_1.clicked.connect(self.write_model)
+		self.btn_control.clicked.connect(self.write_control)
 
 		self.btn_model_1.setFixedWidth(80)
+		self.btn_control.setFixedWidth(80)
+
+		layout_models = QtWidgets.QHBoxLayout()
+		layout_models.addWidget(self.btn_model_1)
+		layout_models.addWidget(self.btn_control)
+		layout_models.setAlignment(QtCore.Qt.AlignLeft)
 
 		layout_buttons = QtWidgets.QHBoxLayout()
 		layout_buttons.addWidget(self.btn_ok)
@@ -144,7 +156,7 @@ class ScriptEditorDialog(QtWidgets.QDialog):
 		layout_buttons.setAlignment(QtCore.Qt.AlignRight)
 
 		layout = QtWidgets.QVBoxLayout()
-		layout.addWidget(self.btn_model_1)
+		layout.addLayout(layout_models)
 		layout.addWidget(self.text_editor)
 		layout.addLayout(layout_buttons)
 
@@ -157,6 +169,16 @@ class ScriptEditorDialog(QtWidgets.QDialog):
 		text = 'import math \n\nt = range(100) \
 		\nseries = [[math.sin(i/10) for i in t], [math.cos(i/10) for i in t]] \
 		\nheader = ["seno", "cosseno"] \nreturn series, t, header\n'
+
+		self.text_editor.setPlainText(text)
+		return
+
+	def write_control(self):
+		text = 'import control \n\nsys1 = control.tf([2,], [1, 0.1, 1]) \
+			\nsys2 = control.tf([1,], [1, 2]) \nsys = control.series(sys1, sys2) \
+			\nt = range(100) \nt, u = control.step_response(control.tf([1,],[10,1]), t) \
+			\nt, y, x = control.forced_response(sys, t, u) \
+			\nh = ["u(t)", "y(t)"] \nreturn [u, y], t, h'
 
 		self.text_editor.setPlainText(text)
 		return
@@ -485,7 +507,20 @@ class DatasetConfig(QtWidgets.QWidget):
 		
 		if obj.currentIndex() == 0:
 			source = 'transfer function'
-			series_obj = self.import_series_tf(obj.tf_tab.list_tf, float(obj.tf_tab.edit_k.text()))
+			if obj.tf_tab.edit_k.text() == '':
+				gain = 1
+			else:
+				try: gain = float(obj.tf_tab.edit_k.text())
+				except: gain = 1
+
+			if obj.tf_tab.edit_x0.text() == '':
+				x0 = 1
+			else:
+				try: x0 = float(obj.tf_tab.edit_x0.text())
+				except: x0 = 1
+			if obj.tf_tab.list_tf.count() == 0:
+				return
+			series_obj = self.import_series_tf(obj.tf_tab.list_tf, gain, x0)
 
 		elif obj.currentIndex() == 1:
 			file_extension = obj.file_config_tab
@@ -514,7 +549,9 @@ class DatasetConfig(QtWidgets.QWidget):
 				series_obj = None
 
 		elif obj.currentIndex() == 2:
-			series_obj = None
+			source = 'dummy serial'
+			series_obj = self.import_series_serial()
+
 		elif obj.currentIndex() == 3:
 			source = 'python script'
 			series_obj = self.import_series_script()
@@ -682,6 +719,19 @@ class DatasetConfig(QtWidgets.QWidget):
 
 		series_obj = SeriesObject(series=series, series_names=headers, time_axis=time_serie)
 		return series_obj
+
+	def import_series_serial(self):
+		dialogSCADA = SCADADialog(4)
+		if dialogSCADA.exec_():
+			series = dialogSCADA.series
+			time_serie = dialogSCADA.time_serie
+			headers = ['Serie '+str(i+1) for i in range(len(series))]
+			series_obj = SeriesObject(series=series, series_names=headers, time_axis=time_serie)
+			return series_obj
+		else:
+			dialogSCADA.update = False
+			dialogSCADA.fetch = False
+			return None
 
 	def import_series_script(self):
 		import pickle
@@ -859,15 +909,17 @@ class TransferFunctionConfig(QtWidgets.QWidget):
 		lbl_num = QtWidgets.QLabel('num')
 		lbl_den = QtWidgets.QLabel('den')
 		lbl_k = QtWidgets.QLabel('Ganho <i>K</i> da entrada')
+		lbl_x0 = QtWidgets.QLabel('Condição inicial da saída')
+		lbl_obs = QtWidgets.QLabel('OBS: Funções de transferência serão multiplicadas na ordem mostrada na lista.')
 		self.edit_num = QtWidgets.QLineEdit()
 		self.edit_den = QtWidgets.QLineEdit()
 		self.edit_k = QtWidgets.QLineEdit()
-		self.list_tf = QtWidgets.QListWidget()
+		self.edit_x0 = QtWidgets.QLineEdit()
 		self.btn_add = QtWidgets.QPushButton('Adicionar função')
 		self.btn_remove = QtWidgets.QPushButton('-')
 		self.btn_move_up = QtWidgets.QPushButton()
 		self.btn_move_down = QtWidgets.QPushButton()
-		lbl_obs = QtWidgets.QLabel('OBS: Funções de transferência serão multiplicadas na ordem mostrada na lista.')
+		self.list_tf = QtWidgets.QListWidget()
 		icon_up = QtGui.QIcon('./icons/arrow_up.png')
 		icon_down = QtGui.QIcon('./icons/arrow_down.png')
 
@@ -880,7 +932,7 @@ class TransferFunctionConfig(QtWidgets.QWidget):
 		self.btn_move_up.setMaximumHeight(20)
 		self.btn_move_down.setMaximumHeight(20)
 		self.btn_remove.setMaximumHeight(20)
-		self.edit_k.setFixedWidth(50)
+		#self.edit_k.setFixedWidth(50)
 		lbl_num.setMargin(2)
 		lbl_den.setMargin(2)
 		lbl_obs.setMargin(2)
@@ -888,6 +940,7 @@ class TransferFunctionConfig(QtWidgets.QWidget):
 		lbl_obs.setWordWrap(True)
 		self.edit_num.setFixedWidth(100)
 		self.edit_den.setFixedWidth(100)
+		#self.list_tf.setMaximumHeight(100)
 
 		self.btn_add.clicked.connect(self.add_function)
 		self.btn_remove.clicked.connect(self.remove_function)
@@ -898,14 +951,16 @@ class TransferFunctionConfig(QtWidgets.QWidget):
 		layout_func.addWidget(self.edit_num, 0, 2)
 		layout_func.addWidget(self.edit_den, 1, 2)
 
-		layout_k = QtWidgets.QHBoxLayout()
-		layout_k.addWidget(lbl_k)
-		layout_k.addWidget(self.edit_k)
+		layout_bottom = QtWidgets.QGridLayout()
+		layout_bottom.addWidget(lbl_k, 0, 0)
+		layout_bottom.addWidget(self.edit_k, 0, 1)
+		layout_bottom.addWidget(lbl_x0, 1, 0)
+		layout_bottom.addWidget(self.edit_x0, 1, 1)
 
 		layout_add_func = QtWidgets.QVBoxLayout()
 		layout_add_func.addLayout(layout_func)
 		layout_add_func.addWidget(self.btn_add)
-		layout_add_func.addLayout(layout_k)
+		layout_add_func.addLayout(layout_bottom)
 		layout_add_func.setAlignment(QtCore.Qt.AlignCenter)
 
 		layout_ctrl = QtWidgets.QVBoxLayout()
@@ -922,7 +977,7 @@ class TransferFunctionConfig(QtWidgets.QWidget):
 
 		layout = QtWidgets.QVBoxLayout()
 		layout.addLayout(layout_config)
-		layout.addWidget(lbl_obs)
+		#layout.addWidget(lbl_obs)
 
 		self.setLayout(layout)
 
@@ -933,8 +988,9 @@ class TransferFunctionConfig(QtWidgets.QWidget):
 		return
 
 	def add_function(self):
-		num = self.edit_num.text()
-		den = self.edit_den.text()
+		num = self.edit_num.text().strip()
+		den = self.edit_den.text().strip()
+		if num == '' or den == '': return
 
 		num = num.replace('[', '')
 		num = num.replace(']', '')
@@ -947,13 +1003,19 @@ class TransferFunctionConfig(QtWidgets.QWidget):
 		den = den.strip()
 
 		nums = num.split(' ')
+		dens = den.split(' ')
+
+		if len(nums) == len(dens) and len(nums) == 1:
+			self.edit_num.setText('')
+			self.edit_den.setText('')
+			return
+
 		formatted_nums = '['
 		for n in nums:
 			if n != '': formatted_nums += str(n) + ' '
 		if (len(formatted_nums) > 2): formatted_nums = formatted_nums[:-1]
 		formatted_nums += ']'
 
-		dens = den.split(' ')
 		formatted_dens = '['
 		for d in dens:
 			if d != '': formatted_dens += str(d) + ' '
@@ -961,6 +1023,9 @@ class TransferFunctionConfig(QtWidgets.QWidget):
 		formatted_dens += ']'
 
 		self.list_tf.addItem(formatted_nums + '\t' + formatted_dens)
+		self.edit_num.setText('')
+		self.edit_den.setText('')
+
 		return
 
 
@@ -1141,10 +1206,10 @@ class PythonScriptRunner(QtWidgets.QWidget):
 	def __init__(self, parent=None):
 		super().__init__()
 
-		lbl_script = QtWidgets.QLabel('Digite script abaixo')
-		lbl_obs = QtWidgets.QLabel('Escreva um script simple, <b>sem cabeçalho de função</b>. \
-			Se certique de finalizar com um comando <i>return</i> [lista_de_series], [serie_temporal] \
-			[lista_de_nomes].\nCaso tudo corra bem, aparecerá uma caixa diálogo com a série criada.')
+		lbl_script = QtWidgets.QLabel('Digite seu script abaixo (double-click para expandir)')
+		lbl_obs = QtWidgets.QLabel('Escreva um script simples, <b>sem cabeçalho de função</b>. \
+			Inclua um <i>return</i> [lista_de_series], [serie_temporal], [lista_de_nomes].\n \
+			Caso tudo corra bem, aparecerá uma caixa diálogo com a série criada.')
 		self.edit_script = ScriptEditor()
 
 		self.edit_script.setPlaceholderText('t = range(50) \

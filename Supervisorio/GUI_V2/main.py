@@ -1,8 +1,10 @@
 import objects.form_objects as objs
+import objects.realtime_objects as rtobjs
 from PyQt5 import QtWidgets
 import sys
 
 app = QtWidgets.QApplication(sys.argv)
+
 main_window = QtWidgets.QMainWindow()
 main_window.setWindowTitle('Supervisorio Didatico')
 
