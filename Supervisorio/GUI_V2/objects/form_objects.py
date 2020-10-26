@@ -505,6 +505,7 @@ class DatasetConfig(QtWidgets.QWidget):
 		use_header = self.ds_layout_config.chkbox_headers.isChecked()
 		use_1st_col = self.ds_layout_config.chkbox_first_col.isChecked()
 		
+		# FUNCAO DE TRANSFERENCIA
 		if obj.currentIndex() == 0:
 			source = 'transfer function'
 			if obj.tf_tab.edit_k.text() == '':
@@ -522,6 +523,7 @@ class DatasetConfig(QtWidgets.QWidget):
 				return
 			series_obj = self.import_series_tf(obj.tf_tab.list_tf, gain, x0)
 
+		# TRANFERENCIA POR ARQUIVO
 		elif obj.currentIndex() == 1:
 			file_extension = obj.file_config_tab
 			path = os.path.join(file_extension.edit_directory.text(), file_extension.edit_file.text())
@@ -548,10 +550,12 @@ class DatasetConfig(QtWidgets.QWidget):
 			else:
 				series_obj = None
 
+		# PORTA SERIAL
 		elif obj.currentIndex() == 2:
 			source = 'dummy serial'
 			series_obj = self.import_series_serial()
 
+		# SCRIPT PYTHON
 		elif obj.currentIndex() == 3:
 			source = 'python script'
 			series_obj = self.import_series_script()
@@ -721,7 +725,10 @@ class DatasetConfig(QtWidgets.QWidget):
 		return series_obj
 
 	def import_series_serial(self):
-		dialogSCADA = SCADADialog(4)
+		#porta = 
+		#baud_rate = 
+		#timeout = 
+		dialogSCADA = SCADADialog(3)
 		if dialogSCADA.exec_():
 			series = dialogSCADA.series
 			time_serie = dialogSCADA.time_serie

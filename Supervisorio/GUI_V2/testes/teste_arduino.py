@@ -29,4 +29,30 @@ def funcErro():
 	portaArduino.close()
 
 
-funcErro()
+def funcPlot():
+	portaArduino = serial.Serial("COM3", 9600, timeout=1)
+	if not portaArduino.is_open:
+	    portaArduino.open()
+
+	nlinhas = 1
+	linha = ''
+	print('Conexao realizada\n')
+
+	portaArduino.flush()
+	ini = time.time()
+	c = 0
+	while time.time() - ini < 10: #and c < 255):
+		if portaArduino.inWaiting() > 0:
+			linha = portaArduino.readline().decode()
+			if linha != '\n' and linha != '':
+				linha = linha.split('\t')
+				msg = ''
+				for value in linha:
+					msg += value.replace('\r', '').replace('\n', '')
+					print(msg)
+				print('EOL')
+		c+=1
+
+	#print('Conexao fechada (' + str(nlinhas) + ') linha(s) lidas\n')
+
+funcPlot()
