@@ -6,6 +6,7 @@ import mpl_toolkits.axisartist as axisartist
 import numpy as np
 import serial
 import time
+import simple_pid
 
 class SCADADialog (QtWidgets.QDialog):
 	to_be_plotted = []
@@ -46,6 +47,7 @@ class SCADADialog (QtWidgets.QDialog):
 		self.lock = False
 
 		self.setup_connection(porta, baud_rate, timeout)
+		self.setup_control()
 		if self.porta == None:
 			print('Nao foi possivel estabelecer conexao')
 			return
@@ -58,7 +60,7 @@ class SCADADialog (QtWidgets.QDialog):
 		t0 = time.time()
 
 		while self.fetch:
-			print('Fetching Data...')
+			#print('Fetching Data...')
 			new_data = []
 
 			# for i in range(int(np.random.rand()*10)):
@@ -69,12 +71,13 @@ class SCADADialog (QtWidgets.QDialog):
 
 			while self.porta.inWaiting() > 0:
 				line = self.porta.readline().decode()
-				test = [float(data.replace('\r', '').replace('\n', '')) for data in line.split('\t')]#if isFloat(data) else np.nan 
+				test = [float(data.replace('\r', '').replace('\n', '')) for data in line.split('\t') if isFloat(data)]# else np.nan 
 				#print(test)
 				new_data.append(test)
+			self.control_function([test[-1], test[-2]])
 			new_data = list(np.array(new_data).transpose())
 
-			print(new_data)
+			#print(new_data)
 
 			i = 0
 			if not new_data == []:
@@ -88,8 +91,12 @@ class SCADADialog (QtWidgets.QDialog):
 				for left in new_data:
 					if not left == []:
 						self.to_be_plotted.append(left)
-				self.lock = False 
-			time.sleep(scan_time)
+				self.lock = False
+
+			time_left = scan_time - (time.time() - t0)/1000
+			print(time_left)
+			if time_left > 0:
+				time.sleep(scan_time)
 		return
 
 	def update_canvas(self, update_time):
@@ -99,7 +106,7 @@ class SCADADialog (QtWidgets.QDialog):
 			if self.to_be_plotted == []:
 				print ('Empty!')
 			else:
-				print('Updating Canvas...')
+				#print('Updating Canvas...')
 
 				while self.lock: pass
 				self.lock = True
@@ -173,8 +180,19 @@ class SCADADialog (QtWidgets.QDialog):
 			n_tries += 1
 		return
 
-	def input_function(self):
+	def setup_control(self):
+		self.pids = []
+		self.pids.append(simple_pid.PID(1, 0.1, 0, setpoint=1, output_limits=(None, None)))
+		self.pids.append(simple_pid.PID(1, 0, 0, setpoint=0, output_limits=(None, None)))
+		return
 
+	def control_function(self, last_read):
+		if len(last_read) == 0:
+			return
+		signals = [self.pids[i](input_value) for i, input_value in enumerate(last_read)]
+		#self.porta.write('{:.2f}#'.format(signal).encode('UTF-8'))
+		print('Got {}'.format(last_read))
+		print('Sent {}#'.format(signals))
 		return
 
 def isFloat(string):
