@@ -1,10 +1,10 @@
 float u[2];
 float y[2];
 float y0[2];
-float p[2][2] = {{0.1, 0}, {-0.12, 0.2}};
+float p[2][2] = {{0.1, 0.5}, {-0.12, 0.2}};
 float t;
 float t0;
-float tstep = 200;  //in milliseconds
+float tstep = 100;  //in milliseconds
 
 /*
 dy[0]dt = p[0][0]*y[0] + p[0][1]*y[1] + u[0]
@@ -48,14 +48,20 @@ void loop() {
     Serial.print('\t');
   }
   Serial.println("");
-  delay(100);
 }
 
 void wait_for_comm() {
   while (true) {
-    if (Serial.available() > 0)
-      Serial.flush();
-    break;
+    if (Serial.available() > 0) {
+      break;
+    }
   }
   return;
+}
+
+void cleanSerial() {
+  char c;
+  while (Serial.available() > 0) {
+    c = Serial.read();
+  }
 }

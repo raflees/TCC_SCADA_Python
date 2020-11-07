@@ -725,10 +725,11 @@ class DatasetConfig(QtWidgets.QWidget):
 		return series_obj
 
 	def import_series_serial(self):
-		#porta = 
-		#baud_rate = 
-		#timeout = 
-		dialogSCADA = SCADADialog(3)
+		obj = self.series_source_config.serial_config_tab
+		dialogSCADA = SCADADialog(	porta = obj.edit_porta.text(),
+									baud_rate = int(obj.edit_br.text()),
+									timeout = int(obj.edit_timeout.text()),
+									nInputs = int(obj.edit_nInputs.text()))
 		if dialogSCADA.exec_():
 			series = dialogSCADA.series
 			time_serie = dialogSCADA.time_serie
@@ -1046,14 +1047,17 @@ class SerialConfig(QtWidgets.QWidget):
 		self.lbl_br = QtWidgets.QLabel('Baud Rate')
 		self.edit_br = QtWidgets.QLineEdit()
 		self.list_br = QtWidgets.QListWidget()
-		self.lbl_timeout = QtWidgets.QLabel('Timeout (ms)')
+		self.lbl_timeout = QtWidgets.QLabel('Timeout (s)')
 		self.edit_timeout = QtWidgets.QLineEdit()
+		self.lbl_nInputs = QtWidgets.QLabel('N# colunas')
+		self.edit_nInputs = QtWidgets.QLineEdit()
 		self.btn_check_connection = QtWidgets.QPushButton('Testar')
 
-		self.edit_porta.setText('COM 3')
+		self.edit_porta.setText('COM3')
 		self.edit_br.setText('9600')
-		self.edit_timeout.setText('5000')
-		self.list_porta.addItems(['COM '+str(i+1) for i in range(6)])
+		self.edit_timeout.setText('1')
+		self.edit_nInputs.setText('3')
+		self.list_porta.addItems(['COM'+str(i+1) for i in range(6)])
 		self.list_br.addItems([str(9600+i*1600) for i in range(7)])
 
 		self.edit_porta.setMaximumWidth(100)
@@ -1061,24 +1065,34 @@ class SerialConfig(QtWidgets.QWidget):
 		self.edit_br.setMaximumWidth(100)
 		self.list_br.setMaximumWidth(100)
 		self.edit_timeout.setMaximumWidth(80)
+		self.edit_nInputs.setMaximumWidth(80)
 
 		self.list_porta.itemClicked.connect(self.overwrite_porta)
 		self.list_br.itemClicked.connect(self.overwrite_br)
 		self.btn_check_connection.clicked.connect(self.test_connection)
 
-		layout = QtWidgets.QGridLayout(self)
-		layout.addWidget(self.lbl_porta, 0, 0)
-		layout.addWidget(self.edit_porta, 1, 0)
-		layout.addWidget(self.list_porta, 2, 0)
-		layout.addWidget(self.lbl_br, 0, 2)
-		layout.addWidget(self.edit_br, 1, 2)
-		layout.addWidget(self.list_br, 2, 2)
-		layout.addWidget(self.lbl_timeout, 0, 4)
-		layout.addWidget(self.edit_timeout, 1, 4)
-		layout.addWidget(self.btn_check_connection, 2, 4, alignment=QtCore.Qt.AlignBottom)
+		layout_right = QtWidgets.QVBoxLayout()
+		layout_right.addWidget(self.lbl_timeout)
+		layout_right.addWidget(self.edit_timeout)
+		layout_right.addWidget(self.lbl_nInputs)
+		layout_right.addWidget(self.edit_nInputs)
+		layout_right.addSpacerItem(QtWidgets.QSpacerItem(1, 1, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
+		layout_right.addWidget(self.btn_check_connection)
 
-		layout.setColumnMinimumWidth(1, 10)
-		layout.setColumnMinimumWidth(3, 10)
+		layout_left = QtWidgets.QGridLayout()
+		layout_left.addWidget(self.lbl_porta, 0, 0)
+		layout_left.addWidget(self.edit_porta, 1, 0)
+		layout_left.addWidget(self.list_porta, 2, 0)
+		layout_left.addWidget(self.lbl_br, 0, 2)
+		layout_left.addWidget(self.edit_br, 1, 2)
+		layout_left.addWidget(self.list_br, 2, 2)
+
+		layout_left.setColumnMinimumWidth(1, 10)
+		layout_left.setColumnMinimumWidth(3, 10)
+
+		layout = QtWidgets.QHBoxLayout()
+		layout.addLayout(layout_left)
+		layout.addLayout(layout_right)
 
 		self.setLayout(layout)
 		return
@@ -1101,15 +1115,12 @@ class SerialConfig(QtWidgets.QWidget):
 				desc = 'Um ou mais parametros estão vazio. Certifique-se de preencher todos os campos'
 				raise Exception
 
-			with serial.Serial(self.edit_porta.text(), self.edit_br.text(),\
-				timeout=int(self.edit_timeout.text())) as porta_teste:
-				if porta_teste.is_open:
-					desc = 'Porta serial está correta, mas já iniciou uma comunicação. Certifique-se que nenhuma ' \
-					'outra aplicação está utilizando esta porta. (Ex: Serial Monitor / Plotter da IDE Arduino)'
-					raise Exception
+			with serial.Serial(	self.edit_porta.text(),
+								self.edit_br.text(),
+								timeout=int(self.edit_timeout.text())) as porta_teste:
+				desc = 'Conexão realizada com sucesso!'
+				message_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, 'All Good!', desc, QtWidgets.QMessageBox.StandardButton.Ok)
 
-			desc = 'Conexão realizada com sucesso!'
-			message_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, 'All Good!', desc, QtWidgets.QMessageBox.StandardButton.Ok)
 		except Exception as exc:
 			if desc == '':
 				desc = str(exc)
