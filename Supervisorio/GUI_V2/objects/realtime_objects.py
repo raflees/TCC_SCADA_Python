@@ -68,16 +68,17 @@ class SCADADialog (QtWidgets.QDialog):
 			# 	#new_data.append([time.time()-t0, 1, 2, 3],)
 			# 	time.sleep(0.1)
 			# new_data = list(np.array(new_data).transpose())
-
+			test = []
 			while self.porta.inWaiting() > 0:
 				line = self.porta.readline().decode()
 				test = [float(data.replace('\r', '').replace('\n', '')) for data in line.split('\t') if isFloat(data)]# else np.nan 
 				#print(test)
 				new_data.append(test)
-			self.control_function([test[-1], test[-2]])
+			if len(test) > 2:
+				self.control_function([test[-1], test[-2]])
 			new_data = list(np.array(new_data).transpose())
 
-			#print(new_data)
+			print(new_data)
 
 			i = 0
 			if not new_data == []:
@@ -94,7 +95,7 @@ class SCADADialog (QtWidgets.QDialog):
 				self.lock = False
 
 			time_left = scan_time - (time.time() - t0)/1000
-			print(time_left)
+			#print(time_left)
 			if time_left > 0:
 				time.sleep(scan_time)
 		return
@@ -111,9 +112,12 @@ class SCADADialog (QtWidgets.QDialog):
 				while self.lock: pass
 				self.lock = True
 
-				for i in range(len(self.plotted)):
-					for elem in self.to_be_plotted[i]:
-						self.plotted[i] = np.append(self.plotted[i], elem)
+				try:
+					for i in range(len(self.plotted)):
+						for elem in self.to_be_plotted[i]:
+							self.plotted[i] = np.append(self.plotted[i], elem)
+				except:
+					pass
 
 				self.to_be_plotted = []
 				self.lock = False
@@ -146,6 +150,8 @@ class SCADADialog (QtWidgets.QDialog):
 	def stop_logging(self):
 		self.update = False
 		self.fetch = False
+		if self.porta.isOpen():
+			self.porta.close()
 		return
 
 	def export_serie(self):
@@ -176,7 +182,7 @@ class SCADADialog (QtWidgets.QDialog):
 			self.porta.open()
 		while self.porta.inWaiting() == 0 and n_tries < 100:
 			print('Escrevendo na porta')
-			self.porta.write(chr(97).encode('UTF-8'))
+			self.porta.write('go'.encode('UTF-8'))
 			n_tries += 1
 		return
 
@@ -190,9 +196,10 @@ class SCADADialog (QtWidgets.QDialog):
 		if len(last_read) == 0:
 			return
 		signals = [self.pids[i](input_value) for i, input_value in enumerate(last_read)]
-		#self.porta.write('{:.2f}#'.format(signal).encode('UTF-8'))
+		for signal in signals:
+			self.porta.write('{:.2f}'.format(signal).encode('UTF-8'))
 		print('Got {}'.format(last_read))
-		print('Sent {}#'.format(signals))
+		print('Sent {}'.format(signals))
 		return
 
 def isFloat(string):

@@ -10,16 +10,19 @@ void setup() {
   pinMode(ledpin, OUTPUT);
   wait_for_comm();
   randomSeed(analogRead(0));
+  input = -1;
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   digitalWrite(ledpin, HIGH);
-  Serial.flush();
-  output = millis() / 10000.0 * 2;
+  if (Serial.available() > 0) {
+    input = Serial.parseFloat();
+  }
+  output = millis() / 1000.0;
   Serial.print(output);
   Serial.print('\t');
-  Serial.print(random(10));
+  Serial.print(input);
   Serial.print('\t');
   Serial.print(random(8));
   Serial.println("");
