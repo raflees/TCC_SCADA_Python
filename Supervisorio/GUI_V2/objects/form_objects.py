@@ -252,6 +252,7 @@ class GraphicPlotConfig(QtWidgets.QWidget):
 			#print('Plotting...')
 			unplottedSeries.remove(self.series_obj)
 			plottedSeries.append(self.series_obj)
+
 		self.plotted = not self.plotted
 		self.plot_object.update_plot()
 		self.repaint()
@@ -478,7 +479,7 @@ class MainPlotArea(QtWidgets.QWidget):
 		for series_obj in plottedSeries:
 			legends += series_obj.series_names
 			for leg, serie in enumerate(series_obj.series):
-				ax.plot(serie)
+				ax.plot(series_obj.time_axis, serie)
 		ax.legend(legends)
 		self.canvas.draw()
 		return
@@ -726,14 +727,22 @@ class DatasetConfig(QtWidgets.QWidget):
 
 	def import_series_serial(self):
 		obj = self.series_source_config.serial_config_tab
+		dialog_header = dialogHeader(int(obj.edit_nInputs.text()))
+
+		if dialog_header.exec_():
+			headers = dialog_header.headers
+		else:
+			return None
+
 		dialogSCADA = SCADADialog(	porta = obj.edit_porta.text(),
 									baud_rate = int(obj.edit_br.text()),
 									timeout = int(obj.edit_timeout.text()),
-									nInputs = int(obj.edit_nInputs.text()))
+									nInputs = int(obj.edit_nInputs.text()),
+									labels = headers)
 		if dialogSCADA.exec_():
 			series = dialogSCADA.series
 			time_serie = dialogSCADA.time_serie
-			headers = ['Serie '+str(i+1) for i in range(len(series))]
+			#print(max(time_serie))
 			series_obj = SeriesObject(series=series, series_names=headers, time_axis=time_serie)
 			return series_obj
 		else:
@@ -827,7 +836,54 @@ class DatasetConfig(QtWidgets.QWidget):
 		series_obj = SeriesObject(series=series, series_names=headers, time_axis=time_serie)
 		return series_obj
 
+class dialogHeader(QtWidgets.QDialog):
+	def __init__(self, nInputs):
+		super().__init__()
 
+		self.headers = ['Serie '+str(i+1) for i in range(nInputs-1)]
+		self.edits = []
+		self.btn_ok = QtWidgets.QPushButton('OK')
+		self.btn_cancel = QtWidgets.QPushButton('Cancelar')
+		lbl_title = QtWidgets.QLabel('Digite os nomes das séries, na ordem que serão enviadas pelo dispositivo. Pressione enter para finalizar.')
+		self.layout_table = QtWidgets.QGridLayout()
+		
+		lbl_title.setWordWrap(True)
+		self.setWindowTitle('Nomes das séries')
+		self.btn_ok.setMaximumWidth(50)
+
+		self.btn_ok.clicked.connect(lambda: self.update_headers())
+		self.btn_cancel.clicked.connect(self.close)
+
+		self.layout_table.addWidget(QtWidgets.QLabel('Tempo'), 0, 0)
+		self.layout_table.addWidget(QtWidgets.QLabel('<i><b>tempo</b></i>'), 0, 1)
+
+		for i in range(nInputs-1):
+			lbl = QtWidgets.QLabel(self.headers[i])
+			edit = QtWidgets.QLineEdit(self.headers[i])
+			self.edits.append(edit)
+
+			self.layout_table.addWidget(lbl, i+1, 0)
+			self.layout_table.addWidget(edit, i+1, 1)
+
+		layout_buttons = QtWidgets.QHBoxLayout()
+		layout_buttons.addWidget(self.btn_ok)
+		layout_buttons.addWidget(self.btn_cancel)
+		layout_buttons.setAlignment(QtCore.Qt.AlignRight)
+
+		layout = QtWidgets.QVBoxLayout()
+		layout.addWidget(lbl_title)
+		layout.addLayout(self.layout_table)
+		layout.addLayout(layout_buttons)
+		self.setLayout(layout)
+		return
+
+	def update_headers(self):
+		for obj in self.edits:
+			pos = self.layout_table.getItemPosition((self.layout_table.indexOf(obj)))
+			self.headers[pos[0]-1] = obj.text()
+		print(self.headers)
+		self.accept()
+		return
 
 class DatasetLayoutConfig(QtWidgets.QWidget):
 	def __init__(self, parent=None):
@@ -900,14 +956,14 @@ class SeriesSourceConfig(QtWidgets.QTabWidget):
 	def chk_tab(self, index):
 		#pprint(index)
 		obj = self.parent.ds_layout_config
-		if index == 3 or index == 0: # Python Script
-			obj.chkbox_headers.hide()
-			obj.chkbox_first_col.hide()
-			obj.chkbox_time_serie.hide()
-		else:
+		if index == 1: # Arquivo
 			obj.chkbox_headers.show()
 			obj.chkbox_first_col.show()
 			obj.chkbox_time_serie.show()
+		else:
+			obj.chkbox_headers.hide()
+			obj.chkbox_first_col.hide()
+			obj.chkbox_time_serie.hide()			
 		return
 		
 

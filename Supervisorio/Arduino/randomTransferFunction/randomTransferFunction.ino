@@ -14,6 +14,7 @@ dy[1]dt = p[1][0]*y[0] + p[1][1]*y[1] + u[1]
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
+  delay(100);
   wait_for_comm();
   
   t0 = millis();

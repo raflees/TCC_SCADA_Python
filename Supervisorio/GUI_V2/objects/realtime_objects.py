@@ -14,7 +14,7 @@ class SCADADialog (QtWidgets.QDialog):
 	update = True
 	porta = None
 
-	def __init__(self, porta='COM3', baud_rate=9600, timeout=1, nInputs=3):
+	def __init__(self, porta='COM3', baud_rate=9600, timeout=1, nInputs=3, labels = []):
 		super().__init__()
 		self.figure = plt.figure()
 		self.canvas = FigureCanvas(self.figure)
@@ -28,6 +28,7 @@ class SCADADialog (QtWidgets.QDialog):
 			self.plotted.append([],)
 			self.to_be_plotted.append([],)
 		self.nInputs = nInputs
+		self.labels = labels
 
 		self.btn_close.clicked.connect(self.close)
 		self.btn_stop.clicked.connect(self.stop_logging)
@@ -45,32 +46,31 @@ class SCADADialog (QtWidgets.QDialog):
 
 		self.setLayout(layout)
 
-		scan_time = 0.1
-		update_time = 1
+		self.scan_time = 0.1
+		self.update_time = 1
 		self.lock = False
 
-		self.setup_connection(porta, baud_rate, timeout)
-		self.setup_control()
+		try:
+			self.setup_connection(porta, baud_rate, timeout)
+		except Exception as exc:
+			message_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, 'Warning!', str(exc), QtWidgets.QMessageBox.StandardButton.Ok)
+			return
+
 		if self.porta == None:
 			print('Nao foi possivel estabelecer conexao')
 			return
 		else:
-			_thread.start_new_thread(self.fetch_data, (scan_time,))
-			_thread.start_new_thread(self.update_canvas, (update_time,))
+			self.setup_control()
+			_thread.start_new_thread(self.fetch_data, ())
+			_thread.start_new_thread(self.update_canvas, ())
 		return
 
-	def fetch_data(self, scan_time):
+	def fetch_data(self):
 		t0 = time.time()
 
 		while self.fetch:
-			#print('Fetching Data...')
 			new_data = []
 
-			# for i in range(int(np.random.rand()*10)):
-			# 	new_data.append([time.time()-t0, np.random.rand(), np.random.rand(), np.random.rand()],)
-			# 	#new_data.append([time.time()-t0, 1, 2, 3],)
-			# 	time.sleep(0.1)
-			# new_data = list(np.array(new_data).transpose())
 			test = []
 			while self.porta.inWaiting() > 0:
 				line = self.porta.readline().decode()
@@ -79,7 +79,7 @@ class SCADADialog (QtWidgets.QDialog):
 				new_data.append(test)
 
 			if len(test) == self.nInputs:
-				self.control_function([test[-2], test[-1]])
+				self.loop_control([test[1], test[2]])
 
 				new_data = list(np.array(new_data).transpose())
 
@@ -97,28 +97,24 @@ class SCADADialog (QtWidgets.QDialog):
 							self.to_be_plotted.append(left)
 					self.lock = False
 			else:
-				print('Wrong number of inputs or no data')
+				print('Wrong number of inputs ({0})'.format(len(test)))
 
-			time_left = scan_time - (time.time() - t0)/1000
-			#print(time_left)
+			time_left = self.scan_time - (time.time() - t0)/1000
 			if time_left > 0:
-				time.sleep(scan_time)
+				time.sleep(self.scan_time)
 		return
 
-	def update_canvas(self, update_time):
+	def update_canvas(self):
 		t_max = 0
 		t0 = time.time()
 
 		while self.update:
-			if self.to_be_plotted == []:
-				print ('Empty!')
-			else:
-				#print('Updating Canvas...')
-
-				while self.lock: pass
-				self.lock = True
+			if self.to_be_plotted != []:
+				while self.lock:
+					pass
 
 				try:
+					self.lock = True
 					for i in range(len(self.plotted)):
 						for elem in self.to_be_plotted[i]:
 							self.plotted[i] = np.append(self.plotted[i], elem)
@@ -138,18 +134,19 @@ class SCADADialog (QtWidgets.QDialog):
 							plt.xlim([0, t_max])
 					except:
 						t_max = 0
-					print('Max: {}'.format(t_max))
+					#print('Max: {}'.format(t_max))
 					ax = self.figure.gca()
-					for serie in series:
+					for i, serie in enumerate(series):
 						ax.plot(time_serie, serie)
+					ax.legend(self.labels)
 				except:
 					pass
 			self.canvas.draw()
 			
-			time_left = update_time - (time.time() - t0)/1000
+			time_left = self.update_time - (time.time() - t0)/1000
 			#print(time_left)
 			if time_left > 0:
-				time.sleep(update_time)
+				time.sleep(self.update_time)
 		return
 
 	def rejected():
@@ -160,6 +157,7 @@ class SCADADialog (QtWidgets.QDialog):
 	def stop_logging(self):
 		self.update = False
 		self.fetch = False
+		time.sleep(max(self.update_time, self.scan_time))
 		if self.porta.isOpen():
 			self.porta.close()
 		return
@@ -188,10 +186,14 @@ class SCADADialog (QtWidgets.QDialog):
 			print('Abrindo porta Serial')
 			self.porta.open()
 			self.porta.reset_input_buffer()
+			print('x')
 		while self.porta.inWaiting() == 0 and n_tries < 100:
 			print('Escrevendo na porta')
 			self.porta.write('go'.encode('UTF-8'))
 			n_tries += 1
+			time.sleep(0.1)
+		if n_tries == 100:
+			print('O dispositivo não respondeu ao sinal emitido...')
 		return
 
 	def setup_control(self):
@@ -200,7 +202,7 @@ class SCADADialog (QtWidgets.QDialog):
 		self.pids.append(simple_pid.PID(1, 0.1, 0, setpoint=5, output_limits=(None, None)))
 		return
 
-	def control_function(self, last_read):
+	def loop_control(self, last_read):
 		if len(last_read) == 0:
 			return
 		signals = [self.pids[i](input_value) for i, input_value in enumerate(last_read)]
