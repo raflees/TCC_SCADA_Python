@@ -1,0 +1,205 @@
+% !TeX spellcheck = pt_BR
+% Observação lista de abreviaturas e símbolos:
+% faz-se necessário executar os seguintes comandos no terminal (na pasta
+% ue estão os arquivos) 
+% makeindex -s pei.ist -o Dissertacao.lab Dissertacao.abx
+% makeindex -s pei.ist -o Dissertacao.los Dissertacao.syx
+
+\documentclass[msc]{pei}
+\usepackage{array}
+\usepackage{cmap}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amsfonts, amssymb, amstext, amsthm, mathtools, xfrac}
+\usepackage[alf,abnt-etal-list=0]{abntex2cite}
+\usepackage[brazil,nohints]{minitoc}
+\usepackage{listings}
+\usepackage{capitulos}
+\usepackage{color}
+\usepackage[font=footnotesize]{caption}
+\usepackage{subcaption}
+\usepackage{tabulary, array}
+\usepackage{rotating}
+\usepackage{graphicx}
+\usepackage{icomma}
+\usepackage{epigraph}
+\usepackage{pdfpages}
+\usepackage{hyperref}
+\usepackage{trivfloat}
+\usepackage{tikz}
+\usepackage{multirow}
+\usepackage{placeins}
+\usepackage{placeins}
+\usepackage{makecell}
+\usepackage{threeparttable}
+
+\graphicspath{{imagens/}}
+\newcommand{\figref}[1]{Figura~\ref{#1}}
+\newcommand{\eqnref}[1]{Equa\c{c}\~{a}o~\eqref{#1}}
+\newcommand{\tabref}[1]{Tabela~\ref{#1}}
+\newcommand{\quadref}[1]{Quadro~\ref{#1}}
+\newcommand{\exref}[1]{Ap\^{e}ndice~\ref{#1}}
+
+%\newcommand\addtotoc[1]{\refstepcounter{dummy}\addcontentsline{toc}{chapter}{#1}}
+
+\renewcommand{\lstlistingname}{Código}
+\renewcommand{\lstlistlistingname}{Lista de Códigos}
+\renewcommand\cellalign{cc}
+
+\setcounter{MaxMatrixCols}{25}
+\captionsetup{belowskip=6pt,aboveskip=4pt}
+\setlength{\extrarowheight}{1.05pt}
+
+%syntax highlighthing for EMSO codes
+\lstdefinelanguage{EMSO}{
+  morekeywords={
+      Real,Boolean,Text,Integer,CalcObject,Model,FlowSheet,using, in, ext, out, as, to, end, switch, case, Switcher, time, diff, sin, cos, tan, exp, ln, log, if, else, asin, sqrt, outer, Plugin, Brief, Default, switchto, when, Optimization, Estimation, Reconciliation, CaseStudy, Sensitivity, Filter, GrossErrorTests, Significance, ObjectiveFunction, Global, Nodal, Measurements, RunTests, Statistics, BiLateral, Lower, Upper, Dynamic, false, true, TimeStart, TimeStep, TimeEnd, TimeUnit, final, Unit, DisplayUnit, sum, for, SET, DEVICES, PARAMETERS, VARIABLES, CONNECTIONS, GUESS, MINIMIZE, FREE, MAXIMIZE, ESTIMATE, EXPERIMENTS, RECONCILE, VARY, RESPONSE, DAESolver, INITIAL, EQUATIONS, SPECIFY, OPTIONS, ATTRIBUTES, Pallete, Info, MaxIterations, NLPSolver, RelativeAccuracy, File, Hessian_approximation, },
+  sensitive = true,
+  morecomment=[l]{\#},
+  morecomment=[s]{\#*}{*\#},
+  morestring=[b]",
+  morestring=[b]'
+}
+\lstset{
+  basicstyle=\fontfamily{pcr}\fontseries{m}\selectfont\footnotesize,
+  commentstyle=\color[rgb]{0.3,0.6,0}\itshape,
+  keywordstyle=\color{blue}\bfseries,
+  stringstyle=\color[rgb]{0.5,0,0.5}\itshape,
+  showstringspaces=false,
+  numbers=left,
+  numberstyle=\color[rgb]{0,0.5,0.5}\fontfamily{pcr}\fontseries{m}\selectfont\tiny,
+  numberblanklines=true,
+  showlines=false,
+  belowskip=\bigskipamount{},
+  breaklines=true,
+  %stepnumber=2,
+  tabsize=6,
+  %extendedchars=true,
+  %float=h,
+  frame=tb
+}
+
+\everymath{\displaystyle}
+\allowdisplaybreaks
+
+\theoremstyle{definition}
+\newtheorem{definition}{Defini\c{c}\~{a}o}[chapter]
+
+\makelosymbols
+\makeloabbreviations
+
+% Quadro
+\trivfloat{quadro}
+\floatstyle{plaintop} % Forçar posição da legenda
+\restylefloat{quadro} % Forçar posição da legenda
+\renewcommand{\listquadroname}{Lista de Quadros} % Forçar texto na Lista de Quadros
+
+
+\addto\captionsbrazil{
+    %% ajusta nomes padroes do babel
+    \renewcommand{\bibname}{Refer\^encias}
+    %\renewcommand{\indexname}{\’Indice}
+    %\renewcommand{\listfigurename}{Lista de ilustra\c{c}\~{o}es}
+    %\renewcommand{\listtablename}{Lista de tabelas}
+    %% ajusta nomes usados com a macro \autoref
+    %\renewcommand{\pageautorefname}{p\’agina}
+    %\renewcommand{\sectionautorefname}{se{\c c}\~ao}
+    %\renewcommand{\subsectionautorefname}{subse{\c c}\~ao}
+    %\renewcommand{\paragraphautorefname}{par\’agrafo}
+    %\renewcommand{\subsubsectionautorefname}{subse{\c c}\~ao}
+}
+
+
+\begin{document}
+	
+\title{TÍTULO}
+\foreigntitle{TITLE}
+\author{RAFAEL GUIMARÃES}{LUCENA}
+\advisor{Prof. Dr.}{NOME SOBRENOME}{ÚLTIMO SOBRENOME}{D.Sc.}
+\coadvisor{Prof. Dr.}{NOME SOBRENOME}{ÚLTIMO SOBRENOME}{D.Sc.}
+%\examiner{Prof.}{Argimiro Resende Secchi}{D.Sc.}
+%\examiner{Prof.}{Leizer Schnitman}{D.Sc.}
+%\examiner{}{Pleycienne Trajano Ribeiro}{D.Sc.}
+\department{PEI}
+\date{12}{2020}
+\keyword{Sistema Supervisório}
+\keyword{Python}
+\keyword{Sistema Open Source}
+\keyword{PyQt}
+\cdd{S2320}{511}
+
+%\includepdf{CAPA_DISSERTACAO_PEI_DANIEL_DINIZ_SANTANA_FRENTE.pdf}
+
+\maketitle
+
+\frontmatter
+
+%\includepdf{FOLHA_APROVACAO.pdf}
+\dedication{Dedicatória}
+
+\chapter*{Agradecimentos}
+
+Agradecimentos
+
+
+\epigraph{\textit{``Nunca tenha certeza de nada, porque a sabedoria começa com a dúvida.''}}{Freud}
+
+\epigraph{\textit{``A única coisa que me espera é exatamente o inesperado.''}}{Clarice Lispector}
+
+\begin{abstract}
+
+\noindent Resumo.
+
+
+\noindent \textbf{Palavras-chave.} palavra-chave 1, palavra-chave 2, palavra-chave 3
+
+\end{abstract}
+
+\begin{foreignabstract}
+
+\noindent abstract
+
+\noindent \textbf{Keywords.} keyword 1, keyword 2, keyword 3
+
+\end{foreignabstract}
+
+\dominitoc
+\tableofcontents
+\listoffigures
+\listoftables
+
+%inclusão da lista de quadros no sumário
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listquadroname} \mtcaddchapter
+\listofquadros
+%fim da inclusão da lista de quadros
+
+%\lstlistoflistings
+\printlosymbols
+\printloabbreviations
+
+\setcounter{mtc}{5}
+\mainmatter
+
+
+\include{Introducao}
+\include{Fundamentacao}
+\include{CriacaoSistema}
+\include{CasoTeste}
+
+
+\backmatter
+
+% \bibliographystyle{abnt-alf}
+% INCLUA AQUI O SEU ARQUIVO DE REFERÊNCIA
+%\bibliography{References_rev02.bib}
+
+\appendix
+\addcontentsline{toc}{chapter}{Anexos e Apêndices}
+
+\include{ApendiceXX}
+
+%\includepdf{CAPA_DISSERTACAO_PEI_DANIEL_DINIZ_SANTANA_FUNDO.pdf}
+
+\end{document}

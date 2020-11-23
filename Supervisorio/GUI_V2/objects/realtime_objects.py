@@ -46,7 +46,7 @@ class SCADADialog (QtWidgets.QDialog):
 
 		self.setLayout(layout)
 
-		self.scan_time = 0.1
+		self.scan_time = 0.2
 		self.update_time = 1
 		self.lock = False
 
@@ -186,12 +186,11 @@ class SCADADialog (QtWidgets.QDialog):
 			print('Abrindo porta Serial')
 			self.porta.open()
 			self.porta.reset_input_buffer()
-			print('x')
 		while self.porta.inWaiting() == 0 and n_tries < 100:
 			print('Escrevendo na porta')
 			self.porta.write('go'.encode('UTF-8'))
 			n_tries += 1
-			time.sleep(0.1)
+			time.sleep(1)
 		if n_tries == 100:
 			print('O dispositivo não respondeu ao sinal emitido...')
 		return
@@ -205,11 +204,16 @@ class SCADADialog (QtWidgets.QDialog):
 	def loop_control(self, last_read):
 		if len(last_read) == 0:
 			return
-		signals = [self.pids[i](input_value) for i, input_value in enumerate(last_read)]
+		
+		return
+		'''signals = [self.pids[i](input_value) for i, input_value in enumerate(last_read)]
 		for signal in signals:
 			self.porta.write('{:.2f}'.format(signal).encode('UTF-8'))
 		print('Got {}'.format(last_read))
-		print('Sent {}'.format(signals))
+		print('Sent {}'.format(signals))'''
+		self.porta.write('{:.2f}'.format(1.0).encode('UTF-8'))
+		self.porta.write('{:.2f}'.format(1.0).encode('UTF-8'))
+		print('Sent')
 		return
 
 def isFloat(string):

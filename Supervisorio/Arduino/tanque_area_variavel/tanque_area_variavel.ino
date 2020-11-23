@@ -34,12 +34,19 @@ void wait_for_comm() {
   return;
 }
 
+void clearSerial() {
+  char c;
+  while(Serial.available() > 0)
+    c = Serial.read();
+  return;
+}
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   
-  h1 = 1.5;
-  h2 = 2.0;
+  h1 = 0.0;
+  h2 = 0.0;
   u1 = 0;
   u2 = 0;
 
@@ -52,9 +59,11 @@ void loop() {
   if (Serial.available()) {
     u1 = Serial.parseFloat();
     u2 = Serial.parseFloat();
+    clearSerial();
   }
 
   t = millis() - t0;
+  t0 = millis();
   for (int i = 0; i < ceil(t/tstep); i++) {
       dh1dt = (1./(pi*pow(gamma,2)*pow(h1+(B/2)/gamma,2))*(u1+c*pow(h2,0.5)-c*pow(h1,0.5)));
       dh2dt = (1./(pi*pow(gamma,2)*pow(h2+(B/2)/gamma,2))*(u2-c*pow(h2,0.5)));
@@ -62,7 +71,7 @@ void loop() {
       h1 += dh1dt*tstep/1000;
       h2 += dh2dt*tstep/1000;
       
-      if (h2<0){
+      /*if (h2<0){
         h2 = 0;
       } else if(h2>hM){
         h2 = hM;
@@ -72,9 +81,8 @@ void loop() {
         h1 = 0;
       } else if(h1>hM){
         h1 = hM;
-      }
+      }*/
     }
-    t0 = millis();
 
     Serial.print(t0/1000);
     Serial.print('\t');
@@ -85,4 +93,7 @@ void loop() {
     Serial.print(u1,2);
     Serial.print('\t');
     Serial.println(u2,2);
+
+    u1 = 1;
+    u2 = 1;
 }

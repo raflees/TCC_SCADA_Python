@@ -508,7 +508,7 @@ class DatasetConfig(QtWidgets.QWidget):
 		
 		# FUNCAO DE TRANSFERENCIA
 		if obj.currentIndex() == 0:
-			source = 'transfer function'
+			source = 'Transfer Function'
 			if obj.tf_tab.edit_k.text() == '':
 				gain = 1
 			else:
@@ -537,28 +537,28 @@ class DatasetConfig(QtWidgets.QWidget):
 				return
 
 			if file_extension.btn_tsv.isChecked():
-				source = '.tsv file'
+				source = '.tsv File'
 				series_obj = self.import_series_tsv(path, use_header, use_1st_col)
 			elif file_extension.btn_csv.isChecked():
-				source = '.csv file'
+				source = '.csv File'
 				series_obj = self.import_series_csv(path, use_header, use_1st_col)
 			elif file_extension.btn_xls.isChecked():
-				source = '.xls file'
+				source = '.xls File'
 				series_obj = self.import_series_xls(path, use_header, use_1st_col)
 			elif file_extension.btn_xlsx.isChecked():
-				source = '.xlsx file'
+				source = '.xlsx File'
 				series_obj = self.import_series_xlsx(path, use_header, use_1st_col)
 			else:
 				series_obj = None
 
 		# PORTA SERIAL
 		elif obj.currentIndex() == 2:
-			source = 'dummy serial'
+			source = 'Serial Port'
 			series_obj = self.import_series_serial()
 
 		# SCRIPT PYTHON
 		elif obj.currentIndex() == 3:
-			source = 'python script'
+			source = 'Python Script'
 			series_obj = self.import_series_script()
 
 		if series_obj is None:
