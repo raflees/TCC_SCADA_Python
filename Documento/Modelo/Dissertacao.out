@@ -26,6 +26,11 @@
 \BOOKMARK [1][-]{section.4.1}{Apresenta\347\343o do Sistema}{chapter.4}% 26
 \BOOKMARK [1][-]{section.4.2}{Sintonia do Controlador}{chapter.4}% 27
 \BOOKMARK [2][-]{subsection.4.2.1}{Lineariza\347\343o do Sistema}{section.4.2}% 28
-\BOOKMARK [0][-]{figure.caption.17}{Anexos e Ap\352ndices}{}% 29
-\BOOKMARK [0][-]{appendix.A}{Exemplo}{}% 30
-\BOOKMARK [1][-]{section.A.1}{Se\347\343o de exemplo}{appendix.A}% 31
+\BOOKMARK [2][-]{subsection.4.2.2}{Sintonia do LQI}{section.4.2}% 29
+\BOOKMARK [2][-]{subsection.4.2.3}{Sintonia do PI}{section.4.2}% 30
+\BOOKMARK [1][-]{section.4.3}{Configura\347\343o do supervis\363rio did\341tico}{chapter.4}% 31
+\BOOKMARK [2][-]{subsection.4.3.1}{LQI}{section.4.3}% 32
+\BOOKMARK [2][-]{subsection.4.3.2}{Controlador PI}{section.4.3}% 33
+\BOOKMARK [0][-]{subsection.4.3.2}{Anexos e Ap\352ndices}{}% 34
+\BOOKMARK [0][-]{appendix.A}{Exemplo}{}% 35
+\BOOKMARK [1][-]{section.A.1}{Se\347\343o de exemplo}{appendix.A}% 36

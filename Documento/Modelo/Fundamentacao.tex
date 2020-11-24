@@ -31,9 +31,9 @@ Outro emprego comum de sistemas SCADA, é de serem responsáveis por informar va
 
 Por ser executado geralmente em um computador comum, a palavra chave de um sistema supervisório é flexibilidade. Um sistema SCADA deve ser capaz de se comunicar por diversos protocolos com diversos dispositivos, e adicionalmente disponibilizar os valores lidos para outros usuários, não somente os que têm acesso às telas. Por possuir esta funcionalidade, software SCADAs ultrapassam o nível 2 na pirâmide de automação, referente à supervisão e controle de uma célula específica de produção, chegando ao nível seguinte, de supervisão da produção, pois agrupa as informações de diversos controladores e sensores em um só local, gerando suporte para ações de gerência.
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
-	\includegraphics{piramide_automacao}
+	\includegraphics[width=0.8\textwidth]{piramide_automacao}
 	\caption{Pirâmide da automação}
 	\label{img_piramide_automacao}
 \end{figure}
@@ -50,7 +50,7 @@ Diversos equipamentos eletrônicos utilizam a comunicação serial, como mouses 
 
 Um modelo de transmissão para um byte (8 bits) de informação por porta serial se constitui em uma onda digital cujos formato se traduz em um bits 1 ou 0. O primeiro bit marca o início da transmissão, seguido por 8 bits relativos à informação enviada, um bit opcional de paridade (que torna o dados mais confiáveis), e um último bit que encerra o bloco de informação. Protocolos de comunicação diferentes podem acrescentar ou remover características à sequência transmitida, seja para assegurar a integridade dos dados ou para aumentar a velocidade de comunicação.
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics{serial_comm}
 	\caption{Exemplo de transmissão serial de uma sequência de 3 bytes}
@@ -80,9 +80,8 @@ Existem 3 módulos do PyQt julgados principais para criação de GUIs locais:
 Para iniciar a GUI, deve ser criado um objeto \emph{QApplication}, que representa o núcleo da aplicação, juntamente com as janelas da mesma, que são objetos \emph{QMainWindow}. Estes aceitam um objeto \emph{QWidget} como Widget central principal (através do método \emph{setCentralWidget()}), cujas características de tamanho e layouts internos definem o tamanho da janela. Inicia-se a aplicação pelo comando \emph{exec\_()}, e as janelas pelo comando \emph{show()}.
 
 Numa interface criada com PyQt5, os objetos visíveis dispostos na tela são chamado de Widgets. Como dito, a maioria herda direta ou indiretamente do objeto \emph{QWidget}. Por conta da arquitetura da biblioteca, uma boa prática para programadores é colocar um Widget dentro do outro, no sentido de design e posicionamento. Assim, é possível definir melhor o espaço e as condições de redimensionamento dos objetos quando a janela for esticada ou comprimida.
-No apêndice deste documento, se encontra um pequeno guia de como criar aplicações com PyQt5, elaborado pelo autor.
 
-\begin{figure}
+\begin{figure}[H]
 \centering
 \includegraphics{Exemplo_QWidget}
 \caption{Janela \emph{QMainWindow} com um \emph{QGroupBox} como Widget central, contendo vários outros Widgets em um layout \emph{QGridLayout} dentro de outro layout \emph{QHBoxLayout}}
