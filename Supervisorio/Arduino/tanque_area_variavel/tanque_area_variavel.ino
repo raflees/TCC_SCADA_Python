@@ -45,8 +45,8 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   
-  h1 = 0.0;
-  h2 = 0.0;
+  h1 = 1.0;
+  h2 = 2.0;
   u1 = 0;
   u2 = 0;
 
@@ -57,10 +57,16 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   if (Serial.available()) {
+    Serial.flush();
     u1 = Serial.parseFloat();
     u2 = Serial.parseFloat();
-    clearSerial();
   }
+  
+  /*if (u1 > 1) u1 = 1;
+  if (u1 < 0) u1 = 0;
+
+  if (u2 > 1) u2 = 1;
+  if (u2 < 0) u2 = 0;*/
 
   t = millis() - t0;
   t0 = millis();
@@ -93,7 +99,4 @@ void loop() {
     Serial.print(u1,2);
     Serial.print('\t');
     Serial.println(u2,2);
-
-    u1 = 1;
-    u2 = 1;
 }

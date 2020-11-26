@@ -18,7 +18,7 @@ As equações deste processo são descritas abaixo:
 $
 \frac{dh_1}{dt} = \frac{1}{\beta(h_1)}(u_1 - k\sqrt{\rho g h_1} + k\sqrt{\rho g h_2})\\
 \frac{dh_2}{dt} = \frac{1}{\beta(h_2)}(u_2 - k\sqrt{\rho g h_2})\\
-\beta(h_i) = frac{dV}{dh_i}\\
+\beta(h_i) = \frac{dV}{dh_i}\\
 V(h_i) = \frac{\pi\gamma^2}{3}(h_i + \frac{B}{2\gamma})^3 - \frac{\pi}{3\gamma}(\frac{B}{2})^3\\
 \gamma = \frac{A-B}{2h_M}\\
 $
@@ -45,6 +45,22 @@ Seus parâmetros e variáveis são descritos e dimensionados na tabela \ref{tbl_
 	\caption{Tabela de parâmetros e variáveis do sistema}
 	\label{tbl_parameters}
 \end{table}
+
+\section{Comportamento esperado}[\label{comportamento_esperado}]
+
+Por se tratar de um sistema não linear, pouco pode-se dizer de seu comportamento dinâmico, partindo-se somente das esquações. Porém, é possível prever possíveis estados estacionários, onde a taxa de variação dos estados no tempo é nula.
+
+Com as derivadas zeradas nas equções descritivas, tem-se:
+\\\\
+$
+{h_1}_{ss} = (\frac{{u_1}_{ss}}{k\sqrt{\rho g}} + \sqrt{{h_2}_{ss}})^2
+$
+\\
+$
+{h_2}_{ss} = \frac{{u_2}_{ss}^2}{k^2 \rho g}
+$
+\\
+Como os estados estacionários são reais e finitos, o sistema é dito estável. Nota-se também que, caso a bomba 1 seja desligada, é possível manter as alturas em um ponto diferente de zero somente com a acão da bomba 2, e ambas assumirão os mesmos valores (${h_1}_{ss} = {h_1}_{ss}$).
 
 \section{Sintonia do Controlador}
 
@@ -135,7 +151,6 @@ logo, os controladores, projetados para um tempo de resposta $\tau$ de 10 segund
 $
 C_1(s) = C_2(s) = \frac{1}{10s} \frac{s + 0,063}{0,937} = 0,1067 + 0,0067 \frac{1}{s}
 $
-\\
 
 \section{Configuração do supervisório didático}
 
@@ -148,18 +163,61 @@ Como já mencionado, o programa apresentado implementa duas funções que podem 
 Além da biblioteca \emph{python-control}, existe outra chamada emph{simple-pid} que, como o nome indica possui objetos que se comportam como controladores PID. Eles recebem como parâmetrosseus respectivos ganhos, valor de referência da variável controlada, limites para a resposta e outros que são referenciados  \href{https://pypi.org/project/simple-pid/}{na página da biblioteca}. Para implementá-los no programa, na função \emph{setup\_control()}, criam-se tais objetos de acordo com o código abaixo:
 \\\\
 \texttt{\footnotesize self.pids = [] \\
-	self.pids.append(simple\_pid.PID(0.1067, 0.0067, setpoint=1, output\_limits=(None, None))) \\
-	self.pids.append(simple\_pid.PID(0.1067, 0.0067, setpoint=1, output\_limits=(None, None)))}
+	self.pids.append(simple\_pid.PID(0.1067, 0.0067, setpoint=2.5, output\_limits=(None, None))) \\
+	self.pids.append(simple\_pid.PID(0.1067, 0.0067, setpoint=2.5, output\_limits=(None, None)))}
 \\\\
 O objeto PID, quando chamado, retorna um valor numérico referente à resposta do controlador a partir de uma leitura, informada como parâmetro. Este valor pode ser escrito na porta serial, e será capturado pelo dispositivo conectado, desde que o mesmo esteja preparado para recebê-lo. No Arduino, o comando \emph{\textbf{Serial}.parseFloat()} se mostrou satisfatório.
 
 Implementando na função \emph{loop\_control()} a lógica descrita acima:
 \\\\
-\texttt{\footnotesize def loop\_control(self, last\_row\_read): \\
-	\hspace*{8mm}if len(last\_read) == 0: \\
+\texttt{\footnotesize def loop\_control(self, input\_data): \\
+	\hspace*{8mm}if len(input\_data) == 0: \\
 	\hspace*{8mm}\hspace*{8mm} return \\\\
-	\hspace*{8mm}signals = [self.pids[i](input\_value) for i, input\_value in enumerate(last\_row\_read)] \\
+	\hspace*{8mm}signals = [self.pids[i](input\_value) for i, input\_value in enumerate(input\_data)] \\
 	\hspace*{8mm}for signal in signals: \\
 	\hspace*{8mm}\hspace*{8mm}self.porta.write('{:.2f}'.format(signal).encode('UTF-8')) \\
 	\hspace*{8mm}return}
 \\\\
+Para este caso de teste, as restrições do processo, como valores possíveis para a entrada e limite de altura dos tanques, foram tratadas no Arduino. Seu código se encontra no anexo deste documento.
+
+\section{Resultados}
+
+\subsection{LQI}
+
+\subsection{Controlador PI}
+
+Com os códigos no Arduino e no supervisórios prontos, a série por via serial foi importada. Primeiramente, removeu-se as restrições de processo, para que a resposta seja mais fiel ao sistema modelado. Os tanques foram partidos em $h1 = 1m$ e $h2 = 2m$.
+
+Os resultados se encontram na figura abaixo:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics{PID_sem_restricoes}
+	\caption{Resposta do processo para controlador PI, desconsiderando restrições de processo}
+	\label{img_pid_sem_restricoes}
+\end{figure}
+
+Em seu estado estacionário, pode-se afirmar que o sistema se comporta satisfatoriamente. Como calculado no item \ref{comportamento_esperado}, com os setpoints de altura iguais, a bomba 1 tem estado estacionário nulo, e o sistema se mantém pela ação única da bomba 2, que assume um valor constante de $k \sqrt{\rho g{h_2}_{ss}} = 0,16$.
+
+Como esperado, entretanto, o controle não é perfeito, pois não somente o sistema leva cerca de 10 minutos para estabilizar, como também tem comportamento dinâmico oscilatório, o que não corresponde com um sistema de primeira ordem. Porém, pelo controlador ter sido sintonizado considerando um sistema não linear, mas ter sido aplicado em outro não linear, o comportamento estacionário tem peso maior avaliação da eficiência do controle. Outro fator a ser considerado é acoplamento do sistema, que dificulta o controle preciso, já que cada controlador age somente sobre uma variável.
+
+Apesar de nenhuma altura extrapolar o limite máximo de 4 metros, o sinal de controle assume, por vezes valores negativos. Se possíveis, isto sigificaria que o fluido poderia ser retirado do tanque pelas bombas, o que não ocorre neste caso. Assim, foram incluídas as seguintes restrições no processo:
+
+\begin{enumerate}
+	\item As alturas ${h_1}_{ss}$ e ${h_2}_{ss}$ devem estar compreendidas no intervalo [0, 4]m
+	\item A entrada do sistema assume valores somente entre 0 e 1 $m^3/s$
+\end{enumerate}
+
+Os resultados para um sistema fisicamente mais fiel são apresentados na Figura abaixo:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics{PID_com_restricoes}
+	\caption{Resposta do processo para controlador PI, incluindo restrições de processo}
+	\label{img_pid_com_restricoes}
+\end{figure}
+
+Neste caso, para valores negativos da variável de controle, os mesmo são por sua vez substituídos por 0. Isto faz com que a altura ${h_1}_{ss}$ leve mais tempo para diminuir seu valor, pois depende somente do escoamento por gravidade e da alimentação do tanque 2. Isso se reflete no tempo de estabilização do processo em si que também é aumentado
+
+Contudo, ainda não houve transbordamentos e os sinais de controle não atingiram valores muito altos. Assim, pode-se concluir que a estratégia do PI sintonizado em um sistema linearizado se mostrou aplicável e razoável, pois é capaz de controlar o sistema sem causar impactos negativos.
+

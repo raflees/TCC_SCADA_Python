@@ -7,6 +7,7 @@ import mpl_toolkits.axisartist as axisartist
 import numpy as np
 import serial
 import control
+import pickle
 
 #libs padroes
 import time
@@ -190,15 +191,13 @@ class GraphicPlotConfig(QtWidgets.QWidget):
 
 	def __init__(self, plot_object, series_obj,
 				plot_list_layout=None,
-				parent=None,
-				description='',
-				source='Dummy'):
+				parent=None):
 		super().__init__(parent)
 		self.series_obj = series_obj
-		self.description = description
+		self.description = series_obj.title
 		self.plot_object = plot_object
 		self.plot_list_layout = plot_list_layout
-		self.source = source
+		self.source = series_obj.source
 		self.plotted = False
 
 		# Objetos filhos principais
@@ -223,7 +222,7 @@ class GraphicPlotConfig(QtWidgets.QWidget):
 		# Ajuste do layout na parte esquerda do objeto grafico
 		layout_left = QtWidgets.QVBoxLayout()
 		layout_left.addWidget(self.lbl_title)
-		layout_left.addWidget(QtWidgets.QLabel(source))
+		layout_left.addWidget(QtWidgets.QLabel(self.source))
 		layout_left.addSpacerItem(QtWidgets.QSpacerItem(1, 1, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
 		layout_left.addLayout(layout_buttons)
 
@@ -289,6 +288,10 @@ class GraphicPlotConfig(QtWidgets.QWidget):
 		if self.series_obj in unplottedSeries:
 			unplottedSeries.remove(self.series_obj)
 		self.hide()
+
+		with open(f'autosave.dat', 'wb') as f:
+			pickle.dump(listSeries, f)
+
 		del self
 		return
 
@@ -381,11 +384,13 @@ class SeriesObject():
 	sys = control.tf([1,], [1,])
 	tfs=[]
 
-	def __init__(self, tfs=[], series=[], series_names=[], time_axis=[]):
+	def __init__(self, title='', tfs=[], series=[], series_names=[], time_axis=[], source=''):
 		self.tfs = tfs
 		self.series = series
 		self.series_names = series_names
 		self.time_axis = time_axis
+		self.source = source
+		self.title = title
 
 		if len(series) == 0 and len(tfs) > 0:
 			for tf in tfs:
@@ -417,6 +422,19 @@ class PlotManager(QtWidgets.QWidget):
 		layout.addLayout(layout_bottom)
 
 		self.setLayout(layout)
+
+		global listSeries
+
+		try:
+			with open(f'autosave.dat', 'rb') as f:
+				saved_series = pickle.load(f)
+			print('Found {} autosaved series'.format(len(saved_series)))
+			for serie in saved_series:
+				graph_list = GraphicPlotConfig(plot_object=self.parent().main_plot_area,
+					series_obj=serie, plot_list_layout=self.plot_list)
+				self.add(graph_list, False)
+		except:
+			pass
 		return
 
 	def dummy_series_dialog(self):
@@ -430,12 +448,18 @@ class PlotManager(QtWidgets.QWidget):
 				description = dialog.edit_series_name.text()
 			series_obj = dialog.series_obj
 			new_serie = GraphicPlotConfig(plot_object=self.plot_object, series_obj=series_obj,
-					plot_list_layout=self.plot_list, description=description)
+					plot_list_layout=self.plot_list)
 			self.add(new_serie)
 		return
 
-	def add(self, new_serie):
+	def add(self, new_serie, save=True):
+		global listSeries
 		self.plot_list.layout.addWidget(new_serie)
+
+		if (save):
+			with open(f'autosave.dat', 'wb') as f:
+				pickle.dump(listSeries, f)
+		return
 
 	def create_dummy_series_object(self):
 		global nSeries
@@ -447,7 +471,7 @@ class PlotManager(QtWidgets.QWidget):
 			series.append(serie)
 		n = nSeries + 1
 		names = ['Serie '+str(i+1) for i in range(quantidade_series)]
-		series_obj = SeriesObject(series=series, time_axis=range(100), series_names=names)
+		series_obj = SeriesObject(series=series, time_axis=range(100), series_names=names, source='dummy', title='Dummy Series')
 
 		return series_obj
 
@@ -574,9 +598,10 @@ class DatasetConfig(QtWidgets.QWidget):
 				description = 'Plot Series #' + str(nSeries+1)
 			else:
 				description = dialog.edit_series_name.text()
+			series_obj.title = description
+			series_obj.source = source
 			new_serie = GraphicPlotConfig(plot_object=self.parent().main_plot_area,
-				series_obj=dialog.series_obj, plot_list_layout=self.parent().plot_manager.plot_list,
-				source=source, description=description)
+				series_obj=dialog.series_obj, plot_list_layout=self.parent().plot_manager.plot_list)
 			self.parent().plot_manager.add(new_serie)
 		return
 

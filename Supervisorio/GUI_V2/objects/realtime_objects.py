@@ -46,6 +46,9 @@ class SCADADialog (QtWidgets.QDialog):
 
 		self.setLayout(layout)
 
+		ax = self.figure.gca()
+		ax.yaxis.tick_right()
+
 		self.scan_time = 0.2
 		self.update_time = 1
 		self.lock = False
@@ -75,7 +78,7 @@ class SCADADialog (QtWidgets.QDialog):
 			while self.porta.inWaiting() > 0:
 				line = self.porta.readline().decode()
 				test = [float(data.replace('\r', '').replace('\n', '')) for data in line.split('\t') if isFloat(data)]# else np.nan 
-				print(test)
+				#print(test)
 				new_data.append(test)
 
 			if len(test) == self.nInputs:
@@ -97,7 +100,8 @@ class SCADADialog (QtWidgets.QDialog):
 							self.to_be_plotted.append(left)
 					self.lock = False
 			else:
-				print('Wrong number of inputs ({0})'.format(len(test)))
+				pass
+				#print('Wrong number of inputs ({0})'.format(len(test)))
 
 			time_left = self.scan_time - (time.time() - t0)/1000
 			if time_left > 0:
@@ -197,23 +201,20 @@ class SCADADialog (QtWidgets.QDialog):
 
 	def setup_control(self):
 		self.pids = []
-		self.pids.append(simple_pid.PID(1, 0.1, 0, setpoint=1, output_limits=(None, None)))
-		self.pids.append(simple_pid.PID(1, 0.1, 0, setpoint=5, output_limits=(None, None)))
+		self.pids.append(simple_pid.PID(0.1067, 0.0067, setpoint=2.5))#, output_limits=(0, 1)))
+		self.pids.append(simple_pid.PID(0.1067, 0.0067, setpoint=2.5))#, output_limits=(0, 1)))
 		return
 
-	def loop_control(self, last_read):
-		if len(last_read) == 0:
+	def loop_control(self, input_data):
+		if len(input_data) == 0:
+			print('No Read')
 			return
-		
-		return
-		'''signals = [self.pids[i](input_value) for i, input_value in enumerate(last_read)]
+
+		signals = [self.pids[i](input_value) for i, input_value in enumerate(input_data)]
 		for signal in signals:
 			self.porta.write('{:.2f}'.format(signal).encode('UTF-8'))
-		print('Got {}'.format(last_read))
-		print('Sent {}'.format(signals))'''
-		self.porta.write('{:.2f}'.format(1.0).encode('UTF-8'))
-		self.porta.write('{:.2f}'.format(1.0).encode('UTF-8'))
-		print('Sent')
+		print('Got {}'.format(input_data))
+		print('Sent {}'.format(signals))
 		return
 
 def isFloat(string):

@@ -28,13 +28,17 @@
 \contentsline {section}{\numberline {3.7}\emph {SCADADialog}}{21}{section.3.7}%
 \contentsline {chapter}{\numberline {4}Caso de Teste}{25}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Apresentação do Sistema}{25}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Sintonia do Controlador}{26}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Linearização do Sistema}{27}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Sintonia do LQI}{27}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Sintonia do PI}{27}{subsection.4.2.3}%
-\contentsline {section}{\numberline {4.3}Configuração do supervisório didático}{29}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}LQI}{29}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Controlador PI}{29}{subsection.4.3.2}%
-\contentsline {chapter}{\numberline {A}Exemplo}{31}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Seção de exemplo}{31}{section.A.1}%
-\contentsline {chapter}{Anexos e Apêndices}{31}{subsection.4.3.2}%
+\contentsline {section}{\numberline {4.2}Comportamento esperado}{26}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Sintonia do Controlador}{27}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Linearização do Sistema}{27}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Sintonia do LQI}{28}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Sintonia do PI}{28}{subsection.4.3.3}%
+\contentsline {section}{\numberline {4.4}Configuração do supervisório didático}{29}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}LQI}{30}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Controlador PI}{30}{subsection.4.4.2}%
+\contentsline {section}{\numberline {4.5}Resultados}{31}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}LQI}{31}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Controlador PI}{31}{subsection.4.5.2}%
+\contentsline {chapter}{\numberline {A}Exemplo}{35}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Seção de exemplo}{35}{section.A.1}%
+\contentsline {chapter}{Anexos e Apêndices}{35}{figure.caption.21}%

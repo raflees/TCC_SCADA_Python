@@ -21,5 +21,7 @@
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Esquema de leitura serial no supervisório didático Fonte: Elaborado pelo Prof. Daniel Santana\relax }}{25}{figure.caption.16}%
 \contentsline {figure}{\numberline {4.2}{\ignorespaces Série de Taylor truncada na primeira ordem\relax }}{27}{figure.caption.18}%
 \contentsline {figure}{\numberline {4.3}{\ignorespaces Processo 1x1 com feedback e controlador\relax }}{28}{figure.caption.19}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Resposta do processo para controlador PI, desconsiderando restrições de processo\relax }}{31}{figure.caption.20}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Resposta do processo para controlador PI, incluindo restrições de processo\relax }}{32}{figure.caption.21}%
 \addvspace {10\p@ }
-\contentsline {xchapter}{Exemplo}{31}{appendix.A}%
+\contentsline {xchapter}{Exemplo}{35}{appendix.A}%
