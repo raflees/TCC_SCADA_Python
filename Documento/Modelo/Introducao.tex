@@ -2,21 +2,34 @@
 
 \section{Contextualização}
 
-Incluir
+O monitoramento remoto de processos é uma área da tecnologia surgida no século XX, quando os sistemas de controle passaram a ser aplicados na indústria. As interfaces homem-máquina passadas se baseavam em relés que acendiam lâmpadas e quadros sinóticos, representando alertas e mostradores. Como avanço dos meios de transmissão de dados, displays digitais e comunicação entre diferentes sistemas, os computadores se modernizaramo suficiente para tomar o espaço industrial, no que diz respeito ao controle e monitoramento de processos. \cite{junior2019}
+
+Neste âmbito da modernização industrial, surgiram os sistemas SCADA (\emph{Supervisory Control And Data Acquisition}), também chamados de sistemas supervisórios. Geralmente são executados em computadores comuns e se comunicam com outros dispositivos eletrônicos via protocolos de comunicação como Modbus e Profibus. Com isso, podem enviar e receber dados de controladores de uma área industrial, e mostrar variáveis de processo em um monitor através de diversos recursos visuais, como gráficos, símbolos e tabelas. Esta dinâmica facilitam a um operador entender rapidamente o estado de suas máquinas e identificar tendências de falhas.
+
+A grande vantagem do emprego destes softwares é a centralização da supervisão de uma forma muitas vezes mais barata que mostradores físicos espalhados numa planta, pois ocorre em um lugar só. Anos atrás, o monitoramento era local, e os operadores precisavem se deslocar a uma máquina para checar seu funcionamento. A comunicação entre o supervisório e controladores permite ainda que parâmetros intrínsecos ao processo sejam configurados dinâmicamente, a exemplo dos setpoints ou receitas.
+
+%Será que já estou falando demais de uma coisa só?
+Sistemas SCADA costumam vir já com interação programada com serviços de bancos de dados, através de drivers de comunicação dos fabricantes mais populares, como Oracle e SQL Server. Desta forma, o programador do sistema não utiliza de grandes conhecimentos de bancos de dados para criar um histórico de processo.
+
+Segundo \cite{junior2019}, o valor de um sistema SCADA está relacionado com o conceito de software aberto. Resumidamente, ele deve ser o mais compatível possível com os hardwares com os quais se comunicaria e com os diferentes sistemas operacionais que podem executá-lo. Além disto, deve ser modular, executado em módulos, de forma que o mal-funcionamento de uma de suas partes não impacte negativamente a execução dos outros. Por fim, deve também ser escalável, e permitir a agregação de novos equipamentos e novas funcionalidades.
+
+Frente à sua importância na área da automação, aspirantes a engenheiros devem se familiarizar com esta tecnologia. Atualmente existem ferramentas gratuitas focadas neste propósito, geralmente aplicadas no meio acadêmico. Softwares open source são gratuitos, e seus códigos-fontes podem ser compartilhados, modificados e aplicados à vontade. Normalmente são projetados para aplicações pequenas, mas a cultura open source tem se espalhado consideravelmente no meio tecnológico, e ganhado robustez, havendo inclusive empresas que fazem uso de licenças gratuitas.
+
+O software livre é algo extremamente útil para o ensino de novas tecnologias, uma vez que, permite que todos tenham acesso ao conhecimento científico. Nas instituições de ensino superior, o software livre é uma das bases formadoras de conhecimento, pois permite que o aluno continue a desenvolver suas atividades em seu próprio computador pessoal, não impedido por recursos monetários ou dificuldades de acesso à informação. \cite{silva2013}
 
 \section{Problema e Justificativa}
 
-Frente à importância de sistemas supervisórios no âmbito da Automação e Controle de processos, e dos altos custos de licenças de alguns softwares como MatLab e SIMATIC WinCC, surgiu a ideia da construção de uma plataforma que utilize uma linguagem gratuita e open-source e sirva de alternativa a aplicações deste ínterim. A mesma seria utilizada para comunicar-se com qualquer controlador conectado por porta serial ao computador que a executasse, registrando em forma de gráficos e valores estatísticos variáveis inerentes a sistemas mecânicos, elétricos ou quaisquer outros monitorados por sensores conectados a tal controlador, ou modelados por funções de transferências. Além disto, teria código livre e aberto, tanto para o estudo e aprendizado dos estudantes da universidade, como para futuras melhorias e inclusão de novas funcionalidades.
+Frente à importância de sistemas supervisórios na Automação e Controle de processos, e dos altos custos de licenças de alguns softwares como MATLab\textsuperscript{\tiny \textregistered} e SIMATIC WinCC, surgiu a ideia da construção de uma plataforma que utilize uma linguagem gratuita e open-source e sirva de alternativa a aplicações deste ínterim. A mesma seria utilizada para comunicar-se com qualquer controlador conectado por porta serial ao computador operante. Ele registraria em forma de gráficos variáveis inerentes a sistemas mecânicos, elétricos ou quaisquer outros, monitorados por sensores conectados a tal controlador, ou modelados por funções de transferências. Além disto, teria código livre e aberto, tanto para o estudo e aprendizado dos estudantes da universidade, como para futuras melhorias e inclusão de novas funcionalidades.
 
 \section{Objetivos}
 
 \subsection{Objetivos Gerais}
 
-Desenvolver em linguagem Python uma GUI (Graphical User Interface) capaz de se comunicar com dispositivos externos que lhe fornecessem dados numéricos para plotagem em sua interface, de forma que seja possível a análise de respostas de sistemas físicos diversos e comparação com modelagens criadas pelos usuários deste sistema.
+Desenvolver em linguagem Python uma GUI (Graphical User Interface) capaz de se comunicar com dispositivos externos que lhe fornecessem dados numéricos para plotagem em sua interface, de forma que seja possível a análise de respostas de sistemas diversos e comparação com modelagens formuladas pelos usuários deste sistema.
 
 \subsection{Objetivos Específicos}
 
-Com o foco nos objetivos supracitados, foram levantados os seguintes pequenos milestones a serem alcançados no decorrer do desenvolvimento do sistema:
+Com o foco nos objetivos supracitados, foram levantados os seguintes pequenos milestones a serem alcançados no decorrer do desenvolvimento do sistema-alvo:
 
 \begin{itemize}
 	\item Definir os requisitos de comunicação
@@ -33,6 +46,6 @@ Este trabalho foi divididos em:
 	\item No capítulo 1 o tema principal foi contextualizado de acordo com a tecnologia atual, o problema a ser solucionado foi apresentado, e os objetivos foram esclarecidos e segmentados em um passo-a-passo.
 	\item No capítulo 2 consta uma fundamentação teórica relativa aos assuntos que cercam o tema principal deste trabalho, a iniciar por uma descrição curta dos softwares SCADA existentes, das tecnologias que podem ser utilizadas para a criação de uma GUI e finalmente um resumo da linguagem selecionada para a construção da interface
 	\item O capítulo 3 trata da programação da plataforma em si, em linguagem Python, mostrando sua arquitetura e convenções empregadas com figuras e esquemas.
-	\item O capítulo 4 apresenta o sistema já pronto e aborda as lições aprendidas no decorrer de seu desenvolvimento, além de outras discussões relativas à sua programação.
+	\item O capítulo 4 toma o sistema pronto e o emprega em uma aplicação real, com o intuito de validar seu funcionamento e exemplificar como o mesmo pode contribuir no ambiente acadêmico da universidade.
 	\item No capítulo 5 este trabalho se encerra em forma de um texto conclusivo, onde, entre outros assuntos, são abordadas possíveis futuras melhorias ao sistema criado.
 \end{enumerate}

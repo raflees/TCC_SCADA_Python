@@ -1,0 +1,6 @@
+pyqt5
+matplotlib
+numpy
+serial
+control
+simple-pid

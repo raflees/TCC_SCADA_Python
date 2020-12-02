@@ -31,6 +31,7 @@ void wait_for_comm() {
       break;
     }
   }
+  clearSerial();
   return;
 }
 
@@ -57,16 +58,18 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   if (Serial.available()) {
-    Serial.flush();
+    //Serial.flush();
     u1 = Serial.parseFloat();
     u2 = Serial.parseFloat();
+    u1 = u1*10;
+    u2 = u2*10;
   }
-  
-  /*if (u1 > 1) u1 = 1;
+
+  if (u1 > 1) u1 = 1;
   if (u1 < 0) u1 = 0;
 
   if (u2 > 1) u2 = 1;
-  if (u2 < 0) u2 = 0;*/
+  if (u2 < 0) u2 = 0;
 
   t = millis() - t0;
   t0 = millis();
@@ -77,7 +80,7 @@ void loop() {
       h1 += dh1dt*tstep/1000;
       h2 += dh2dt*tstep/1000;
       
-      /*if (h2<0){
+      if (h2<0){
         h2 = 0;
       } else if(h2>hM){
         h2 = hM;
@@ -87,7 +90,7 @@ void loop() {
         h1 = 0;
       } else if(h1>hM){
         h1 = hM;
-      }*/
+      }
     }
 
     Serial.print(t0/1000);
@@ -96,7 +99,7 @@ void loop() {
     Serial.print('\t');
     Serial.print(h2, 2);//+(float) random(-1,1)/80.,2);
     Serial.print('\t');
-    Serial.print(u1,2);
+    Serial.print(u1, 2);
     Serial.print('\t');
-    Serial.println(u2,2);
+    Serial.println(u2, 2);
 }

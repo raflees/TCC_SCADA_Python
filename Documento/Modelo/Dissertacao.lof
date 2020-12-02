@@ -1,27 +1,36 @@
 \babel@toc {brazil}{}
 \babel@toc {english}{}
 \babel@toc {brazil}{}
-\contentsline {xchapter}{}{xvi}{section*.5}%
+\contentsline {xchapter}{}{xviii}{section*.5}%
 \addvspace {10\p@ }
 \contentsline {xchapter}{Introdução}{1}{chapter.1}%
 \addvspace {10\p@ }
 \contentsline {xchapter}{Fundamentação Teórica}{5}{chapter.2}%
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Fonte: https://www.agaads.com/service/scada-system/}}{7}{figure.caption.7}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Pirâmide da automação\relax }}{8}{figure.caption.8}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Exemplo de transmissão serial de uma sequência de 3 bytes\relax }}{9}{figure.caption.9}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Janela \emph {QMainWindow} com um \emph {QGroupBox} como Widget central, contendo vários outros Widgets em um layout \emph {QGridLayout} dentro de outro layout \emph {QHBoxLayout}\relax }}{12}{figure.caption.10}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Fonte: https://www.logiquesistemas.com.br/blog/piramide-de-automacao-industrial/attachment/354/}}{8}{figure.caption.8}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Fonte: http://electrosofts.com/parallel/}}{10}{figure.caption.9}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Fonte: https://doc.qt.io/qt-5/qwidget.html}}{12}{figure.caption.10}%
 \addvspace {10\p@ }
 \contentsline {xchapter}{Desenvolvimento do Sistema Supervisório}{13}{chapter.3}%
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Supervisório didático e seus objetos principais\relax }}{16}{figure.caption.12}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces \emph {ModelSeriesDialog}: Caixa diálogo para edição dos eixos e título das séries\relax }}{18}{figure.caption.13}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces \emph {GraphicPlotConfig} não plotado em \emph {MainPlotArea}\relax }}{19}{figure.caption.14}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces \emph {MainPlotArea}\relax }}{20}{figure.caption.15}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Supervisório didático e seus objetos principais\relax }}{16}{figure.caption.11}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces \emph {ModelSeriesDialog}: Caixa diálogo para edição dos eixos e título das séries\relax }}{18}{figure.caption.12}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces \emph {GraphicPlotConfig} não plotado em \emph {MainPlotArea}\relax }}{19}{figure.caption.13}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces \emph {MainPlotArea}\relax }}{21}{figure.caption.14}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Esquema de leitura serial no supervisório didático\relax }}{23}{figure.caption.15}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Diagrama de relações entre os objetos empregados e funções principais\relax }}{26}{figure.caption.16}%
 \addvspace {10\p@ }
-\contentsline {xchapter}{Caso de Teste}{25}{chapter.4}%
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Esquema de leitura serial no supervisório didático Fonte: Elaborado pelo Prof. Daniel Santana\relax }}{25}{figure.caption.16}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Série de Taylor truncada na primeira ordem\relax }}{27}{figure.caption.18}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Processo 1x1 com feedback e controlador\relax }}{28}{figure.caption.19}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Resposta do processo para controlador PI, desconsiderando restrições de processo\relax }}{31}{figure.caption.20}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Resposta do processo para controlador PI, incluindo restrições de processo\relax }}{32}{figure.caption.21}%
+\contentsline {xchapter}{Caso de Teste}{27}{chapter.4}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Esquema de leitura serial no supervisório didático Fonte: Elaborado pelo Prof. Daniel Santana\relax }}{27}{figure.caption.17}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Processo 1x1 com feedback e controlador\relax }}{30}{figure.caption.19}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Resposta do processo para controlador PI, desconsiderando restrições de processo\relax }}{36}{figure.caption.20}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Resposta do processo para controlador PI, incluindo restrições de processo\relax }}{38}{figure.caption.21}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Resposta do LQR no primeiro caso de teste\relax }}{38}{figure.caption.22}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Resposta do LQR no caso 2\relax }}{39}{figure.caption.23}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Resposta do LQR no caso 3\relax }}{40}{figure.caption.24}%
 \addvspace {10\p@ }
-\contentsline {xchapter}{Exemplo}{35}{appendix.A}%
+\contentsline {xchapter}{Conclusão}{43}{chapter.5}%
+\addvspace {10\p@ }
+\contentsline {xchapter}{Códigos}{47}{appendix.A}%
+\addvspace {10\p@ }
+\contentsline {xchapter}{Tutorial de utilização do supervisório didático}{51}{appendix.B}%
+\contentsline {figure}{\numberline {B.1}{\ignorespaces Objeto \emph {TransferFunctionConfig} (à esquerda)\relax }}{53}{figure.caption.26}%

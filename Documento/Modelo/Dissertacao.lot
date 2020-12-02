@@ -1,16 +1,19 @@
 \babel@toc {brazil}{}
 \babel@toc {english}{}
 \babel@toc {brazil}{}
-\contentsline {xchapter}{}{xvi}{section*.5}%
+\contentsline {xchapter}{}{xviii}{section*.5}%
 \addvspace {10\p@ }
 \contentsline {xchapter}{Introdução}{1}{chapter.1}%
 \addvspace {10\p@ }
 \contentsline {xchapter}{Fundamentação Teórica}{5}{chapter.2}%
 \addvspace {10\p@ }
 \contentsline {xchapter}{Desenvolvimento do Sistema Supervisório}{13}{chapter.3}%
-\contentsline {table}{\numberline {3.1}{\ignorespaces Bibliotecas Python utilizadas no desenvolvimento do supervisório didático\relax }}{15}{table.caption.11}%
 \addvspace {10\p@ }
-\contentsline {xchapter}{Caso de Teste}{25}{chapter.4}%
-\contentsline {table}{\numberline {4.1}{\ignorespaces Tabela de parâmetros e variáveis do sistema\relax }}{26}{table.caption.17}%
+\contentsline {xchapter}{Caso de Teste}{27}{chapter.4}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Tabela de parâmetros e variáveis do sistema\relax }}{28}{table.caption.18}%
 \addvspace {10\p@ }
-\contentsline {xchapter}{Exemplo}{35}{appendix.A}%
+\contentsline {xchapter}{Conclusão}{43}{chapter.5}%
+\addvspace {10\p@ }
+\contentsline {xchapter}{Códigos}{47}{appendix.A}%
+\addvspace {10\p@ }
+\contentsline {xchapter}{Tutorial de utilização do supervisório didático}{51}{appendix.B}%

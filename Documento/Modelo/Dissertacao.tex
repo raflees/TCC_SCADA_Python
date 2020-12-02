@@ -17,13 +17,16 @@
 \usepackage{capitulos}
 \usepackage{color}
 \usepackage[font=footnotesize]{caption}
+\usepackage{csquotes}
 \usepackage{subcaption}
 \usepackage{tabulary, array}
+\usepackage{movie15}
 \usepackage{rotating}
 \usepackage{graphicx}
 \usepackage{icomma}
 \usepackage{epigraph}
 \usepackage{pdfpages}
+\usepackage[section]{placeins}
 \usepackage{hyperref}
 \usepackage{trivfloat}
 \usepackage{tikz}
@@ -94,6 +97,10 @@
 \restylefloat{quadro} % Forçar posição da legenda
 \renewcommand{\listquadroname}{Lista de Quadros} % Forçar texto na Lista de Quadros
 
+% Codigo
+\newcounter{cntcode}[section]
+\newenvironment{code}{\refstepcounter{cntcode} \begin{center} Código \thecntcode \end{center}}
+{}
 
 \addto\captionsbrazil{
     %% ajusta nomes padroes do babel
@@ -112,11 +119,11 @@
 
 \begin{document}
 	
-\title{TÍTULO}
-\foreigntitle{TITLE}
+\title{}
+\foreigntitle{}
 \author{RAFAEL GUIMARÃES}{LUCENA}
-\advisor{Prof. Dr.}{NOME SOBRENOME}{ÚLTIMO SOBRENOME}{D.Sc.}
-\coadvisor{Prof. Dr.}{NOME SOBRENOME}{ÚLTIMO SOBRENOME}{D.Sc.}
+\advisor{Prof. Dr.}{DANIEL DINIZ}{SANTANA}{D.Sc.}
+%\coadvisor{Prof. Dr.}{NOME SOBRENOME}{ÚLTIMO SOBRENOME}{D.Sc.}
 %\examiner{Prof.}{Argimiro Resende Secchi}{D.Sc.}
 %\examiner{Prof.}{Leizer Schnitman}{D.Sc.}
 %\examiner{}{Pleycienne Trajano Ribeiro}{D.Sc.}
@@ -141,17 +148,20 @@
 
 Agradecimentos
 
+% REMOVER
+\epigraph{\textit{Death is a promise, and your life is a lie}}{Oliver Sykes}
 
-\epigraph{\textit{``Nunca tenha certeza de nada, porque a sabedoria começa com a dúvida.''}}{Freud}
-
-\epigraph{\textit{``A única coisa que me espera é exatamente o inesperado.''}}{Clarice Lispector}
+\epigraph{\textit{I don't get mad, I get even}}{Dave Mustaine}
 
 \begin{abstract}
 
-\noindent Resumo.
+\begin{center}
+	RESUMO
+\end{center}
 
+\noindent Este trabalho apresenta, dentro do âmbito acadêmico, o desenvolvimento de um sistema supervisório ou SCADA construído em linguagem Python. A proposta surgiu como uma alternativa a tecnologias existentes, e tenta sanar problemas delas advindos, como custo, incompatibilidade e obsolência. Além disto, visa fomentar o uso de tecnologias gratuitas na universidade. O objetivo foi de construir um programa que, além de plotar em tempo real sinais recebidos por comunicação serial, salve estas séries de dados e possibilite outros métodos de entrada de dados. Além disto, o processo de criação do sistema foi descrito detalhadamente, tornando este documento uma possível referência para outros trabalhos de construção de interface com Python. Os resultados apresentados validam o funcionamento da ferramenta e trazem resultados coerentes.
 
-\noindent \textbf{Palavras-chave.} palavra-chave 1, palavra-chave 2, palavra-chave 3
+\noindent \textbf{Palavras-chave.} Python, SCADA, sistema supervisório, open-source
 
 \end{abstract}
 
@@ -159,7 +169,7 @@ Agradecimentos
 
 \noindent abstract
 
-\noindent \textbf{Keywords.} keyword 1, keyword 2, keyword 3
+\noindent \textbf{Keywords.} Python, SCADA, open-source
 
 \end{foreignabstract}
 
@@ -187,18 +197,19 @@ Agradecimentos
 \include{Fundamentacao}
 \include{CriacaoSistema}
 \include{CasoTeste}
-
+\include{Conclusao}
 
 \backmatter
 
-% \bibliographystyle{abnt-alf}
+%\bibliographystyle{abnt-alf}
 % INCLUA AQUI O SEU ARQUIVO DE REFERÊNCIA
-%\bibliography{References_rev02.bib}
+\bibliography{bibliografia.bib}
 
 \appendix
 \addcontentsline{toc}{chapter}{Anexos e Apêndices}
 
-\include{ApendiceXX}
+\include{Apendice1}
+\include{Apendice2}
 
 %\includepdf{CAPA_DISSERTACAO_PEI_DANIEL_DINIZ_SANTANA_FUNDO.pdf}
 

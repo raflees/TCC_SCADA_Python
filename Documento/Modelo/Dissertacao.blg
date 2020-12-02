@@ -1,0 +1,110 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: Dissertacao.aux
+Reallocating 'name_of_file' (item size: 1) to 15 items.
+A level-1 auxiliary file: Introducao.aux
+Reallocating 'name_of_file' (item size: 1) to 18 items.
+A level-1 auxiliary file: Fundamentacao.aux
+Reallocating 'name_of_file' (item size: 1) to 19 items.
+A level-1 auxiliary file: CriacaoSistema.aux
+Reallocating 'name_of_file' (item size: 1) to 14 items.
+A level-1 auxiliary file: CasoTeste.aux
+Case mismatch error between cite keys lourenco2007 and Lourenco2007
+---line 19 of file CasoTeste.aux
+ : \citation{lourenco2007
+ :                       }
+I'm skipping whatever remains of this command
+Reallocating 'name_of_file' (item size: 1) to 14 items.
+A level-1 auxiliary file: Conclusao.aux
+Reallocating 'name_of_file' (item size: 1) to 16 items.
+Reallocating 'name_of_file' (item size: 1) to 17 items.
+Reallocating 'name_of_file' (item size: 1) to 14 items.
+A level-1 auxiliary file: Apendice1.aux
+Reallocating 'name_of_file' (item size: 1) to 12 items.
+The style file: abntex2-alf.bst
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'wiz_functions' (item size: 4) to 6000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'wiz_functions' (item size: 4) to 9000 items.
+Database file #1: abntex2-options.bib
+Database file #2: bibliografia.bib
+Warning--entry type for "Elipse2019" isn't style-file defined
+--line 26 of file bibliografia.bib
+Warning--entry type for "Lourenco2007" isn't style-file defined
+--line 36 of file bibliografia.bib
+Warning--entry type for "Martins2007" isn't style-file defined
+--line 71 of file bibliografia.bib
+Warning--entry type for "Roggia2016" isn't style-file defined
+--line 79 of file bibliografia.bib
+Warning--entry type for "Denver1995" isn't style-file defined
+--line 100 of file bibliografia.bib
+Warning--entry type for "ArduinoSerial" isn't style-file defined
+--line 109 of file bibliografia.bib
+I was expecting a `,' or a `}'---line 114 of file bibliografia.bib
+ :  
+ :  url = {https://www.arduino.cc/reference/en/language/functions/communication/serial/},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Repeated entry---line 127 of file bibliografia.bib
+ : @thesis{Moraes2016
+ :                   ,
+I'm skipping whatever remains of this entry
+Warning--entry type for "QT2020" isn't style-file defined
+--line 148 of file bibliografia.bib
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'glb_str_end' (item size: 4) to 20 items.
+Reallocating 'glb_str_ptr' (item size: 4) to 20 items.
+Reallocating 'global_strs' (item size: 1) to 4000000 items.
+Warning--faltando school em Moraes2016
++---------------------------------------------------------+
+| Estilo bibliográfico abntex2-alf.bst versão v-1.9.7           |
+| Em caso de dúvidas ou problemas com este estilo procure |
+| http://www.abntex.net.br/                               |
++---------------------------------------------------------+
+You've used 16 entries,
+            6714 wiz_defined-function locations,
+            1275 strings with 11191 characters,
+and the built_in function-call counts, 13749 in all, are:
+= -- 1456
+> -- 302
+< -- 147
++ -- 333
+- -- 94
+* -- 824
+:= -- 1835
+add.period$ -- 46
+call.type$ -- 16
+change.case$ -- 120
+chr.to.int$ -- 19
+cite$ -- 15
+duplicate$ -- 873
+empty$ -- 913
+format.name$ -- 451
+if$ -- 3155
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 262
+newline$ -- 70
+num.names$ -- 60
+pop$ -- 351
+preamble$ -- 1
+purify$ -- 55
+quote$ -- 0
+skip$ -- 1234
+stack$ -- 1
+substring$ -- 483
+swap$ -- 318
+text.length$ -- 4
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 21
+warning$ -- 1
+while$ -- 85
+width$ -- 0
+write$ -- 202
+(There were 3 error messages)
