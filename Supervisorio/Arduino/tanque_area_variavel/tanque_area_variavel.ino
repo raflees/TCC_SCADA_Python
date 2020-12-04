@@ -46,8 +46,8 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   
-  h1 = 1.0;
-  h2 = 2.0;
+  h1 = 0.0;
+  h2 = 0.0;
   u1 = 0;
   u2 = 0;
 
@@ -95,11 +95,11 @@ void loop() {
 
     Serial.print(t0/1000);
     Serial.print('\t');
-    Serial.print(h1, 2);//+(float) random(-1,1)/80.,2);
+    Serial.print(h1, 3);// (float)random(-1,1)/80. ,3);
     Serial.print('\t');
-    Serial.print(h2, 2);//+(float) random(-1,1)/80.,2);
+    Serial.print(h2, 3);// +(float) random(-1,1)/80., 3);
     Serial.print('\t');
-    Serial.print(u1, 2);
+    Serial.print(u1, 3);
     Serial.print('\t');
-    Serial.println(u2, 2);
+    Serial.println(u2, 3);
 }

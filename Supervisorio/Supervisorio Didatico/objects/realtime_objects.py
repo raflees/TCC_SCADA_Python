@@ -123,8 +123,13 @@ class SCADADialog (QtWidgets.QDialog):
 				try:
 					self.lock = True
 					for i in range(len(self.plotted)):
-						for elem in self.to_be_plotted[i]:
-							self.plotted[i] = np.append(self.plotted[i], elem)
+						#Time Serie
+						if i == 0:
+							for elem in self.to_be_plotted[i]:
+								self.plotted[i] = np.append(self.plotted[i], elem)
+						else:
+							for elem in self.to_be_plotted[i]:
+									self.plotted[i] = np.append(self.plotted[i], elem)
 
 					self.to_be_plotted = []
 					self.lock = False
@@ -210,30 +215,30 @@ class SCADADialog (QtWidgets.QDialog):
 		self.pids = []
 		self.pids.append(simple_pid.PID(0.1067, 0.0067, setpoint=2.5))#, output_limits=(0, 1)))
 		self.pids.append(simple_pid.PID(0.1067, 0.0067, setpoint=2.5))#, output_limits=(0, 1)))
-		'''A = np.matrix([[-0.063, 0.046],[-0.063, 0]])
+		A = np.matrix([[-0.063, 0.046],[0, -0.063]])
 		B = np.matrix([[0.937, 0],[0, 0.937]])
 		R = np.matrix([[0.5, 0],[0, 0.5]])
-		Q = np.matrix([[2, 0],[0, 2]])
+		Q = np.matrix([[0.5, 0],[0, 0.5]])
 		K, P, V = controlpy.synthesis.controller_lqr(A, B, Q, R)
-		self.K = K.tolist()'''
+		self.K = K.tolist()
 		rho = 1000
 		g = 9.8
 		k = 0.001
 
-		self.sp_h1 = 1
-		self.sp_h2 = 1
-		self.sp_u1 = 0
-		self.sp_u2 = k*math.sqrt(rho*g)
+		self.h1ss = 1
+		self.h2ss = 1
+		self.u1ss = 0
+		self.u2ss = k*math.sqrt(rho*g)
 
-		self.pids = []
+		'''self.pids = []
 		self.pids.append(simple_pid.PID(0.1067, 0.0067, setpoint= 2.5 - self.sp_h1))#, output_limits=(0, 1)))
-		self.pids.append(simple_pid.PID(0.1067, 0.0067, setpoint= 2.5 - self.sp_h1))#, output_limits=(0, 1)))
+		self.pids.append(simple_pid.PID(0.1067, 0.0067, setpoint= 2.5 - self.sp_h1))#, output_limits=(0, 1)))'''
 
-		'''print('Matriz dos ganhos')
+		print('Matriz dos ganhos')
 		print(self.K)
 		print('Leis de controle (em desvio):')
 		print('u1 = -({:.2f}*h1 + {:.2f}*h2)'.format(self.K[0][0], self.K[0][1]))
-		print('u2 = -({:.2f}*h1 + {:.2f}*h2)'.format(self.K[1][0], self.K[1][1]))'''
+		print('u2 = -({:.2f}*h1 + {:.2f}*h2)'.format(self.K[1][0], self.K[1][1]))
 		return
 
 	def loop_control(self, input_data):
@@ -241,19 +246,18 @@ class SCADADialog (QtWidgets.QDialog):
 			print('No Read')
 			return
 
-		input_data[0] = input_data[0] - self.sp_h1
-		input_data[1] = input_data[1] - self.sp_h2
-		signals = [self.pids[i](input_value) for i, input_value in enumerate(input_data)]
-		signals[0] = signals[0] + self.sp_u1
-		signals[1] = signals[1] + self.sp_u2
-		''' = 	[-(input_data[0]*self.K[0][0] + input_data[1]*self.K[0][1]) + self.sp_u1,
-					-(input_data[0]*self.K[1][0] + input_data[1]*self.K[1][1]) + self.sp_u2]'''
+		input_data[0] = input_data[0] - self.h1ss
+		input_data[1] = input_data[1] - self.h2ss
+		#signals = [self.pids[i](input_value) for i, input_value in enumerate(input_data)]
+		signals = 	[-(input_data[0]*self.K[0][0] + input_data[1]*self.K[0][1]) + self.u1ss,
+					-(input_data[0]*self.K[1][0] + input_data[1]*self.K[1][1]) + self.u2ss]
 		for signal in signals:
 			resp = '{:.3f}'.format(float(signal)/10).encode('UTF-8')
 			self.porta.write(resp)
 
 		print('Got {}'.format(['{:.2f}'.format(data).encode('UTF-8') for data in input_data]))
 		print('Sent {}'.format(['{:.2f}'.format(sig).encode('UTF-8') for sig in signals]))
+
 		return
 
 def isFloat(string):

@@ -1,0 +1,110 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: Dissertacao.aux
+Reallocating 'name_of_file' (item size: 1) to 15 items.
+A level-1 auxiliary file: Introducao.aux
+Reallocating 'name_of_file' (item size: 1) to 18 items.
+A level-1 auxiliary file: Fundamentacao.aux
+Reallocating 'name_of_file' (item size: 1) to 19 items.
+A level-1 auxiliary file: CriacaoSistema.aux
+Reallocating 'name_of_file' (item size: 1) to 14 items.
+A level-1 auxiliary file: CasoTeste.aux
+Reallocating 'name_of_file' (item size: 1) to 14 items.
+A level-1 auxiliary file: Conclusao.aux
+Reallocating 'name_of_file' (item size: 1) to 16 items.
+Reallocating 'name_of_file' (item size: 1) to 17 items.
+Reallocating 'name_of_file' (item size: 1) to 14 items.
+A level-1 auxiliary file: Apendice1.aux
+Reallocating 'name_of_file' (item size: 1) to 14 items.
+A level-1 auxiliary file: Apendice2.aux
+Reallocating 'name_of_file' (item size: 1) to 12 items.
+The style file: abntex2-alf.bst
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'wiz_functions' (item size: 4) to 6000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'wiz_functions' (item size: 4) to 9000 items.
+Database file #1: abntex2-options.bib
+Database file #2: bibliografia.bib
+Warning--entry type for "Elipse2019" isn't style-file defined
+--line 54 of file bibliografia.bib
+Warning--entry type for "Lourenco2007" isn't style-file defined
+--line 62 of file bibliografia.bib
+Warning--entry type for "Overflow2019" isn't style-file defined
+--line 90 of file bibliografia.bib
+Warning--entry type for "Martins2007" isn't style-file defined
+--line 173 of file bibliografia.bib
+Warning--entry type for "Roggia2016" isn't style-file defined
+--line 181 of file bibliografia.bib
+Warning--entry type for "Denver1995" isn't style-file defined
+--line 197 of file bibliografia.bib
+Warning--entry type for "ArduinoSerial" isn't style-file defined
+--line 204 of file bibliografia.bib
+I was expecting a `,' or a `}'---line 208 of file bibliografia.bib
+ :  
+ :  url = {https://www.arduino.cc/reference/en/language/functions/communication/serial/},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Repeated entry---line 219 of file bibliografia.bib
+ : @thesis{Moraes2016
+ :                   ,
+I'm skipping whatever remains of this entry
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'glb_str_end' (item size: 4) to 20 items.
+Reallocating 'glb_str_ptr' (item size: 4) to 20 items.
+Reallocating 'global_strs' (item size: 1) to 4000000 items.
+Warning--campo year vazio ou faltando em Overflow2019
+Warning--campo year vazio ou faltando em Elipse2012
+Warning--faltando school em Moraes2016
+Warning--campo note vazio em santana2019
++---------------------------------------------------------+
+| Estilo bibliográfico abntex2-alf.bst versão v-1.9.7           |
+| Em caso de dúvidas ou problemas com este estilo procure |
+| http://www.abntex.net.br/                               |
++---------------------------------------------------------+
+You've used 27 entries,
+            6714 wiz_defined-function locations,
+            1334 strings with 12706 characters,
+and the built_in function-call counts, 26207 in all, are:
+= -- 2794
+> -- 552
+< -- 389
++ -- 701
+- -- 168
+* -- 1600
+:= -- 3400
+add.period$ -- 82
+call.type$ -- 27
+change.case$ -- 219
+chr.to.int$ -- 36
+cite$ -- 29
+duplicate$ -- 1953
+empty$ -- 1502
+format.name$ -- 851
+if$ -- 5782
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 459
+newline$ -- 127
+num.names$ -- 106
+pop$ -- 585
+preamble$ -- 1
+purify$ -- 89
+quote$ -- 0
+skip$ -- 2496
+stack$ -- 1
+substring$ -- 967
+swap$ -- 717
+text.length$ -- 15
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 38
+warning$ -- 4
+while$ -- 154
+width$ -- 0
+write$ -- 361
+(There were 2 error messages)

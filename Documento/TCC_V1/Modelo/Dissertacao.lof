@@ -1,0 +1,39 @@
+\babel@toc {brazil}{}
+\babel@toc {english}{}
+\babel@toc {brazil}{}
+\contentsline {xchapter}{}{l}{section*.4}%
+\addvspace {10\p@ }
+\contentsline {xchapter}{Introdução}{1}{chapter.1}%
+\addvspace {10\p@ }
+\contentsline {xchapter}{Fundamentação Teórica}{5}{chapter.2}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Processo 1x1 com feedback e controlador\relax }}{7}{figure.caption.6}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Tela exemplo de um sistema supervisório\relax }}{9}{figure.caption.7}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Pirâmide da automação\relax }}{10}{figure.caption.8}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Exemplo de transmissão serial de uma sequência de 3 bytes\relax }}{11}{figure.caption.9}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Janela \emph {QMainWindow} com um \emph {QGroupBox} como Widget central, contendo vários outros Widgets em um layout \emph {QGridLayout} dentro de outro layout \emph {QHBoxLayout}\relax }}{14}{figure.caption.10}%
+\addvspace {10\p@ }
+\contentsline {xchapter}{Desenvolvimento do Sistema Supervisório}{15}{chapter.3}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Supervisório didático e seus objetos principais\relax }}{19}{figure.caption.11}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces \emph {ModelSeriesDialog}: Caixa diálogo para edição dos eixos e título das séries\relax }}{21}{figure.caption.12}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces \emph {GraphicPlotConfig} não plotado em \emph {MainPlotArea}\relax }}{22}{figure.caption.13}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces \emph {MainPlotArea}\relax }}{23}{figure.caption.14}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Esquema de leitura serial no supervisório didático\relax }}{25}{figure.caption.15}%
+\addvspace {10\p@ }
+\contentsline {xchapter}{validação do SUpervisório Didático}{29}{chapter.4}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Esquema de leitura serial no supervisório didático\relax }}{30}{figure.caption.16}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Sistema partido no estado estacionário\relax }}{32}{figure.caption.19}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Interface com as séries salvas\relax }}{37}{figure.caption.20}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Resposta do processo para controlador PI, incluindo restrições de processo\relax }}{38}{figure.caption.21}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Resposta do LQR no caso 1\relax }}{38}{figure.caption.22}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Resposta do LQR no caso 2\relax }}{39}{figure.caption.23}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Resposta do LQR no caso 2\relax }}{40}{figure.caption.24}%
+\addvspace {10\p@ }
+\contentsline {xchapter}{Conclusão}{41}{chapter.5}%
+\addvspace {10\p@ }
+\contentsline {xchapter}{Códigos}{45}{appendix.A}%
+\addvspace {10\p@ }
+\contentsline {xchapter}{Tutorial de utilização do supervisório didático}{49}{appendix.B}%
+\contentsline {figure}{\numberline {B.1}{\ignorespaces Objeto \emph {TransferFunctionConfig} (à esquerda)\relax }}{51}{figure.caption.26}%
+\addvspace {10\p@ }
+\contentsline {xchapter}{Códigos}{57}{appendix.C}%
+\contentsline {figure}{\numberline {C.1}{\ignorespaces Diagrama de relações entre os objetos empregados e funções principais\relax }}{58}{figure.caption.27}%

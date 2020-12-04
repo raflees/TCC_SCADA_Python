@@ -1,6 +1,6 @@
 pyqt5
 matplotlib
 numpy
-serial
+pyserial
 control
 simple-pid
