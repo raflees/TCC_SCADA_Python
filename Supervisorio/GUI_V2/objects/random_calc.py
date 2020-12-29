@@ -1,36 +1,87 @@
-import controlpy
-import numpy as np
+Ku1 = 0.2
+Ku2 = 0.2
+Kx1 = -0.05
+Kx2 = -.2
+Td = 5
 
+p1 = 1/(Ku1*Td)
+i1 = -Kx1/(Ku1*Td)
+p2 = 1/(Ku2*Td)
+i2 = -Kx2/(Ku2*Td)
 
-A = 4
-B = 1
-hm = 4
-rho = 1000
-g = 9.8
-k = 0.001
-'''
-h1ss = 1
-h2ss = 1
-u1ss = 0
-u2ss = k*math.sqrt(rho*g)
-
-gamma = (A-B)/(2*hm)
-beta = 4/(4*pi*pow(gamma*h1ss,2) + 4*B*gamma*h1ss + pow(B,2))
-dbeta = -4*(8*pi*pow(gamma,2)*h1ss + 4*gamma*B)/pow((4*pi*pow(gamma*h1ss,2) + 4*B*gamma*h1ss + pow(B,2)),2)
-
-A = -(dbeta*k*sqrt(rho*g*h1ss)+beta*k*sqrt(rho*g)/(2*sqrt(h1ss)))
-B = beta*k*sqrt(rho*g)/(2*sqrt(h1ss))
-print(k*sqrt(rho*g*2.5))'''
-
-A = np.matrix([[-0.063, 0.046],[0, -0.063]])
-B = np.matrix([[0.937, 0],[0, 0.937]])
-Q = np.matrix([[0.5, 0],[0, 0.5]])
-R = np.matrix([[0.5, 0],[0, 0.5]])
-input_data = [1, 2]
-K, P, e = controlpy.synthesis.controller_lqr(A, B, Q, R)
-#K = [list(gain[0]) for gain in list(K)]
-print(K.tolist())
+print('C1(s) = {:.3f} + {:.3f}/s'.format(p1, i1))
+print('C2(s) = {:.3f} + {:.3f}/s'.format(p2, i2))
 exit()
-signals = 	[input_data[0]*K[0][0] + input_data[1]*K[0][1],
-			input_data[0]*K[1][0] + input_data[1]*K[1][1]]
-print(signals)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ea = 3361.5
+ra = 0.05
+aa = 0.09
+ba = -30.1535
+Eb = 1947.5357
+rb = 0.05
+ab = -0.09
+bb = 31.2535
+
+e = 2.7183
+R = 8.314462
+
+Cf = 0
+Cn = 0
+Ca0 = 10
+T = 55+273
+dt = 0.001
+t = 0
+
+print(-Ea*(aa*T+ba)/(R*T))
+
+vca = []
+vcn = []
+vcf = []
+vt = []
+while t < 40:
+	Ca = Ca0 - Cf - Cn
+	Cf = Cf + (ra*pow(e,(-Ea*(aa*T+ba)/(R*T)))*Ca)*dt
+	Cn = Cn + (rb*pow(e,(-Eb*(ab*T+bb)/(R*T)))*Ca)*dt
+
+	vca.append(Ca)
+	vcf.append(Cf)
+	vcn.append(Cn)
+	vt.append(t)
+
+	print(Cf)
+
+	t = t + dt
+
+plt.plot(vt, vca, label='Ca(t)')
+plt.plot(vt, vcf, label='Cf(t)')
+plt.plot(vt, vcn, label='Cn(t)')
+plt.legend()
+plt.show()

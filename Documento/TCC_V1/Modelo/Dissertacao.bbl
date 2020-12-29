@@ -5,140 +5,208 @@
 \providecommand{\abntbstabout}[1]{}
 \abntbstabout{v-1.9.7 }
 
-\bibitem[Arduino Serial Function Reference 2019]{ArduinoSerial}
-\abntrefinfo{Arduino\ldots}{ARDUINO\ldots}{2019}
-{ARDUINO Serial Function Reference. 2019.}
+\bibitem[AGAAD 2020, Acesso em 09 de dez. de 2020]{SCADAimg1}
+\abntrefinfo{AGAAD}{AGAAD}{2020, Acesso em 09 de dez. de 2020}
+{AGAAD. \emph{SCADA System}. 2020, Acesso em 09 de dez. de 2020.
+Dispon{\'\i}vel em: \url{https://www.agaads.com/service/scada-system/}.}
 
-\bibitem[{Argentim} et al. 2013]{argentim2013}
-\abntrefinfo{{Argentim} et al.}{{Argentim} et al.}{2013}
-{{Argentim}, L.~M.; {Rezende}, W.~C.; {Santos}, P.~E.; {Aguiar}, R.~A. Pid, lqr
-  and lqr-pid on a quadcopter platform. In:  \emph{2013 International
-  Conference on Informatics, Electronics and Vision (ICIEV)}. [S.l.: s.n.],
-  2013. p.~1--6.}
+\bibitem[Arduino 2019, Acesso em 08 de dez. de 2020]{ArduinoSerial}
+\abntrefinfo{Arduino}{ARDUINO}{2019, Acesso em 08 de dez. de 2020}
+{ARDUINO. \emph{{Arduino Serial Function Reference}}. 2019, Acesso em 08 de
+  dez. de 2020.
+Dispon{\'\i}vel em:
+  \url{https://www.arduino.cc/reference/en/language/functions/communication/serial/}.}
+
+\bibitem[Argentim et al. 2013]{argentim2013}
+\abntrefinfo{Argentim et al.}{ARGENTIM et al.}{2013}
+{ARGENTIM, L.~M.; REZENDE, W.~C.; SANTOS, P.~E.; AGUIAR, R.~A. {PID, LQR and
+  LQR-PID on a quadcopter platform}. In:  \emph{2013 International Conference
+  on Informatics, Electronics and Vision, ICIEV 2013}. [S.l.: s.n.], 2013.
+  p.~1--6.
+ISBN 9781479903979.}
+
+\bibitem[Barros 2007]{Lourenco2007}
+\abntrefinfo{Barros}{BARROS}{2007}
+{BARROS, P.~R. \emph{{Sintonia de Controladores PID Introdu{\c{c}}{\~{a}}o}}.
+  2007. 1--22~p.
+Dispon{\'\i}vel em: \url{http://ltodi.est.ips.pt/smarques/CS/Pid.pdf}.}
 
 \bibitem[Bayer 2012]{sqlalchemy}
 \abntrefinfo{Bayer}{BAYER}{2012}
-{BAYER, M. Sqlalchemy. In:  BROWN, A.; WILSON, G. (Ed.). \emph{The Architecture
-  of Open Source Applications Volume II: Structure, Scale, and a Few More
-  Fearless Hacks}. aosabook.org, 2012.
+{BAYER, M. {SQLAlchemy}. In:  BROWN, A.; WILSON, G. (Ed.). \emph{The
+  Architecture of Open Source Applications Volume II: Structure, Scale, and a
+  Few More Fearless Hacks}. aosabook.org, 2012.
 Dispon{\'\i}vel em: \url{http://aosabook.org/en/sqlalchemy.html}.}
 
 \bibitem[Bolton 2015]{Bolton2015}
 \abntrefinfo{Bolton}{BOLTON}{2015}
-{BOLTON, W. \emph{Programable Logic Controllers}. [S.l.: s.n.], 2015.}
+{BOLTON, W. \emph{{Programable Logic Controllers}}. [S.l.]: Elsevier, 2015.}
 
-\bibitem[control 2019]{pythoncontrol}
-\abntrefinfo{control}{CONTROL}{2019}
-{CONTROL python. Python control systems library.
-2019.
-Dispon{\'\i}vel em: \url{https://python-control.readthedocs.io/en/0.8.3/}.}
+\bibitem[Cooper e Draves 1988]{threads}
+\abntrefinfo{Cooper e Draves}{COOPER; DRAVES}{1988}
+{COOPER, E.~C.; DRAVES, R.~P. C threads.
+1988.}
 
 \bibitem[Denver 1995]{Denver1995}
 \abntrefinfo{Denver}{DENVER}{1995}
-{DENVER, A. \emph{Serial Communication in Win32}. 1995.}
+{DENVER, A. \emph{{Serial Communication in Win32}}. 1995.}
 
-\bibitem[Developer Survey Results 2019]{Overflow2019}
-\abntrefinfo{Developer\ldots}{DEVELOPER\ldots}{}
-{DEVELOPER Survey Results 2019.
-Dispon{\'\i}vel em: \url{https://insights.stackoverflow.com/survey/2019}.}
+\bibitem[{Elipse Software} 2010]{Elipse2012}
+\abntrefinfo{{Elipse Software}}{{Elipse Software}}{2010}
+{{Elipse Software}. \emph{{Manual do Usu{\'{a}}rio do E3}}.
+[S.l.], 2010.}
 
-\bibitem[Elipse Knowledge Base 2019]{Elipse2019}
-\abntrefinfo{Elipse\ldots}{ELIPSE\ldots}{2019}
-{ELIPSE Knowledge Base. 2019.
+\bibitem[{Elipse Software} 2019, Acesso em 01 de dez. de 2020]{Elipse2019}
+\abntrefinfo{{Elipse Software}}{{Elipse Software}}{2019, Acesso em 01 de dez.
+  de 2020}
+{{Elipse Software}. \emph{{Elipse Knowledge Base}}. 2019, Acesso em 01 de dez.
+  de 2020.
 Dispon{\'\i}vel em:
   \url{https://kb.elipse.com.br/kb29583-utilizando-o-e3studio-em-modo-demo/}.}
+
+\bibitem[Garcia 2019]{junior2019}
+\abntrefinfo{Garcia}{GARCIA}{2019}
+{GARCIA, E. \emph{{Introdu{\c{c}}{\~{a}}o a Sistemas de Supervis{\~{a}}o,
+  Controle e Aquisi{\c{c}}{\~{a}}o de Dados: SCADA}}. Alta Books, 2019.
+ISBN 9788550809175. Dispon{\'\i}vel em:
+  \url{https://books.google.com.br/books?id=vgOcDwAAQBAJ}.}
 
 \bibitem[Harris et al. 2020]{harris2020array}
 \abntrefinfo{Harris et al.}{HARRIS et al.}{2020}
 {HARRIS, C.~R.; MILLMAN, K.~J.; WALT, S.~J. van~der; GOMMERS, R.; VIRTANEN, P.;
   COURNAPEAU, D.; WIESER, E.; TAYLOR, J.; BERG, S.; SMITH, N.~J.; KERN, R.;
-  PICUS, M.; HOYER, S.; KERKWIJK, M.~H. van; BRETT, M.; HALDANE, A.; R{'{\i}}O,
-  J.~F. del; WIEBE, M.; PETERSON, P.; G{'{e}}RARD-MARCHANT, P.; SHEPPARD, K.;
-  REDDY, T.; WECKESSER, W.; ABBASI, H.; GOHLKE, C.; OLIPHANT, T.~E. Array
-  programming with {NumPy}.
-\emph{Nature}, Springer Science and Business Media {LLC}, v.~585, n.~7825, p.
-  357--362, setembro 2020.
+  PICUS, M.; HOYER, S.; KERKWIJK, M.~H. van; BRETT, M.; HALDANE, A.; R'IO,
+  J.~F. del; WIEBE, M.; PETERSON, P.; G'ERARD-MARCHANT, P.; SHEPPARD, K.;
+  REDDY, T.; WECKESSER, W.; ABBASI, H.; GOHLKE, C.; OLIPHANT, T.~E. {Array
+  programming with {\{}NumPy{\}}}.
+\emph{Nature}, Springer Science and Business Media {\{}LLC{\}}, v.~585,
+  n.~7825, p. 357--362, 2020.
 Dispon{\'\i}vel em: \url{https://doi.org/10.1038/s41586-020-2649-2}.}
 
 \bibitem[Hunter 2007]{hunter2007matplotlib}
 \abntrefinfo{Hunter}{HUNTER}{2007}
-{HUNTER, J.~D. Matplotlib: A 2d graphics environment.
-\emph{Computing in science \& engineering}, IEEE, v.~9, n.~3, p. 90--95, 2007.}
-
-\bibitem[Júnior 2019]{junior2019}
-\abntrefinfo{Júnior}{JúNIOR}{2019}
-{JúNIOR, E.~G. \emph{Introdução a Sistemas de Supervisão, Controle e
-  Aquisição de Dados: SCADA}. [S.l.]: Alta Books, 2019.}
-
-\bibitem[Katsuhiro 2010]{katsuhiro2010}
-\abntrefinfo{Katsuhiro}{KATSUHIRO}{2010}
-{KATSUHIRO, O. \emph{Engenharia de Controle Moderno}. [S.l.: s.n.], 2010.}
+{HUNTER, J.~D. {Matplotlib: A 2D graphics environment}.
+\emph{Computing in science {\&} engineering}, IEEE, v.~9, n.~3, p. 90--95,
+  2007.}
 
 \bibitem[Lathi 2007]{Lathi2007}
 \abntrefinfo{Lathi}{LATHI}{2007}
-{LATHI, B.~P. \emph{Sinais e sistemas lineares}. [S.l.: s.n.], 2007.}
+{LATHI, B.~P. \emph{{Sinais e sistemas lineares}}. [S.l.]: Bookman, 2007.}
 
 \bibitem[Liechti 2020]{pyserial}
 \abntrefinfo{Liechti}{LIECHTI}{2020}
-{LIECHTI, C. pyserial 3.0 documentation.
+{LIECHTI, C. {pySerial 3.0 Documentation}.
 2020.
-Dispon{\'\i}vel em: \url{https://pythonhosted.org/pyserial/\#}.}
-
-\bibitem[Lourenço 1997]{Lourenco2007}
-\abntrefinfo{Lourenço}{LOURENçO}{1997}
-{LOURENçO, J. \emph{Sintonia de Controladores}. 1997.
-Dispon{\'\i}vel em: \url{http://ltodi.est.ips.pt/smarques/CS/Pid.pdf}.}
-
-\bibitem[Manual do Usuário do E3]{Elipse2012}
-\abntrefinfo{Manual\ldots}{MANUAL\ldots}{}
-{MANUAL do Usuário do E3.
-[S.l.].}
+Dispon{\'\i}vel em: \url{https://pythonhosted.org/pyserial/{}.}
 
 \bibitem[Martins 2007]{Martins2007}
 \abntrefinfo{Martins}{MARTINS}{2007}
-{MARTINS, G.~M. \emph{Princípios de Automação Industrial}. 2007.}
+{MARTINS, G.~M. \emph{{Princ{\'{i}}pios de Automa{\c{c}}{\~{a}}o Industrial}}.
+  2007.}
 
-\bibitem[Mazidi, Mckinlay e Causey 2008]{Mazidi2016}
-\abntrefinfo{Mazidi, Mckinlay e Causey}{MAZIDI; MCKINLAY; CAUSEY}{2008}
-{MAZIDI, A.~M.; MCKINLAY, R.~D.; CAUSEY, D. \emph{PIC Microcontroller and
-  Embedded Systems: Using Assembly and C for PIC18}. [S.l.: s.n.], 2008.}
+\bibitem[MathWorks 2020, Acesso em 08 de dez. de 2020]{MathWorks}
+\abntrefinfo{MathWorks}{MATHWORKS}{2020, Acesso em 08 de dez. de 2020}
+{MATHWORKS. \emph{New Licence for Matlab Student 2020b}. 2020, Acesso em 08 de
+  dez. de 2020.
+Dispon{\'\i}vel em:
+  \url{https://www.mathworks.com/store/link/products/student/new}.}
+
+\bibitem[Mazidi e Causey 2009]{Mazidi2016}
+\abntrefinfo{Mazidi e Causey}{MAZIDI; CAUSEY}{2009}
+{MAZIDI, M.~A.; CAUSEY, D. \emph{{HCS12 Microcontroller and Embedded Systems
+  Using Assembly and C with CodeWarrior}}. [S.l.: s.n.], 2009. 752~p.
+ISBN 9780136072294.}
 
 \bibitem[Moraes 2016]{Moraes2016}
 \abntrefinfo{Moraes}{MORAES}{2016}
 {MORAES, A.~S.
-\emph{Desenvolvimento de sistema supervisório didático para controle de
-  inversor de frequência acionando motor de indução trifásico}.
-Trabalho de conclusão de curso, 2016.}
+\emph{{Desenvolvimento de sistema supervis{\'{o}}rio did{\'{a}}tico para
+  controle de inversor de frequ{\^{e}}ncia acionando motor de
+  indu{\c{c}}{\~{a}}o trif{\'{a}}sico}}.
+Trabalho de conclus{\~{a}}o de curso, 2016.}
+
+\bibitem[Ogata 2010]{katsuhiro2010}
+\abntrefinfo{Ogata}{OGATA}{2010}
+{OGATA, K. \emph{{Engenharia de Controle Moderno}}. [S.l.: s.n.], 2010. 912~p.
+ISBN 9788576058106.}
 
 \bibitem[PyQT 2020]{pyqtdoc}
 \abntrefinfo{PyQT}{PYQT}{2020}
-{PYQT. Pyqt reference guide.
+{PYQT. {PyQt Reference Guide}.
 2020.
 Dispon{\'\i}vel em:
   \url{https://www.riverbankcomputing.com/static/Docs/PyQt5/}.}
 
+\bibitem[Python-control 2019]{pythoncontrol}
+\abntrefinfo{Python-control}{PYTHON-CONTROL}{2019}
+{PYTHON-CONTROL. {Python Control Systems Library}.
+2019.
+Dispon{\'\i}vel em: \url{https://python-control.readthedocs.io/en/0.8.3/}.}
+
+\bibitem[{Riverbank Computing Limited} 2020]{QT2020}
+\abntrefinfo{{Riverbank Computing Limited}}{{Riverbank Computing
+  Limited}}{2020}
+{{Riverbank Computing Limited}. \emph{{Documentation for PyQt}}. 2020.
+Dispon{\'\i}vel em: \url{https://pypi.org/project/PyQt5/}.}
+
 \bibitem[Roggia e Fuentes 2016]{Roggia2016}
 \abntrefinfo{Roggia e Fuentes}{ROGGIA; FUENTES}{2016}
 {ROGGIA, L.; FUENTES, R.~C.
-Apostila, \emph{Automação Industrial}. 2016.}
+Apostila, \emph{{Automa{\c{c}}{\~{a}}o Industrial}}. 2016.}
 
-\bibitem[Rossum 2003]{Rossum2003}
-\abntrefinfo{Rossum}{ROSSUM}{2003}
+\bibitem[Rossum 2003, Acesso em 08 de dez. de 2020]{Rossum2003}
+\abntrefinfo{Rossum}{ROSSUM}{2003, Acesso em 08 de dez. de 2020}
 {ROSSUM, G. van. The making of python.
-2003.}
+2003, Acesso em 08 de dez. de 2020.
+Dispon{\'\i}vel em: \url{https://www.artima.com/intv/python.html}.}
 
 \bibitem[Santana 2019]{santana2019}
 \abntrefinfo{Santana}{SANTANA}{2019}
-{SANTANA, D.~D. Notas de aula. 2019.}
+{SANTANA, D.~D. {Notas de aula}. 2019.}
+
+\bibitem[{SHM Automação} 2020, Acesso em 08 de dez. de 2020]{SHMR}
+\abntrefinfo{{SHM Automação}}{{SHM Automação}}{2020, Acesso em 08 de dez.
+  de 2020}
+{{SHM Automação}. \emph{Comprar software em SHM Automação}. 2020, Acesso em
+  08 de dez. de 2020.
+Dispon{\'\i}vel em: \url{https://www.shmr.com.br/software1/}.}
+
+\bibitem[Shreeharsha 2007, Acesso em 09 de dez. de 2020]{SerialImg}
+\abntrefinfo{Shreeharsha}{SHREEHARSHA}{2007, Acesso em 09 de dez. de 2020}
+{SHREEHARSHA, P. \emph{Parallel Port Programming (Part 1) with C}. 2007, Acesso
+  em 09 de dez. de 2020.
+Dispon{\'\i}vel em: \url{http://electrosofts.com/parallel/}.}
 
 \bibitem[Siemens 1999]{Siemens1999}
 \abntrefinfo{Siemens}{SIEMENS}{1999}
-{SIEMENS. \emph{SIMATIC HMI WinCC Manual}.
+{SIEMENS. \emph{{SIMATIC HMI WinCC Manual}}.
 [S.l.], 1999.}
+
+\bibitem[Silva 2017, Acesso em 09 de dez. de 2020]{PiramideImg}
+\abntrefinfo{Silva}{SILVA}{2017, Acesso em 09 de dez. de 2020}
+{SILVA, D. Pirâmide de automação industrial.
+2017, Acesso em 09 de dez. de 2020.
+Dispon{\'\i}vel em:
+  \url{https://www.logiquesistemas.com.br/blog/piramide-de-automacao-industrial/attachment/354/}.}
+
+\bibitem[Silva et al. 2013]{silva2013}
+\abntrefinfo{Silva et al.}{SILVA et al.}{2013}
+{SILVA, M.~R.; OLIVEIRA, {\^{A}}.~R. de; CARMO, M.~J. do; JUNIOR, L. O. d.~A.
+  {Import{\^{a}}ncia da ferramenta ScadaBR para o Ensino em Engenharia}. In:
+  \emph{XLI Congresso Brasileiro de Educa{\c{c}}{\~{a}}o em Engenharia
+  (COBENGE) - Educa{\c{c}}{\~{a}}o na Era do Conhecimento}. [S.l.: s.n.],
+  2013.}
 
 \bibitem[Smith e Corripio 2006]{corripio2006}
 \abntrefinfo{Smith e Corripio}{SMITH; CORRIPIO}{2006}
-{SMITH, C.~A.; CORRIPIO, A. \emph{Princípios e prática do contrle automático
-  de processos}. [S.l.: s.n.], 2006.}
+{SMITH, C.~A.; CORRIPIO, A. \emph{{Princ{\'{i}}pios e pr{\'{a}}tica do contrle
+  autom{\'{a}}tico de processos}}. [S.l.]: LTC, 2006.}
+
+\bibitem[Tung 2020, Acesso em 08 de dez. de 2020]{ZDNet}
+\abntrefinfo{Tung}{TUNG}{2020, Acesso em 08 de dez. de 2020}
+{TUNG, L. Programming languages: Python rules as java declines.
+2020, Acesso em 08 de dez. de 2020.
+Dispon{\'\i}vel em:
+  \url{https://www.zdnet.com/article/programming-languages-python-rules-rust-and-julia-rise-as-java-declines/}.}}
 
 \end{thebibliography}

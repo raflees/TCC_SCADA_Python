@@ -1,1 +1,13 @@
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {A.1}Código do arduino para Controle de Tanque com Área Variável}{\reset@font\mtcSfont 45}{section.A.1}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {A.1}Apresentação}{\reset@font\mtcSfont 49}{section.A.1}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {A.2}Primeira utilização}{\reset@font\mtcSfont 49}{section.A.2}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {A.3}Iniciando o programa}{\reset@font\mtcSfont 50}{section.A.3}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {A.4}Importando séries estáticas no programa}{\reset@font\mtcSfont 50}{section.A.4}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {A.4.1}Função de Transferência}{\reset@font\mtcSSfont 50}{subsection.A.4.1}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {A.4.2}Entrada por arquivo}{\reset@font\mtcSSfont 51}{subsection.A.4.2}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {A.4.3}Serial}{\reset@font\mtcSSfont 52}{subsection.A.4.3}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {A.4.4}Script Python}{\reset@font\mtcSSfont 52}{subsection.A.4.4}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {A.5}Monitoramento em tempo real}{\reset@font\mtcSfont 53}{section.A.5}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {A.6}Salvando e editando séries de dados}{\reset@font\mtcSfont 53}{section.A.6}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {A.7}Plotando séries}{\reset@font\mtcSfont 54}{section.A.7}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {A.8}Editando e exportando gráficos}{\reset@font\mtcSfont 54}{section.A.8}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {A.9}Deletando séries}{\reset@font\mtcSfont 54}{section.A.9}}

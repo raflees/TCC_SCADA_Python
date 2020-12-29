@@ -43,6 +43,8 @@
 \newcommand{\quadref}[1]{Quadro~\ref{#1}}
 \newcommand{\exref}[1]{Ap\^{e}ndice~\ref{#1}}
 
+\renewcommand{\familydefault}{\rmdefault}
+\renewcommand{\rmdefault}{phv}
 %\newcommand\addtotoc[1]{\refstepcounter{dummy}\addcontentsline{toc}{chapter}{#1}}
 
 \renewcommand{\lstlistingname}{Código}
@@ -121,7 +123,7 @@
 	\title{Desenvolvimento de sistema supervisório \emph{open source} didático}
 	\foreigntitle{Development of an open source, academic SCADA system}
 	\author{RAFAEL GUIMARÃES DE ARAÚJO}{LUCENA}
-	\advisor{Prof. Dr.}{DANIEL DINIZ}{SANTANA}{D.Sc.}
+	\advisor{Profº. Me.}{Profº. Me. DANIEL DINIZ}{SANTANA}{D.Sc.}
 	%\coadvisor{Prof. Dr.}{NOME SOBRENOME}{ÚLTIMO SOBRENOME}{D.Sc.}
 	%\examiner{Prof.}{Argimiro Resende Secchi}{D.Sc.}
 	%\examiner{Prof.}{Leizer Schnitman}{D.Sc.}
@@ -132,13 +134,16 @@
 	\keyword{Python}
 	\keyword{Open Source}
 	\keyword{SCADA}
-	%\cdd{S2320}{511}
+	\cdd{S2320}{511}
 	
 	%\includepdf{CAPA_DISSERTACAO_PEI_DANIEL_DINIZ_SANTANA_FRENTE.pdf}
 	
 	\maketitle
 	
-	%\frontmatter
+	\frontmatter
+	
+	\include{Contracapa}
+	\include{FolhaAssinatura}
 	
 	%\includepdf{FOLHA_APROVACAO.pdf}
 	%\dedication{Dedicatória}
@@ -158,9 +163,11 @@
 			RESUMO
 		\end{center}
 		
-		\noindent Este trabalho apresenta, dentro do âmbito acadêmico, o desenvolvimento de um sistema supervisório ou SCADA construído em linguagem Python. A proposta surgiu como uma alternativa a tecnologias existentes, e tenta sanar problemas delas advindos, como custo, incompatibilidade e obsolência. Além disto, visa fomentar o uso de tecnologias gratuitas na universidade. O objetivo foi de construir um programa que, além de plotar em tempo real sinais recebidos por comunicação serial, salve estas séries de dados e possibilite outros métodos de entrada de dados. Além disto, o processo de criação do sistema foi descrito detalhadamente, tornando este documento uma possível referência para outros trabalhos de construção de interface com Python. Os resultados apresentados validam o funcionamento da ferramenta e trazem resultados coerentes.
+		\vspace*{5mm}
 		
-		\noindent \textbf{Palavras-chave.} Python, SCADA, sistema supervisório, open-source
+		\noindent Este trabalho apresenta, dentro do âmbito acadêmico, o desenvolvimento de um sistema supervisório ou SCADA construído em linguagem Python. A proposta surgiu como uma alternativa a tecnologias existentes, e visa fomentar o uso de ferramentas gratuitas na universidade. O objetivo principal é construir um programa supervisório que, comunicando-se com dispositivos externos, desenhe as séries de dados recebidos em tempo real, e salve estas séries internamente, para análise posterior. Além disto, o processo de criação do sistema foi descrito detalhadamente, tornando este documento uma possível referência para outros trabalhos de construção de interface com Python. O sistema finalizado foi então aplicado à uma simulação de um processo real, e foi capaz de acompanhar sua resposta a sinais de controle diversos.
+		\\\\
+		\noindent \textbf{Palavras-chave.} Python, SCADA, sistema supervisório, \textit{open-source}
 		
 	\end{abstract}
 	
@@ -170,8 +177,10 @@
 			ABSTRACT
 		\end{center}
 	
-		\noindent abstract
-		
+		\vspace*{5mm}
+	
+		\noindent This work presents, from an academic perspective, the development of a SCADA system built on Python. The proposition arouse as an alternative to existing technologies, and aims to drive the spread of free platforms among the university. The main goal is to build a SCADA system which can communicate with external devices, plot series of data transmitted on a real-time base, and save them internally, allowing later use. Furthermore, the system's construction process is thoroughly described, which turns this work into a likeable reference to other endeavors related to interface programming with Python. The finished system is paired to a simulated process, and is able to track its behavior when submited to different control signals.
+		\\\\
 		\noindent \textbf{Keywords.} Python, SCADA, open-source
 		
 	\end{foreignabstract}
@@ -195,6 +204,7 @@
 	\setcounter{mtc}{5}
 	\mainmatter
 	
+	%\fontfamily{sf}\fontseries{m}\selectfont
 	
 	\include{Introducao}
 	\include{Fundamentacao}
@@ -206,7 +216,7 @@
 	
 	%\bibliographystyle{abnt-alf}
 	% INCLUA AQUI O SEU ARQUIVO DE REFERÊNCIA
-	\bibliography{bibliografia.bib}
+	\bibliography{bibliografia2.bib}
 	
 	\appendix
 	\addcontentsline{toc}{chapter}{Anexos e Apêndices}

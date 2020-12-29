@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2020.8.24)  4 DEC 2020 02:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2020.8.24)  28 DEC 2020 20:35
 entering extended mode
 **./Dissertacao.tex
 (Dissertacao.tex
@@ -1014,35 +1014,41 @@ Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 Package csquotes Info: Redefining alias 'default' -> 'brazil'.
-(Dissertacao.aux (Introducao.aux) (Fundamentacao.aux) (CriacaoSistema.aux)
-(CasoTeste.aux
+(Dissertacao.aux (Contracapa.aux) (FolhaAssinatura.aux) (Introducao.aux)
+(Fundamentacao.aux) (CriacaoSistema.aux) (CasoTeste.aux
 
 LaTeX Warning: Label `code_lqr_loop' multiply defined.
 
 ) (Conclusao.aux) (Apendice1.aux) (Apendice2.aux) (Apendice3.aux))
 \openout1 = `Dissertacao.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Trying to load font information for T1+phv on input line 12
+2.
+
+("C:\Program Files\MiKTeX\tex/latex/psnfss\t1phv.fd"
+File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
+)
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
-(lastpage)             ! on input line 120.
+(lastpage)             ! on input line 122.
 \AtBeginShipoutBox=\box77
-Package hyperref Info: Link coloring OFF on input line 120.
+Package hyperref Info: Link coloring OFF on input line 122.
 
 ("C:\Program Files\MiKTeX\tex/latex/hyperref\nameref.sty"
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
@@ -1055,9 +1061,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count345
 )
-LaTeX Info: Redefining \ref on input line 120.
-LaTeX Info: Redefining \pageref on input line 120.
-LaTeX Info: Redefining \nameref on input line 120.
+LaTeX Info: Redefining \ref on input line 122.
+LaTeX Info: Redefining \pageref on input line 122.
+LaTeX Info: Redefining \nameref on input line 122.
 
 (Dissertacao.out) (Dissertacao.out)
 \@outlinefile=\write7
@@ -1136,37 +1142,90 @@ Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 
 
 Package hyperref Warning: Option `colorlinks' has already been used,
-(hyperref)                setting the option has no effect on input line 139.
+(hyperref)                setting the option has no effect on input line 141.
 
-Package hyperref Info: Option `breaklinks' set `true' on input line 139.
-Package hyperref Info: Option `raiselinks' set `true' on input line 139.
-Package hyperref Info: Option `pageanchor' set `true' on input line 139.
+Package hyperref Info: Option `breaklinks' set `true' on input line 141.
+Package hyperref Info: Option `raiselinks' set `true' on input line 141.
+Package hyperref Info: Option `pageanchor' set `true' on input line 141.
 <UFBA.jpg, id=246, 289.3209pt x 446.1468pt>
 File: UFBA.jpg Graphic file (type jpg)
 <use UFBA.jpg>
-Package pdftex.def Info: UFBA.jpg  used on input line 139.
+Package pdftex.def Info: UFBA.jpg  used on input line 141.
 (pdftex.def)             Requested size: 86.79694pt x 133.84508pt.
+LaTeX Font Info:    Font shape `T1/phv/m/it' in size <14.4> not available
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 141.
 <<ot1.cmap>><<oml.cmap>><<oms.cmap>><<omx.cmap>>
-LaTeX Font Info:    Trying to load font information for U+msa on input line 139
+LaTeX Font Info:    Trying to load font information for U+msa on input line 141
 .
 
 ("C:\Program Files\MiKTeX\tex/latex/amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 139
+LaTeX Font Info:    Trying to load font information for U+msb on input line 141
 .
 
 ("C:\Program Files\MiKTeX\tex/latex/amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1
+)
+Underfull \hbox (badness 10000) in alignment at lines 141--141
+[][]
+ []
+
+[1
 
 
 {C:/Users/Rafael Lucena/AppData/Local/MiKTeX/pdftex/config/pdftex.map} <./UFBA.
-jpg>] [2
+jpg>]
+\openout2 = `Contracapa.aux'.
+
+ (Contracapa.tex
+LaTeX Font Info:    Font shape `T1/phv/b/it' in size <14.4> not available
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 4.
+
+Underfull \hbox (badness 10000) in paragraph at lines 11--17
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 11--17
+
+ []
+
+LaTeX Font Info:    Trying to load font information for TS1+phv on input line 1
+8.
+("C:\Program Files\MiKTeX\tex/latex/psnfss\ts1phv.fd"
+File: ts1phv.fd 2020/03/25 scalable font definitions for TS1/phv.
+)) [2
+
 
 ]
+\openout2 = `FolhaAssinatura.aux'.
+
+
+(FolhaAssinatura.tex
+LaTeX Font Info:    Font shape `T1/phv/b/it' in size <12> not available
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 8.
+) [3
+
+
+]
+LaTeX Font Info:    Font shape `T1/phv/m/it' in size <12> not available
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 170.
+
+Underfull \hbox (badness 10000) in paragraph at lines 168--171
+
+ []
+
+[4
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 182--185
+
+ []
+
 Package minitoc Info: I0024
-(minitoc)             PREPARING MINITOCS FROM Dissertacao.toc on input line 180
+(minitoc)             PREPARING MINITOCS FROM Dissertacao.toc on input line 189
 .
 Package minitoc Info: I0033
 (minitoc)             Writing Dissertacao.mtc1.
@@ -1220,29 +1279,28 @@ Package minitoc Info: I0033
 (minitoc)             Writing Dissertacao.mtc13.
 \openout3 = `Dissertacao.mtc13'.
 
- [3
+[5
 
-] [4
+] [6
 
-]
-(Dissertacao.toc [5] [6])
+] (Dissertacao.toc [7] [8])
 \tf@toc=\write8
 \openout8 = `Dissertacao.toc'.
 
- [7] [8
+ [9] [10
 
 ] (Dissertacao.lof)
 \tf@lof=\write9
 \openout9 = `Dissertacao.lof'.
 
- [9] [10
-
-] (Dissertacao.lot)
+ [11] [12]
+(Dissertacao.lot)
 \tf@lot=\write10
 \openout10 = `Dissertacao.lot'.
 
+ [13
 
-[11] [12
+] [14
 
 ] (Dissertacao.loa)
 \tf@loa=\write11
@@ -1251,122 +1309,146 @@ Package minitoc Info: I0033
 
 No file Dissertacao.los.
 No file Dissertacao.lab.
-[13] [14
+[15] [16
 
 ]
 \openout2 = `Introducao.aux'.
 
  (Introducao.tex
 Cap\'{\i }tulo 1.
-
-Package hyperref Warning: Suppressing empty link on input line 7.
-
 [1
 
 
-] [2] [3]) [4]
+]
+Overfull \hbox (7.18312pt too wide) in paragraph at lines 16--17
+[]\T1/phv/m/n/12 O pro-grama Sca-daBR, por exem-plo, trata-se jus-ta-mente de u
+m sis-tema SCADA
+ []
+
+
+Underfull \vbox (badness 7047) has occurred while \output is active []
+
+ [2]
+[3]) [4]
 \openout2 = `Fundamentacao.aux'.
 
  (Fundamentacao.tex
 Cap\'{\i }tulo 2.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [5
+[5
 
 
 
-]
-[6]
-<imagens/exemplo_processo.png, id=511, 581.17125pt x 120.45pt>
+] [6]
+<imagens/exemplo_processo.png, id=526, 296.60812pt x 65.49469pt>
 File: imagens/exemplo_processo.png Graphic file (type png)
 <use imagens/exemplo_processo.png>
 Package pdftex.def Info: imagens/exemplo_processo.png  used on input line 59.
-(pdftex.def)             Requested size: 341.43437pt x 70.76346pt.
- [7 <./imagens/exemplo_processo.png>] [8]
-<imagens/Supervisorio_exemplo.png, id=544, 429.10312pt x 286.06876pt>
+(pdftex.def)             Requested size: 341.43437pt x 75.39622pt.
+
+Underfull \vbox (badness 1331) has occurred while \output is active []
+
+ [7]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [8 <./imagens/exemplo_processo.png>]
+<imagens/Supervisorio_exemplo.png, id=557, 429.10312pt x 286.06876pt>
 File: imagens/Supervisorio_exemplo.png Graphic file (type png)
 <use imagens/Supervisorio_exemplo.png>
 Package pdftex.def Info: imagens/Supervisorio_exemplo.png  used on input line 9
-3.
+8.
 (pdftex.def)             Requested size: 429.10207pt x 286.06805pt.
 
-Overfull \hbox (2.31071pt too wide) in paragraph at lines 93--96
+Overfull \hbox (2.31071pt too wide) in paragraph at lines 98--101
  [][] 
  []
 
-<imagens/piramide_automacao.png, id=549, 607.51968pt x 386.19281pt>
+<imagens/piramide_automacao.png, id=563, 607.51968pt x 386.19281pt>
 File: imagens/piramide_automacao.png Graphic file (type png)
 <use imagens/piramide_automacao.png>
-Package pdftex.def Info: imagens/piramide_automacao.png  used on input line 103
+Package pdftex.def Info: imagens/piramide_automacao.png  used on input line 108
 .
 (pdftex.def)             Requested size: 341.43437pt x 217.05023pt.
-[9 <./imagens/Supervisorio_exemplo.png>] [10 <./imagens/piramide_automacao.png>
-]
-<imagens/serial_comm.png, id=575, 298.11375pt x 213.79875pt>
+[9] [10 <./imagens/Supervisorio_exemplo.png>] [11 <./imagens/piramide_automacao
+.png>]
+<imagens/serial_comm.png, id=597, 298.11375pt x 213.79875pt>
 File: imagens/serial_comm.png Graphic file (type png)
 <use imagens/serial_comm.png>
-Package pdftex.def Info: imagens/serial_comm.png  used on input line 123.
+Package pdftex.def Info: imagens/serial_comm.png  used on input line 128.
 (pdftex.def)             Requested size: 298.11302pt x 213.79822pt.
- [11 <./imagens/serial_comm.png>]
 
-Package hyperref Warning: Suppressing empty link on input line 136.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[12]
-<imagens/Exemplo_QWidget.png, id=608, 354.57469pt x 228.10219pt>
+ [12 <./imagens/serial_comm.png>] [13]
+Overfull \hbox (5.65733pt too wide) in paragraph at lines 147--148
+[]\T1/phv/m/n/12 Destacam-se 3 mó-du-los do PyQt uti-li-za-dos para cri-a-ção d
+e GUIs lo-cais ([]PYQT[],
+ []
+
+[14]
+LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 163.
+<imagens/Exemplo_QWidget.png, id=641, 354.57469pt x 228.10219pt>
 File: imagens/Exemplo_QWidget.png Graphic file (type png)
 <use imagens/Exemplo_QWidget.png>
-Package pdftex.def Info: imagens/Exemplo_QWidget.png  used on input line 159.
+Package pdftex.def Info: imagens/Exemplo_QWidget.png  used on input line 164.
 (pdftex.def)             Requested size: 354.57382pt x 228.10161pt.
-) [13] [14 <./imagens/Exemplo_QWidget.png>]
+) [15 <./imagens/Exemplo_QWidget.png>]
 \openout2 = `CriacaoSistema.aux'.
 
- (CriacaoSistema.tex
-Cap\'{\i }tulo 3.
-[15
+ (CriacaoSistema.tex [16
 
 
 
 ]
+Cap\'{\i }tulo 3.
+[17]
 Package hyperref Info: bookmark level for unknown quadro defaults to 0 on input
  line 28.
 
 Underfull \hbox (badness 10000) in paragraph at lines 43--43
-[]|\T1/cmr/m/n/12 python-
+[]|\T1/phv/m/n/12 python-
  []
 
-[16] [17]
-<imagens/GUI_macro.png, id=654, 755.07094pt x 478.03593pt>
+[18] [19]
+<imagens/GUI_macro.png, id=689, 755.07094pt x 478.03593pt>
 File: imagens/GUI_macro.png Graphic file (type png)
 <use imagens/GUI_macro.png>
 Package pdftex.def Info: imagens/GUI_macro.png  used on input line 67.
 (pdftex.def)             Requested size: 426.79135pt x 270.20021pt.
- [18] [19 <./imagens/GUI_macro.png>]
-<imagens/edit_series_dialog.png, id=665, 453.94594pt x 303.38344pt>
+ [20]
+LaTeX Font Info:    Font shape `T1/phv/b/it' in size <17.28> not available
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 73.
+ [21 <./imagens/GUI_macro.png>]
+<imagens/edit_series_dialog.png, id=701, 453.94594pt x 303.38344pt>
 File: imagens/edit_series_dialog.png Graphic file (type png)
 <use imagens/edit_series_dialog.png>
 Package pdftex.def Info: imagens/edit_series_dialog.png  used on input line 95.
 
 (pdftex.def)             Requested size: 426.79135pt x 285.23601pt.
- [20]
-<imagens/graphic_plot_config.png, id=677, 277.78781pt x 97.86563pt>
+ [22]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [23 <./imagens/edit_series_dialog.png>]
+<imagens/graphic_plot_config.png, id=718, 277.78781pt x 97.86563pt>
 File: imagens/graphic_plot_config.png Graphic file (type png)
 <use imagens/graphic_plot_config.png>
 Package pdftex.def Info: imagens/graphic_plot_config.png  used on input line 11
 4.
 (pdftex.def)             Requested size: 277.78711pt x 97.86537pt.
- [21 <./imagens/edit_series_dialog.png>] [22 <./imagens/graphic_plot_config.png
->]
-<imagens/main_plot_area.png, id=689, 423.08063pt x 277.035pt>
+ [24 <./imagens/graphic_plot_config.png>]
+<imagens/main_plot_area.png, id=725, 411.78844pt x 274.02374pt>
 File: imagens/main_plot_area.png Graphic file (type png)
 <use imagens/main_plot_area.png>
 Package pdftex.def Info: imagens/main_plot_area.png  used on input line 133.
-(pdftex.def)             Requested size: 341.43437pt x 223.58127pt.
- [23 <./imagens/main_plot_area.png>]
-Underfull \vbox (badness 7047) has occurred while \output is active []
+(pdftex.def)             Requested size: 341.43437pt x 227.20967pt.
+ [25]
+Underfull \vbox (badness 1383) has occurred while \output is active []
 
- [24]
-<imagens/esquema_serial.png, id=701, 429.0429pt x 216.81pt>
+ [26 <./imagens/main_plot_area.png>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [27]
+<imagens/esquema_serial.png, id=744, 429.0429pt x 216.81pt>
 File: imagens/esquema_serial.png Graphic file (type png)
 <use imagens/esquema_serial.png>
 Package pdftex.def Info: imagens/esquema_serial.png  used on input line 159.
@@ -1376,181 +1458,216 @@ Overfull \hbox (2.25049pt too wide) in paragraph at lines 159--161
  [][] 
  []
 
-[25 <./imagens/esquema_serial.png>] [26]) [27]
-\openout2 = `CasoTeste.aux'.
-
- (CasoTeste.tex [28
-
-
-
-]
-Cap\'{\i }tulo 4.
-<imagens/sistema_teste.png, id=723, 368.87813pt x 332.74312pt>
-File: imagens/sistema_teste.png Graphic file (type png)
-<use imagens/sistema_teste.png>
-Package pdftex.def Info: imagens/sistema_teste.png  used on input line 12.
-(pdftex.def)             Requested size: 341.43205pt x 281.12701pt.
-[29] [30 <./imagens/sistema_teste.png>]
-<imagens/estado_estacionario.png, id=748, 390.258pt x 231.264pt>
-File: imagens/estado_estacionario.png Graphic file (type png)
-<use imagens/estado_estacionario.png>
-Package pdftex.def Info: imagens/estado_estacionario.png  used on input line 85
-.
-(pdftex.def)             Requested size: 390.25703pt x 231.26343pt.
-
-Overfull \hbox (64.28268pt too wide) detected at line 97
-[]
+[28 <./imagens/esquema_serial.png>] [29])
+Overfull \hbox (13.01717pt too wide) in paragraph at lines 175--211
+[]\T1/phv/m/n/12 Sempre que uma sé-rie é in-cluída, edi-tada ou de-le-tada, o a
+r-quivo "au-to-save.dat"é
  []
 
 
-Underfull \vbox (badness 6825) has occurred while \output is active []
+Overfull \hbox (1.37785pt too wide) in paragraph at lines 175--211
+\T1/phv/m/n/12 so-bres-crito com a lista de sé-ries da ses-são (\T1/phv/m/sl/12
+ list-Se-ries\T1/phv/m/n/12 ). Em con-tra-par-tida, quando
+ []
 
- [31
+[30]
+\openout2 = `CasoTeste.aux'.
+
+ (CasoTeste.tex
+Cap\'{\i }tulo 4.
+<imagens/arduino.jpeg, id=759, 518.6878pt x 515.67656pt>
+File: imagens/arduino.jpeg Graphic file (type jpg)
+<use imagens/arduino.jpeg>
+Package pdftex.def Info: imagens/arduino.jpeg  used on input line 10.
+(pdftex.def)             Requested size: 341.44858pt x 281.1129pt.
+[31
+
+
+
+ <./imagens/arduino.jpeg>]
+<imagens/esquema_serial_arduino.png, id=765, 320.69812pt x 176.15813pt>
+File: imagens/esquema_serial_arduino.png Graphic file (type png)
+<use imagens/esquema_serial_arduino.png>
+Package pdftex.def Info: imagens/esquema_serial_arduino.png  used on input line
+ 19.
+(pdftex.def)             Requested size: 320.69733pt x 176.15768pt.
+<imagens/sistema_teste.png, id=768, 368.87813pt x 332.74312pt>
+File: imagens/sistema_teste.png Graphic file (type png)
+<use imagens/sistema_teste.png>
+Package pdftex.def Info: imagens/sistema_teste.png  used on input line 30.
+(pdftex.def)             Requested size: 341.43205pt x 281.12701pt.
+ [32 <./imagens/esquema_serial_arduino.png>]
+[33 <./imagens/sistema_teste.png>]
+<imagens/estado_estacionario.png, id=793, 390.258pt x 231.264pt>
+File: imagens/estado_estacionario.png Graphic file (type png)
+<use imagens/estado_estacionario.png>
+Package pdftex.def Info: imagens/estado_estacionario.png  used on input line 10
+3.
+(pdftex.def)             Requested size: 390.25703pt x 231.26343pt.
+ [34
 
 ]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [32 <./imagens/estado_estacionario.png>] [33]
-LaTeX Font Info:    Trying to load font information for T1+pcr on input line 15
+ [35 <./imagens/estado_estacionario.png>]
+Underfull \vbox (badness 1558) has occurred while \output is active []
+
+ [36]
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 17
 3.
 
 ("C:\Program Files\MiKTeX\tex/latex/psnfss\t1pcr.fd"
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-) [34]
+) [37]
 LaTeX Font Info:    Trying to load font information for TS1+pcr on input line 1
-72.
+92.
 
 ("C:\Program Files\MiKTeX\tex/latex/psnfss\ts1pcr.fd"
 File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
-) [35]
-<imagens/series_salvas.png, id=831, 755.07094pt x 476.53032pt>
+) [38] [39]
+<imagens/series_salvas.png, id=899, 755.07094pt x 476.53032pt>
 File: imagens/series_salvas.png Graphic file (type png)
 <use imagens/series_salvas.png>
-Package pdftex.def Info: imagens/series_salvas.png  used on input line 236.
+Package pdftex.def Info: imagens/series_salvas.png  used on input line 256.
 (pdftex.def)             Requested size: 426.79135pt x 269.3492pt.
-<imagens/save_icon.png, id=832, 22.58438pt x 21.83156pt>
+<imagens/save_icon.png, id=900, 22.58438pt x 21.83156pt>
 File: imagens/save_icon.png Graphic file (type png)
 <use imagens/save_icon.png>
-Package pdftex.def Info: imagens/save_icon.png  used on input line 240.
-(pdftex.def)             Requested size: 12.15228pt x 11.74713pt.
- [36 <./imagens/save_icon.png>]
-<imagens/PID_com_restricoes.png, id=864, 390.258pt x 231.264pt>
+Package pdftex.def Info: imagens/save_icon.png  used on input line 260.
+(pdftex.def)             Requested size: 12.41385pt x 12.0pt.
+ [40 <./imagens/series_salvas.png> <./imagens/save_icon.png>]
+<imagens/PID_com_restricoes.png, id=913, 390.258pt x 231.264pt>
 File: imagens/PID_com_restricoes.png Graphic file (type png)
 <use imagens/PID_com_restricoes.png>
-Package pdftex.def Info: imagens/PID_com_restricoes.png  used on input line 256
+Package pdftex.def Info: imagens/PID_com_restricoes.png  used on input line 276
 .
 (pdftex.def)             Requested size: 390.25703pt x 231.26343pt.
- [37 <./imagens/series_salvas.png>]
-<imagens/LQR_caso_1.png, id=872, 390.258pt x 231.264pt>
+<imagens/LQR_caso_1.png, id=914, 390.258pt x 231.264pt>
 File: imagens/LQR_caso_1.png Graphic file (type png)
 <use imagens/LQR_caso_1.png>
-Package pdftex.def Info: imagens/LQR_caso_1.png  used on input line 267.
+Package pdftex.def Info: imagens/LQR_caso_1.png  used on input line 287.
 (pdftex.def)             Requested size: 390.25703pt x 231.26343pt.
- [38 <./imagens/PID_com_restricoes.png> <./imagens/LQR_caso_1.png>]
-<imagens/LQR_caso_2.png, id=880, 390.258pt x 231.264pt>
+<imagens/LQR_caso_2.png, id=916, 390.258pt x 231.264pt>
 File: imagens/LQR_caso_2.png Graphic file (type png)
 <use imagens/LQR_caso_2.png>
-Package pdftex.def Info: imagens/LQR_caso_2.png  used on input line 278.
+Package pdftex.def Info: imagens/LQR_caso_2.png  used on input line 298.
 (pdftex.def)             Requested size: 390.25703pt x 231.26343pt.
-<imagens/edit_LQR_caso_2.png, id=882, 487.8225pt x 322.20375pt>
+ [41 <./imagens/PID_com_restricoes.png>]
+<imagens/edit_LQR_caso_2.png, id=923, 487.8225pt x 322.20375pt>
 File: imagens/edit_LQR_caso_2.png Graphic file (type png)
 <use imagens/edit_LQR_caso_2.png>
-Package pdftex.def Info: imagens/edit_LQR_caso_2.png  used on input line 287.
+Package pdftex.def Info: imagens/edit_LQR_caso_2.png  used on input line 307.
 (pdftex.def)             Requested size: 426.79135pt x 281.89809pt.
- [39 <./imagens/LQR_caso_2.png>]) [40 <./imagens/edit_LQR_caso_2.png>]
+) [42 <./imagens/LQR_caso_1.png>] [43 <./imagens/LQR_caso_2.png> <./imagens/edi
+t_LQR_caso_2.png>]
 \openout2 = `Conclusao.aux'.
 
- (Conclusao.tex
+ (Conclusao.tex [44
+
+
+
+]
 Cap\'{\i }tulo 5.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [41
+ [45])
+[46] (Dissertacao.bbl [47
 
 
 
-])
-[42] (Dissertacao.bbl [43
-
-
-
-]) [44]
+] [48]) [49]
 \openout2 = `Apendice1.aux'.
 
- (Apendice1.tex
+ (Apendice1.tex [50
+
+
+]
 Ap\^endice A.
-[45
 
+Overfull \hbox (11.10753pt too wide) in paragraph at lines 13--14
+[]\T1/phv/m/n/12 Para in-ta-la-ção das bi-bli-o-te-cas uti-li-za-das, roda-se o
+ ar-quivo ins-tall_-pac-ka-ges.bat,
+ []
 
-]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [46]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [47])
-[48]
-\openout2 = `Apendice2.aux'.
-
- (Apendice2.tex
-Ap\^endice B.
-[49
-
-
-
-]
-<imagens/transfer_func_config.png, id=1063, 410.2828pt x 147.55125pt>
+[51]
+<imagens/transfer_func_config.png, id=1004, 410.2828pt x 147.55125pt>
 File: imagens/transfer_func_config.png Graphic file (type png)
 <use imagens/transfer_func_config.png>
 Package pdftex.def Info: imagens/transfer_func_config.png  used on input line 3
-8.
+9.
 (pdftex.def)             Requested size: 410.2818pt x 147.55087pt.
- [50] [51 <./imagens/transfer_func_config.png>] [52] [53]
-<imagens/zoom_icon.png, id=1085, 24.09pt x 24.84282pt>
+ [52] [53 <./imagens/transfer_func_config.png>] [54] [55]
+<imagens/zoom_icon.png, id=1025, 24.09pt x 24.84282pt>
 File: imagens/zoom_icon.png Graphic file (type png)
 <use imagens/zoom_icon.png>
 Package pdftex.def Info: imagens/zoom_icon.png  used on input line 116.
-(pdftex.def)             Requested size: 11.39139pt x 11.74713pt.
-<imagens/move_icon.png, id=1086, 26.34843pt x 24.09pt>
+(pdftex.def)             Requested size: 11.63657pt x 12.0pt.
+<imagens/move_icon.png, id=1026, 26.34843pt x 24.09pt>
 File: imagens/move_icon.png Graphic file (type png)
 <use imagens/move_icon.png>
 Package pdftex.def Info: imagens/move_icon.png  used on input line 117.
-(pdftex.def)             Requested size: 12.84811pt x 11.74713pt.
-<imagens/home_icon.png, id=1087, 21.83156pt x 19.57312pt>
+(pdftex.def)             Requested size: 13.12473pt x 12.0pt.
+ [56 <./imagens/zoom_icon.png>]
+<imagens/home_icon.png, id=1032, 21.83156pt x 19.57312pt>
 File: imagens/home_icon.png Graphic file (type png)
 <use imagens/home_icon.png>
 Package pdftex.def Info: imagens/home_icon.png  used on input line 118.
-(pdftex.def)             Requested size: 13.10303pt x 11.74713pt.
-<imagens/limits_icon.png, id=1088, 22.58438pt x 21.83156pt>
+(pdftex.def)             Requested size: 13.38484pt x 12.0pt.
+<imagens/limits_icon.png, id=1033, 22.58438pt x 21.83156pt>
 File: imagens/limits_icon.png Graphic file (type png)
 <use imagens/limits_icon.png>
 Package pdftex.def Info: imagens/limits_icon.png  used on input line 119.
-(pdftex.def)             Requested size: 12.15228pt x 11.74713pt.
-<imagens/axes_icon.png, id=1089, 22.58438pt x 21.83156pt>
+(pdftex.def)             Requested size: 12.41385pt x 12.0pt.
+<imagens/axes_icon.png, id=1034, 22.58438pt x 21.83156pt>
 File: imagens/axes_icon.png Graphic file (type png)
 <use imagens/axes_icon.png>
 Package pdftex.def Info: imagens/axes_icon.png  used on input line 120.
-(pdftex.def)             Requested size: 12.15228pt x 11.74713pt.
+(pdftex.def)             Requested size: 12.41385pt x 12.0pt.
 File: imagens/save_icon.png Graphic file (type png)
 <use imagens/save_icon.png>
 Package pdftex.def Info: imagens/save_icon.png  used on input line 121.
-(pdftex.def)             Requested size: 12.15228pt x 11.74713pt.
-) [54 <./imagens/zoom_icon.png> <./imagens/move_icon.png> <./imagens/home_icon.
-png> <./imagens/limits_icon.png> <./imagens/axes_icon.png>] [55]
-\openout2 = `Apendice3.aux'.
+(pdftex.def)             Requested size: 12.41385pt x 12.0pt.
+) [57 <./imagens/move_icon.png> <./imagens/home_icon.png> <./imagens/limits_ico
+n.png> <./imagens/axes_icon.png>]
+\openout2 = `Apendice2.aux'.
 
- (Apendice3.tex [56
+ (Apendice2.tex [58
 
 
 
 ]
-Ap\^endice C.
-<imagens/diagrama_objetos.png, id=1107, 643.6848pt x 486.8589pt>
+Ap\^endice B.
+<imagens/diagrama_objetos.png, id=1048, 643.6848pt x 486.8589pt>
 File: imagens/diagrama_objetos.png Graphic file (type png)
 <use imagens/diagrama_objetos.png>
 Package pdftex.def Info: imagens/diagrama_objetos.png  used on input line 5.
 (pdftex.def)             Requested size: 643.68323pt x 486.85771pt.
-) [57] [58 <./imagens/diagrama_objetos.png>] 
+) [59] [60 <./imagens/diagrama_objetos.png>]
+\openout2 = `Apendice3.aux'.
+
+ (Apendice3.tex
+Ap\^endice C.
+
+Overfull \hbox (9.6122pt too wide) in paragraph at lines 3--3
+[]\T1/phv/b/n/17.28 Código do ar-duino para Con-trole de Tan-que com
+ []
+
+
+Underfull \vbox (badness 1590) has occurred while \output is active []
+
+ [61
+
+
+
+]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [62]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [63])
+[64] 
 AED: lastpage setting LastPage
 Package minitoc Info: I0009
 (minitoc)             Listing minitoc auxiliary files. 
@@ -1563,58 +1680,45 @@ Package movie15 Warning: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 (movie15)                @@ superseded by `media9'.           @@
 (movie15)                @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 219.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 219.
-(Dissertacao.aux (Introducao.aux) (Fundamentacao.aux) (CriacaoSistema.aux)
-(CasoTeste.aux) (Conclusao.aux) (Apendice1.aux) (Apendice2.aux) (Apendice3.aux)
-)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 219.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 219.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 229.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 229.
+(Dissertacao.aux (Contracapa.aux) (FolhaAssinatura.aux) (Introducao.aux)
+(Fundamentacao.aux) (CriacaoSistema.aux) (CasoTeste.aux) (Conclusao.aux)
+(Apendice1.aux) (Apendice2.aux) (Apendice3.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 229.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 229.
 Package rerunfilecheck Info: File `Dissertacao.out' has not changed.
-(rerunfilecheck)             Checksum: 1D7E9FC7BF5A70C8A29E80EC6D3D0BBE;4139.
+(rerunfilecheck)             Checksum: 2AC7971EC57D12DA3E48904771E649A4;4099.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 219.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 229.
  ) 
 Here is how much of TeX's memory you used:
- 28261 strings out of 480790
- 496177 string characters out of 2907029
- 920509 words of memory out of 3000000
- 42937 multiletter control sequences out of 15000+200000
- 551574 words of font info for 66 fonts, out of 3000000 for 9000
+ 28443 strings out of 480790
+ 499094 string characters out of 2907029
+ 924862 words of memory out of 3000000
+ 43072 multiletter control sequences out of 15000+200000
+ 587842 words of font info for 84 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 60i,14n,60p,941b,1911s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\Rafael Lucena\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi
-600\ecbi1200.pk>{C:/Program Files/MiKTeX/fonts/enc/dvips/base/8r.enc} <C:\Users
-\Rafael Lucena\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0800
-.pk> <C:\Users\Rafael Lucena\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/d
-pi600\ecbi1728.pk> <C:\Users\Rafael Lucena\AppData\Local\MiKTeX\fonts/pk/ljfour
-/jknappen/ec/dpi600\ecti1000.pk> <C:\Users\Rafael Lucena\AppData\Local\MiKTeX\f
-onts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\Rafael Lucena\AppData\
-Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk> <C:\Users\Rafael L
-ucena\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\
-Users\Rafael Lucena\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcr
-m0600.pk> <C:\Users\Rafael Lucena\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen
-/ec/dpi600\ecbx1728.pk> <C:\Users\Rafael Lucena\AppData\Local\MiKTeX\fonts/pk/l
-jfour/jknappen/ec/dpi600\ecsl1200.pk> <C:\Users\Rafael Lucena\AppData\Local\MiK
-TeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk> <C:\Users\Rafael Lucena\App
-Data\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\Raf
-ael Lucena\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1200.pk>
- <C:\Users\Rafael Lucena\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
-0\ecrm1200.pk><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pf
-b><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Progra
-m Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTe
-X/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX/fonts/type1
-/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfo
-nts/cm/cmr6.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pf
-b><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Progra
-m Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTe
-X/fonts/type1/urw/courier/ucrr8a.pfb>
-Output written on Dissertacao.pdf (72 pages, 2378322 bytes).
+ 60i,14n,60p,982b,1885s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files/MiKTeX/fonts/enc/dvips/base/8r.enc}<C:/Program Files/MiKTeX
+/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX/fonts/type1
+/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsf
+onts/cm/cmmi6.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8
+.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Prog
+ram Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKT
+eX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX/fonts/type1
+/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsf
+onts/cm/cmsy8.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/courier/ucrr8a.pfb><
+C:/Program Files/MiKTeX/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/M
+iKTeX/fonts/type1/urw/helvetic/uhvbo8a.pfb><C:/Program Files/MiKTeX/fonts/type1
+/urw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/helvetic/uhvr
+o8a.pfb>
+Output written on Dissertacao.pdf (80 pages, 2371840 bytes).
 PDF statistics:
- 1797 PDF objects out of 2073 (max. 8388607)
- 387 named destinations out of 1000 (max. 500000)
- 643 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1315 PDF objects out of 1440 (max. 8388607)
+ 406 named destinations out of 1000 (max. 500000)
+ 653 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -226,11 +226,11 @@ p\kern-.025em e}}\kern-.08em\TeX}
  % \@mainmatterfalse
   \pagenumbering{roman}
   \thispagestyle{empty}
-  \setcounter{page}{3}
+  \setcounter{page}{2}
   %\makefrontpage
   \clearpage
   \pagestyle{plain}
- \ifthenelse{\boolean{maledoc}}{}{\makecatalog}%
+ %\ifthenelse{\boolean{maledoc}}{}{\makecatalog}%
 }
 \renewcommand\mainmatter{%
   \immediate\write\@auxout{%
@@ -259,22 +259,25 @@ p\kern-.025em e}}\kern-.08em\TeX}
   %\makebox[20mm][c]{{\fontfamily{phv}\textbf{\small COPPE/UFRJ}}}
   \end{center}
   \begin{center}
-  \nohyphens{\MakeUppercase\local@title}\par
+  \MakeUppercase{\Large Universidade Federal da Bahia} \\	
+  \MakeUppercase{Escola Politécnica} \\
+  \vspace*{20mm}
+  \nohyphens{\large\MakeUppercase\local@title}\par
   \vspace*{28mm}
   \nohyphens{\@authname\ \@authsurn}\par
   \end{center}
   \vspace*{16mm}
-  \begin{flushright}
+  \begin{center}
   \begin{minipage}{80mm}
-  %\frontcover@maintext
+  \frontcover@maintext
   \end{minipage}\par
   \vspace*{7.5mm}
   \begin{tabularx}{80mm}[b]{@{}l@{ }X@{}}
-    \local@advisorstring: & \nohyphens{\@adname\ \@adsurn}\\
-    \ifthenelse{\equal{\@coadname}{\@empty}}{}{%
-      & \nohyphens{\@coadname\ \@coadsurn}\\}
+    %\local@advisorstring: & \nohyphens{\@adname\ \@adsurn}\\
+    %\ifthenelse{\equal{\@coadname}{\@empty}}{}{%
+    %  & \nohyphens{\@coadname\ \@coadsurn}\\}
   \end{tabularx}\par
-  \end{flushright}
+  \end{center}
   \vspace*{\fill}
   \begin{center}
   \local@cityname\par
@@ -421,7 +424,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \clearpage
   \thispagestyle{plain}
   \begin{otherlanguage}{english}
-  %\foreignabstract@toptext\par
+  \foreignabstract@toptext\par
   \vspace*{7mm}}{%
   \end{otherlanguage}
   \vspace*{\fill}
@@ -591,13 +594,14 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \newcommand\local@cityname{Salvador}
 \newcommand\local@statename{BA}
 \newcommand\local@countryname{Brasil}
-%\newcommand\frontcover@maintext{
-%  \sloppy\nohyphens{\local@doctype\ de \@degreename\
-%  \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
-%  ao Programa de P{\' o}s-gradua{\c c}{\~ a}o em \local@deptname, da \local@universityname, como parte dos requisitos
-%  necess{\' a}rios {\` a} obten{\c c}{\~ a}o do t{\' i}tulo de
-%  \local@degname\ em \local@deptname.}
-%}
+\newcommand\frontcover@maintext{
+  %\sloppy\nohyphens{Trabalho de conclusão de curso apresentado ao
+  	%colegiado do curso de Engenharia de Controle e
+  	%Automação de Processos da Universidade Federal
+  	%da Bahia como requisito para obtenção do título
+  	%de Bacharel em Engenharia de Controle e
+  	%Automação de Processos. }
+}
 \newcommand\frontpage@maintext{
   \noindent {\MakeUppercase\local@doctype}
   \ifthenelse{\boolean{maledoc}}{SUBMETIDO}{SUBMETIDA}
@@ -622,9 +626,9 @@ p\kern-.025em e}}\kern-.08em\TeX}
   %\local@degname\ em Ci{\^ e}ncias (\@degree)}
 }
 \newcommand\foreignabstract@toptext{%
-  \noindent \sloppy\nohyphens{Abstract of \foreign@doctype\ presented to
-  PEI/UFBA as a partial fulfillment of the requirements for the
-  degree of \foreign@degname\ of Science (\@degree)}
+  %\noindent \sloppy\nohyphens{Abstract of \foreign@doctype\ presented to
+  %PEI/UFBA as a partial fulfillment of the requirements for the
+  %degree of \foreign@degname\ of Science (\@degree)}
 }
 % Inserted by Márcio Martins
 %\DeclareOption{harvard}{

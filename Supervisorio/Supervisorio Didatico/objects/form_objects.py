@@ -1,6 +1,6 @@
 from .realtime_objects import *
 
-from PyQt5 import QtWidgets, QtCore, QtGui, QtChart
+from PyQt5 import QtWidgets, QtCore, QtGui
 from matplotlib.backends.backend_qt5agg import FigureCanvas, NavigationToolbar2QT
 import matplotlib.pyplot as plt
 import mpl_toolkits.axisartist as axisartist

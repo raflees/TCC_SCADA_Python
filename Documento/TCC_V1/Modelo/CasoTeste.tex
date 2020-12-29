@@ -1,31 +1,49 @@
-\chapter{validação do SUpervisório Didático}
+\chapter{Validação do Supervisório Didático}
 
-Nesta seção, serão utilizados 2 controladores devidamente sintonizados em um sistema simulado, cujas equações descritivas são conhecidas. No supervisório didático, existem mecanismos que simulam um controlador, sendo a finalidade deste processo validar os valores retornados pelo arduino, como respostas dos sinais de controle, e concluir sobre a empregabilidade do software supervisório.
+\section {Metodologia}
+
+Nesta seção, serão utilizados 2 controladores devidamente sintonizados em um sistema simulado, cujas equações descritivas são conhecidas. No supervisório didático, existem mecanismos que simulam um controlador e será programado um processo não linear no arduino, ilustrado na figura \ref{img_arduino}. A finalidade é de aplicar o supervisório didático em um processo modelado, gerar um gráfico de suas saídas como respostas dos sinais de controle, e, finalmente, concluir sobre a sua empregabilidade em aplicações didáticas.
+
+\begin{figure}[htb]
+	\centering
+	\caption{Arduino UNO utilizado na simulação do processo}
+	\includegraphics[width=0.8\textwidth,height=0.4\textheight]{arduino}
+	\label{img_arduino}
+\end{figure}
+
+A Figura \ref{img_esquema_arduino} esquematiza a interação entre o arduíno, controlador simulado no programa, e o supervisório em si.
+
+\begin{figure}[htb]
+	\centering
+	\caption{Arduino UNO utilizado na simulação do processo}
+	\includegraphics{esquema_serial_arduino}
+	\label{img_esquema_arduino}
+\end{figure}
 
 \section{Apresentação do Sistema}
 
-O sistema simulado pelo arduino se trata de dois tanques de área variável acoplados e alimentados por uma vazão controlável. A Figura \ref{img_sistema_teste} os esquematiza.
+O sistema simulado pelo Arduino se trata de dois tanques de área variável acoplados e alimentados por uma vazão controlável. A Figura \ref{img_sistema_teste} os esquematiza. O código do Arduino utilizado para os testes desta seção se encontram no Apêndice \ref{Chap:Apendice3}.
 
 \begin{figure}[htb]
 	\centering
 	\caption{Esquema de leitura serial no supervisório didático}
-	\includegraphics[width=0.8\textwidth,height=0.4\textheight]{sistema_teste}
+	\includegraphics[width=0.8\textwidth,height=0.4\textheight]{sistema_teste} \\
 	Fonte: Elaborado por \citeonline{santana2019}
 	\label{img_sistema_teste}
 \end{figure}
 
 Os tanques têm o formato de tronco de cone e as variáveis controladas são suas alturas em metro. As variáveis manipuladas são as vazões de entrada de fluido em ambos os tanques.
 
-As equações deste processo são descritas por
+As equações deste processo são descritas por:
 \begin{align}
-\frac{dh_1}{dt} &= \frac{1}{\beta(h_1)}(u_1 - k\sqrt{\rho g h_1} + k\sqrt{\rho g h_2}) \\
-\frac{dh_2}{dt} &= \frac{1}{\beta(h_2)}(u_2 - k\sqrt{\rho g h_2}) \\
-\beta(h_i) &= \frac{dV}{dh_i} \\
-V(h_i) &= \frac{\pi\gamma^2}{3}(h_i + \frac{B}{2\gamma})^3 - \frac{\pi}{3\gamma}(\frac{B}{2})^3 \\
-\gamma &= \frac{A-B}{2h_M}
+\frac{dh_1}{dt} &= \frac{1}{\beta(h_1)}(u_1 - k\sqrt{\rho g h_1} + k\sqrt{\rho g h_2}), \\
+\frac{dh_2}{dt} &= \frac{1}{\beta(h_2)}(u_2 - k\sqrt{\rho g h_2}), \\
+\beta(h_i) &= \frac{dV_i}{dh_i}, \\
+V(h_i) &= \frac{\pi\gamma^2}{3}(h_i + \frac{B}{2\gamma})^3 - \frac{\pi}{3\gamma}(\frac{B}{2})^3, \\
+\gamma &= \frac{A-B}{2h_M},
 \label{eq_descritivas}
 \end{align}
-e seus parâmetros e variáveis são descritos e dimensionados na tabela \ref{tbl_parameters}:
+e seus parâmetros e variáveis são descritos e dimensionados na tabela \ref{tbl_parameters}.
 
 \begin{table}[htb]
 	\centering
@@ -54,12 +72,12 @@ Por se tratar de um sistema não linear, pouco pode-se dizer de seu comportament
 
 Com as derivadas zeradas nas equações descritivas \ref{eq_descritivas}, tem-se que:
 \begin{equation}
-{h_1}_{ss} = (\frac{{u_1}_{ss}}{k\sqrt{\rho g}} + \sqrt{{h_2}_{ss}})^2
+{h_1}_{ss} = \bigg(\frac{{u_1}_{ss}}{k\sqrt{\rho g}} + \sqrt{{h_2}_{ss}}\bigg)^2,
 \end{equation}
 \begin{equation}
-{h_2}_{ss} = \frac{{u_2}_{ss}^2}{k^2 \rho g}
+{h_2}_{ss} = \frac{{u_2}_{ss}^2}{k^2 \rho g},
 \end{equation}
-, o que resultam em infinitos valores representando estados estacionários deste sistema. Para o processo de linearização, contemplado na próxima subseção, ao menos um ponto deve ser definidos. Partindo de um valor 0 para a vazão de alimentação do tanque 2, no topo, e uma altura final de 1 metro para o mesmo, calculam-se o restante dos estados estacionários na tabela \ref{tbl_ss}.
+o que resultam em infinitos valores representando estados estacionários deste sistema. Para o processo de linearização, contemplado na próxima subseção, ao menos um ponto deve ser definidos. Partindo de um valor 0 para a vazão de alimentação do tanque 2, no topo, e buscando um ponto estacionário em torno de 1 metro para cada altura, calcula-se os valores que satisfaçam tal condição na tabela \ref{tbl_ss}.
 
 \begin{table}[htb]
 	\centering
@@ -77,7 +95,7 @@ Com as derivadas zeradas nas equações descritivas \ref{eq_descritivas}, tem-se
 	\label{tbl_ss}
 \end{table}
 
-Para validar estes valores, é possível usar o supervisório didático como auxílio. Para isto, programa-se o arduino para simular o sistema, partindo dos pontos na tabela \ref{tbl_ss}, enquanto que o módulo do controlador no programa envia os valores constantes de ${u_1}_{ss}$ e ${u_2}_{ss}$. Executada a simulação, a Figura \ref{img_ss} mostra o resultado. Nota-se a altura $h_2$ do sistema cai ao iniciá-lo, mas isso se deu ao atraso de comunicação entre o arduino e o computador. Mesmo assim, o sistema retorna para uma região próxima à que foi iniciado, momento no qual não apresenta outras variações significativas.
+Para validar estes valores, é possível usar o supervisório didático como auxílio. Para isto, programa-se o arduino para simular o sistema, partindo os estados nos pontos na tabela \ref{tbl_ss}, enquanto que o módulo do controlador no programa envia um sinal degrau nas entradas, de valores ${u_1}_{ss}$ e ${u_2}_{ss}$. Desta forma, não se faz necessário um tempo muito grande para a convergência do sistema para o possível ponto estacionário. Executada a simulação, a Figura \ref{img_ss} mostra o resultado. Como esperado, o sistema converge para os valores estacionários, e conclui-se que os pontos calculados são coerentes para esta condição do sistema.
 
 \begin{figure}[htb]
 	\centering
@@ -90,52 +108,54 @@ Para validar estes valores, é possível usar o supervisório didático como aux
 
 Aplicando a linearização no sistema de estudo, as novas equações do sistema, em desvio, serão:
 \begin{align}
-\frac{dh_1}{dt} &= -\big(\frac{d\beta^{-1}(h)}{dh}\bigg|_{{h_1}_{ss}} k\sqrt{\rho g {h_1}_{ss}} + \frac{\beta^-1({h_1}_{ss}) k\sqrt{\rho g}}{2\sqrt{{h_1}_{ss}}}\big)\overline{h_1} + \big(\frac{\beta^-1({h_1}_{ss}) k\sqrt{\rho g}}{2\sqrt{{h_2}_{ss}}}\big)\overline{h_2} +  \beta^{-1}({h_1}_{ss})\overline{u_1} \\
-\frac{dh_2}{dt} &= -\big(\frac{d\beta^{-1}(h)}{dh}\bigg|_{{h_2}_{ss}} k\sqrt{\rho g {h_2}_{ss}} + \frac{\beta^-1({h_2}_{ss}) k\sqrt{\rho g}}{2\sqrt{{h_2}_{ss}}}\big)\overline{h_2} + \beta^{-1}({h_1}_{ss})\overline{u_2} \\
-\beta^{-1}(h) &= \frac{4}{4\pi(\gamma h)^2 + 4B\gamma h + B^2} \\
-\frac{d\beta^{-1}(h)}{dh} &= -4 \frac{8 \pi \gamma^2 h + 4 \gamma B}{(4\pi(\gamma h)^2 + 4B\gamma h + B^2)^2} \\
+\nonumber \frac{dh_1}{dt} = &-\big(\frac{d\beta^{-1}(h)}{dh}\bigg|_{{h_1}_{ss}} k\sqrt{\rho g {h_1}_{ss}} + \\
+&\frac{\beta^-1({h_1}_{ss}) k\sqrt{\rho g}}{2\sqrt{{h_1}_{ss}}}\big)\overline{h_1} + \big(\frac{\beta^-1({h_1}_{ss}) k\sqrt{\rho g}}{2\sqrt{{h_2}_{ss}}}\big)\overline{h_2} +  \beta^{-1}({h_1}_{ss})\overline{u_1}, \\
+\frac{dh_2}{dt} = &-\big(\frac{d\beta^{-1}(h)}{dh}\bigg|_{{h_2}_{ss}} k\sqrt{\rho g {h_2}_{ss}} + \frac{\beta^-1({h_2}_{ss}) k\sqrt{\rho g}}{2\sqrt{{h_2}_{ss}}}\big)\overline{h_2} + \beta^{-1}({h_1}_{ss})\overline{u_2}, \\
+\beta^{-1}(h) = &\frac{4}{4\pi(\gamma h)^2 + 4B\gamma h + B^2}, \\
+\frac{d\beta^{-1}(h)}{dh} = &-4 \frac{8 \pi \gamma^2 h + 4 \gamma B}{(4\pi(\gamma h)^2 + 4B\gamma h + B^2)^2},
 \end{align}
-Substituindo os estados estacionários da tabela \ref{tbl_ss} e os parâmetros da tabela \ref{tbl_parameters}, tem se:
+Substituindo os estados estacionários da tabela \ref{tbl_ss} e os parâmetros da tabela \ref{tbl_parameters}, tem-se:
 \begin{align}
-\overline{h_1(s)} = & \frac{0,046}{s + 0,063}\overline{h_2} + \frac{0,937}{s + 0,063}\overline{u_1} \\
-\overline{h_1(s)} = & \frac{0,937}{s + 0,063}\overline{u_2}
+\overline{h_1(s)} = & \frac{0,046}{s + 0,063}\overline{h_2} + \frac{0,937}{s + 0,063}\overline{u_1}, \\
+\overline{h_2(s)} = & \frac{0,937}{s + 0,063}\overline{u_2}.
 \end{align}
 
 Em formato de espaço de estados o sistema final linearizado será:
 \begin{equation}
-\begin{pmatrix} \dot{\overline{h_1}} \\ \dot{\overline{h_2}} \end{pmatrix} = \begin{pmatrix} -0,063 & 0,046 \\ 0 & -0,063 \end{pmatrix} \begin{pmatrix} \overline{h_1} \\ \overline{h_2} \end{pmatrix} + \begin{pmatrix} 0,937 & 0 \\ 0 & 0,937 \end{pmatrix} \begin{pmatrix} \overline{u_1} \\ \overline{u_2} \end{pmatrix}
+\begin{pmatrix} \dot{\overline{h_1}} \\ \dot{\overline{h_2}} \end{pmatrix} = \begin{pmatrix} -0,063 & 0,046 \\ 0 & -0,063 \end{pmatrix} \begin{pmatrix} \overline{h_1} \\ \overline{h_2} \end{pmatrix} + \begin{pmatrix} 0,937 & 0 \\ 0 & 0,937 \end{pmatrix} \begin{pmatrix} \overline{u_1} \\ \overline{u_2} \end{pmatrix}.
 \label{espaco_estados}
 \end{equation}
 
 \subsection{Sintonia do PI}
 
-Para a sintonia do PI pelo método síntese, toma-se uma entrada para cada saída, pelo critério de maior impacto. Pela equação \ref{espaco_estados}, nota-se que a entrada $u_1$ tem maior impacto em $h_1$ e $u_2$ em $h_2$. Logo, os controladores, projetados para um tempo de resposta $\tau_c$ de 10 segundos, de acordo com a equação \ref{sintese_controlador}, serão:
+Para a sintonia do PI pelo método síntese, toma-se uma entrada para cada saída, pelo critério de maior impacto. Pela equação \eqref{espaco_estados}, nota-se que a entrada $u_1$ tem impacto único em $h_1$ e que $u_2$ influencia $h_1$ e $h_2$ (pois $h_2$ se relaciona com $h_1$). Logo, os controladores, projetados para um tempo de resposta $\tau_c$ de 10 segundos, de acordo com a equação \eqref{sintese_controlador}, serão:
 \begin{equation}
-C_1(s) = C_2(s) = \frac{1}{10s} \frac{s + 0,063}{0,937} = 0,1067 + 0,0067 \frac{1}{s}
+C_1(s) = C_2(s) = \frac{1}{10s} \frac{s + 0,063}{0,937} = 0,1067 + 0,0067 \frac{1}{s}.
 \end{equation}
 
 \subsection{Sintonia do LQR}
 
-Para o presente caso de teste, partindo da equação \ref{espaco_estados}, tem-se como matrizes $A$ e $B$:
+Para o presente caso de teste, partindo da equação \eqref{espaco_estados}, tem-se como matrizes $A$ e $B$:
 \begin{equation}
 A = \begin{pmatrix} -0,063 & 0,046 \\ 0 & -0,063 \end{pmatrix},
-B = \begin{pmatrix} 0,937 & 0 \\ 0 & 0,937 \end{pmatrix}
+B = \begin{pmatrix} 0,937 & 0 \\ 0 & 0,937 \end{pmatrix}.
 \end{equation}
 
 Assumindo que nenhum estado nem entrada deve levar maior importância em relação aos outros, tem-se como matrizes de ganhos $Q$ e $R$
 \begin{equation}
 Q = \begin{pmatrix} 0,5 & 0 \\ 0 & 0,5 \end{pmatrix},
-R = \begin{pmatrix} 0,5 & 0 \\ 0 & 0,5 \end{pmatrix}
-\end{equation}
-, que geram a matriz de ganho $K$:
-\begin{equation}
-K = \begin{pmatrix} 0,935 & 0,023 \\ 0,023 & 0,936 \end{pmatrix}
+R = \begin{pmatrix} 0,5 & 0 \\ 0 & 0,5 \end{pmatrix}.
 \end{equation}
 
-De acordo com a equação \ref{lqr_generic_control_func}, as entradas do sistema serão então regidas pelas equações:
+A matriz de ganho $K$ é
+\begin{equation}
+K = \begin{pmatrix} 0,935 & 0,023 \\ 0,023 & 0,936 \end{pmatrix}.
+\end{equation}
+
+De acordo com a equação \eqref{lqr_generic_control_func}, as entradas do sistema serão então regidas pelas equações:
 \begin{align}
-\overline{u_1} &= 0,935 \overline{h_1} + 0,023 \overline{h_2} \\
-\overline{u_2} &= 0,023 \overline{h_1} + 0,936 \overline{h_2}
+\overline{u_1} &= 0,935 \overline{h_1} + 0,023 \overline{h_2}. \\
+\overline{u_2} &= 0,023 \overline{h_1} + 0,936 \overline{h_2}.
 \label{lqr_control_function}
 \end{align}
 
@@ -147,7 +167,7 @@ Como já mencionado, o supervisório didático implementa duas funções que pod
 
 \subsection{Controlador PI}
 
-Além da biblioteca \emph{python-control}, existe outra chamada \emph{simple-pid} que, como o nome indica, possui objetos que se comportam como controladores PID. Eles recebem como parâmetros seus respectivos ganhos, valores de setpoints, limites para a resposta e outros que são referenciados \href{https://pypi.org/project/simple-pid/}{em sua documentação}, e tem sua funçao de controle descrita como a equação \ref{eq_PID}. Para implementá-los no programa, na função \emph{setup\_control()}, criam-se tais objetos de acordo com o código \ref{code_pi_setup}.
+Além da biblioteca \emph{python-control}, existe outra chamada \emph{simple-pid} que, como o nome indica, possui objetos que se comportam como controladores PID. Eles recebem como parâmetros seus respectivos ganhos, valores de setpoints, limites para a resposta e outros que são referenciados \href{https://pypi.org/project/simple-pid/}{em sua documentação}, e tem sua funçao de controle descrita como a equação \eqref{eq_PID}. Para implementá-los no programa, na função \emph{setup\_control()}, criam-se tais objetos de acordo com o código \ref{code_pi_setup}.
 
 \begin{code}
 \begin{lstlisting}
@@ -177,7 +197,7 @@ Implementa-se, então, na função \emph{loop\_control()}, o código \ref{code_p
 
 \subsection{LQR}
 
-Uma das alternativas para a implementação do LQR no programa é a de usar a mesma biblioteca \emph{control} referenciada no Quadro \ref{qdr_used_libs}, que simula processos por funções de transferência. Nela existe a função \emph{lqr()} que retorna, entre outras saídas, a matriz de ganhos $K$ que parametriza a função de controle mostrada na equação \ref{lqr_generic_control_func}
+Uma das alternativas para a implementação do LQR no programa é a de usar a mesma biblioteca \emph{control} referenciada no Quadro \ref{qdr_used_libs}, que simula processos por funções de transferência. Nela existe a função \emph{lqr()} que retorna, entre outras saídas, a matriz de ganhos $K$ que parametriza a função de controle mostrada na equação \eqref{lqr_generic_control_func}
 
 Na função \emph{setup\_control()}, escreve-se o código \ref{code_lqr_loop}, onde calcula-se primeiramente a matriz de ganhos $K$ e a armazena como uma propriedade do objeto pai. Aqui também foram definidos os desvios das variáveis, que serão empregados no cálculo de cada sinal de controle.
 
@@ -204,7 +224,7 @@ return
 \label{code_lqr_loop}
 \end{code}
 
-Na função \emph{loop\_control()}, aplica-se a equação \ref{lqr_control_function} para o cálculo dos sinais de controle a cada iteração.
+Na função \emph{loop\_control()}, aplica-se a equação \eqref{lqr_control_function} para o cálculo dos sinais de controle a cada iteração.
 
 \begin{code}
 \begin{lstlisting}
@@ -239,7 +259,7 @@ Todos os casos de teste foram executados, e as séries foram salvas no programa,
 
 Com isto, a os gráficos foram exportandos clicando em \includegraphics[height=1em]{save_icon} e copiados para este documento.
 
-O código do Arduino encontra-se no Apêndice \ref{Chap:Apendice1}. Por simular o processo em si, foi incluído nele um trecho de código para limitar os estados e entradas nos seguintes critérios:
+Por simular o processo em si, foi incluído no código do Arduino um trecho de código para limitar os estados e entradas nos seguintes critérios:
 
 \begin{enumerate}
 	\item As alturas ${h_1}_{ss}$ e ${h_2}_{ss}$ devem estar compreendidas no intervalo [0, 4]m
@@ -257,7 +277,7 @@ Se trantando do controlador PI, entretanto, o controle não foi perfeito, como c
 	\label{img_pid_com_restricoes}
 \end{figure}
 
-Nota-se que o sinal de controle foi corretamente saturado em 0, validando o limitador do sistema. O gráfico também é contínuo, sem falhas visíveis de comunicação ou leituras discrepantes. Através de um curto script Python foi criada uma linha reta "setpoint" no gráfico plotada em conjunto com os resultados.
+Nota-se que o sinal de controle foi corretamente saturado em 0, validando o limitador do sistema. O gráfico também é contínuo, sem falhas visíveis de comunicação ou leituras discrepantes. Através de um curto script Python foi criada uma linha reta "setpoint" no gráfico gerado em conjunto com os resultados.
 
 Também para o caso do LQR não houveram interrupções ou leituras inesperadas durante o monitoramento. Percebeu-se que o sistema respondeu bem mais rápido que o do caso anterior, a custo de um maior esforço de controle.
 
@@ -279,17 +299,11 @@ Para dimunuir o esforço de controle, o peso de cada variável controlada foi au
 	\label{img_lqr_caso_2}
 \end{figure}
 
-Ao salvar as séries de dados (Figura \ref{img_edit_lqr_caso_2}), observou-se no eixo de tempo que o período dos dados é de cerca de 0,2s, tempo satisfatório para simulação de sistemas químicos, que tendem a ser lentos. Porém, em aplicações reais, isto é um ponto a se avaliar, se se tornará um problema.
+Ao salvar as séries de dados (Figura \ref{img_edit_lqr_caso_2}), observou-se no eixo de tempo que o período dos dados é de cerca de 0,2 unidades de tempo (para este caso, segundos), tempo satisfatório para simulação de sistemas químicos, que tendem a ser lentos. Porém, em aplicações reais, isto é um ponto a se avaliar, se se tornará um problema.
 
 \begin{figure}[htb]
 	\centering
-	\caption{Resposta do LQR no caso 2}
+	\caption{Resposta do LQR no caso 3}
 	\includegraphics[width=\textwidth]{edit_LQR_caso_2}
 	\label{img_edit_lqr_caso_2}
 \end{figure}
-
-\section{Considerações Finais}
-
-Neste capítulo, foram simulados e comparados dois diferentes métodos de controle num sistema de tanques acoplados. No caso do PI, apesar de haver certa demora para regular o sistema, o esforço de controle não chegou perto do limite máximo, e o estado estacionário atingido foi bem próximo dos setpoints escolhido. Em contrapartida, o LQR apresentou um erro estacionário visível, e demandou um esforço maior de controle. Por outro lado, a sintonia de ambos são diferentes, e outros valores podiam ter sido empregados para $\tau$ do sistema final modelado para o PID.
-
-No geral, pode-se afirmar que o supervisório didático cumpriu seu propósito em trazer os dados em tempo real e com confiança ao usuário. Não só isso, possibilitou que os gráficos de resposta fossem facilmente armazenados e exportados em formato de imagem. Um ponto de melhoria seria permitir que o setpoint fosse modificado em tempo de execução, para que o comportamento do sistema fosse perturbado. Por outro lado, isto pode ser feito com programação Python na função do loop de controle.
